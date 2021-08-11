@@ -1,0 +1,41 @@
+<?php if ($this->usuario->getAdministrativo()) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Permissões Administrativas') ?></legend>
+
+  <form class="form-horizontal" 
+        name="form_acoes" 
+        action="<?php echo $this->baseUrl('/administrativo/usuario/set-permissao-adm') ?>">
+   
+    <input type="hidden" name="usuario" value="<?php echo $this->usuario->getId() ?>">
+    
+    <ul>
+      <?php $m = $this->modulosAdm ?>
+      <li>
+        <?php echo $m->getNome() ?>
+        <ul>
+          <?php foreach ($m->getControles() as $c) { ?>
+          <li>
+            <?php echo $c->getNome() ?>
+            <ul>
+              <?php foreach ($c->getAcoes() as $a) { ?>
+              <li>
+                <input type="checkbox" id="acao_<?php echo $a->getId() ?>" name="acao[<?php echo $a->getId() ?>]"
+                <?php if (array_search($a->getId(), $this->permissoesAdm) !== false) echo 'checked' ?>>
+                <?php echo $a->getNome() ?>
+              </li>
+              <?php } ?>
+            </ul>
+          </li>
+          <?php } ?>
+        </ul>
+      </li> 
+    </ul>
+    
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" class="btn btn-success" value="Salvar" name="submit" />
+      </div>
+    </div>
+  </form>
+</fieldset>
+<?php } ?>

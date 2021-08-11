@@ -1,0 +1,109 @@
+<table class="table table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th colspan="5">Módulo</th>
+      <th style="width:9%">
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/novo')) { ?>
+        <a class="btn btn-success btn-mini" role="button" data-toggle="modal"
+          href="#myModal"
+          modal-url="<?php echo $this->baseUrl('/administrativo/modulo/novo') ?>">
+          <?php echo $this->translate->_('Novo módulo') ?>
+        </a>
+        <?php } ?>
+      </th>
+    </tr>
+  </thead>    
+  <tbody class="table-hover">
+    <?php foreach ($this->modulos as $m) { ?>
+    <tr style="background-color:#ccc">
+      <td><?php echo $m->getNome() ?></td>
+      <td>Visivel: <?php echo ($m->getVisivel() ? $this->translate->_('SIM') :  $this->translate->_('NÃO')) ?></td>
+      <td>
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/edita')) { ?>
+        <a class="btn btn-primary btn-mini" role="button" data-toggle="modal" href="#myModal" 
+          modal-url="<?php echo $this->baseUrl("/administrativo/modulo/edita/id/{$m->getId()}") ?>">
+          <i class="icon-pencil icon-white"></i>
+        </a>
+        <?php } ?>
+        
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/remove')) { ?>
+        <a class="btn btn-danger btn-mini" 
+           href="<?php echo $this->baseUrl("/administrativo/modulo/remove/id/{$m->getId()}") ?>">
+          <i class="icon-minus icon-white"></i>
+        </a>                    
+        <?php } ?>
+      <td>
+        <b>Controles</b> 
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/novo')) { ?>
+        <a class="btn btn-success btn-mini" role="button" data-toggle="modal" href="#myModal"
+          modal-url="<?php echo $this->baseUrl("/administrativo/controle/novo/m/{$m->getId()}") ?>">
+          <i class="icon-plus icon-white"></i>
+        </a>
+        <?php } ?>
+      </td>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    
+    <?php foreach ($m->getControles() as $c) { ?>
+    <tr style="background-color:#DDD">
+      <td colspan="2"></td>
+      <td><?php echo $c->getNome() ?></td>
+      <td>Visivel: <?php echo ($c->getVisivel()? 'SIM' : 'NÃO') ?></td>
+      <td>
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/edita')) { ?>
+        <a class="btn btn-primary btn-mini" role="button" data-toggle="modal" href="#myModal"
+          modal-url="<?php echo $this->baseUrl("/administrativo/controle/edita/id/{$c->getId()}/m/{$m->getId()}") ?>">
+          <i class="icon-pencil icon-white"></i>
+        </a>
+        <?php } ?>
+        
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/remove')) { ?>
+        <a class="btn btn-danger btn-mini" 
+           href="<?php echo $this->baseUrl("/administrativo/controle/remove/id/{$c->getId()}") ?>">
+          <i class="icon-minus icon-white"></i>
+        </a>                        
+        <?php } ?>
+      </td>
+      <td>
+        <b>Ações</b>
+        
+        <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/novo')) { ?>
+        <a class="btn btn-success btn-mini" role="button" data-toggle="modal" href="#myModal"
+          modal-url="<?php echo $this->baseUrl("/administrativo/acao/novo/c/{$c->getId()}") ?>">
+          <i class="icon-plus icon-white"></i>
+        </a>
+        <?php } ?>
+        
+      <td>&nbsp;</td>
+    </tr>
+    
+    <?php foreach ($c->getAcoes() as $a) { ?>
+    <tr style="background-color:#eee">
+    <td colspan="4">&nbsp;</td>
+    <td><?php echo $a->getNome() ?></td>
+    <td>&nbsp;</td>
+    <td>
+      <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/edita')) { ?>
+      <a class="btn btn-primary btn-mini" role="button" data-toggle="modal" href="#myModal"
+        modal-width="500" 
+        modal-url="<?php echo $this->baseUrl("/administrativo/acao/edita/id/{$a->getId()}/c/{$c->getId()}") ?>">
+        <i class="icon-pencil icon-white"></i>
+      </a>
+      <?php } ?>
+      
+      <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/remove')) { ?>
+      <a class="btn btn-danger btn-mini" 
+         href="<?php echo $this->baseUrl("/administrativo/acao/remove/id/{$a->getId()}") ?>">
+        <i class="icon-minus icon-white"></i>
+      </a>
+      <?php } ?>
+      
+      </td>
+    </tr>
+    <?php } ?>
+    
+    <?php } ?>
+    
+    <?php } ?>
+  </tbody>
+</table>

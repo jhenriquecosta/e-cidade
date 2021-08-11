@@ -1,0 +1,21 @@
+<div class="db-header">
+  <div class="db-header-logo-background"></div>
+  <div class="db-seller-logo">
+    <img class="pull-left" src="<?php echo $this->serverUrl('/global/img/logo_topo.png') ?>">
+    <span style="margin-top: 75px; float: left;color: #a2a2a2;font-size: 11px; padding-left: 5px;">
+      <?php
+        echo DBSeller_Helper_String_Format::versionNfse(Zend_Registry::get('config')->ecidadeonline2->versao);
+      ?>
+    </span>
+    <div class="db-header-logo-prefeitura">
+      <div class="pull-left">
+        <img height="74" width="64" src=<?php echo $this->serverUrl('/global/img/brasao.jpg') ?>>
+      </div>
+
+      <div class="db-header-nome-prefeitura">
+        <?php echo $this->oPrefeitura->getNome() ?>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,8 @@
+<?php 
+$oBreadcrumbs = $this->navigation(Zend_Registry::get('breadcrumbs'));
+
+if ($oBreadcrumbs->findActive($oBreadcrumbs->getContainer()) && !$this->oculta_breadcrumbs) { ?>
+<ul class="breadcrumb">
+  <?php echo $oBreadcrumbs->breadcrumbs()->setMinDepth(0)->setSeparator('<span class="divider">&gt;</span>'); ?>
+</ul>
+<?php } ?>

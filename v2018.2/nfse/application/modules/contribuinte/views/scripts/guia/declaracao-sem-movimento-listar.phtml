@@ -1,0 +1,26 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Declaração sem Movimento') ?></legend>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Mês') ?></th>
+        <th><?php echo $this->translate->_('Ano') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->aDeclaracaoSemMovimento) > 0) { ?>
+      <?php foreach ($this->aDeclaracaoSemMovimento as $oDeclaracaoSemMovimento) { ?>
+      <tr>
+        <td><?php echo DBSeller_Helper_Date_Date::mesExtenso($oDeclaracaoSemMovimento->mes) ?></td>
+        <td><?php echo $oDeclaracaoSemMovimento->ano ?></td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="2"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+</fieldset>

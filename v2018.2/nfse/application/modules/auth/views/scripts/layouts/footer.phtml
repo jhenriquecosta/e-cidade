@@ -1,0 +1,30 @@
+<?php if ($this->oPrefeitura) { ?>
+
+  <p>
+    <?php
+    echo "{$this->oPrefeitura->getNome()} - {$this->oPrefeitura->getMunicipio()} - {$this->oPrefeitura->getUf()}"
+    ?>
+  </p>
+  <p>
+    <?php echo "{$this->oPrefeitura->getEndereco()}, {$this->oPrefeitura->getNumero()}" ?>
+    <?php echo '- CEP: ' . DBSeller_Helper_Number_Format::maskCep($this->oPrefeitura->getCep()); ?>
+  </p>
+  <?php if ($this->oPrefeitura->getTelefone()) { ?>
+    <p>
+      <?php echo 'Fone: ' . DBSeller_Helper_Number_Format::maskPhoneNumber($this->oPrefeitura->getTelefone()) ?>
+
+      <?php if ($this->oPrefeitura->getEmail()) { ?>
+        &nbsp;&nbsp;-&nbsp;&nbsp;
+        <?php echo 'Email: ' . $this->oPrefeitura->getEmail() ?>
+      <?php } ?>
+    </p>
+  <?php } ?>
+<?php } else { ?>
+
+  <p>DBSeller Serviços de Informática Ltda. - Porto Alegre - RS</p>
+  <p>Av. Júlio de Castilhos, 44 (5º Andar - Sala 501) - Centro - CEP: 90030-130</p>
+  <p>Fone: 0xx (51) 3076.5101</p>
+<?php } ?>
+
+
+

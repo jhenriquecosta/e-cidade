@@ -1,0 +1,552 @@
+<?php foreach ($this->aDadosNota as $iPagina => $oDadosPagina) {
+
+$iAliquota         = $oDadosPagina->oDadosServico->oDadosNota->getS_vl_aliquota();
+$bNaoInside        = $oDadosPagina->oDadosServico->oDadosNota->getS_nao_incide();
+$iImunidade        = $oDadosPagina->oDadosServico->oDadosNota->getS_dados_exigibilidadeiss();
+$bInsideFora       = $oDadosPagina->oDadosServico->oDadosNota->getS_dados_fora_incide();
+$lTomadorCooperado = $oDadosPagina->oDadosServico->oDadosNota->getT_cooperado();
+$oPaisTomador      = Default_Model_Cadenderpais::getByAttributes(array('cod_bacen' => $oDadosPagina->oDadosServico->oDadosNota->getT_cod_pais()));
+$oPaisServico      = Default_Model_Cadenderpais::getByAttributes(array('cod_bacen' => $oDadosPagina->oDadosServico->oDadosNota->getS_dados_cod_pais()));
+
+/**
+ * Valida exibicao da msg de tributacao
+ */
+$sTributacao = '';
+if ($iAliquota == 0 && $iImunidade != 27) {
+
+  $sTributacao = '**Tributação fixa.';
+  if($bNaoInside || !$bInsideFora){
+    $sTributacao = '**Tributação não incide.';
+  }
+}
+
+/**
+ * Valida se tomador é associado/cooperado e altera mensagem
+ */
+if($lTomadorCooperado){
+  $sTributacao = '**Tomador Associado / Tributação não incide.';
+}
+
+if ($oDadosPagina->iPagina == 1) {?>
+
+  <?php if (!$this->lHtmlEmbutido) { ?>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+  <?php } ?>
+
+    <style type="text/css">
+
+      html, body {
+        height: 100%;
+      }
+
+      html {
+        display: table;
+        margin: auto;
+      }
+
+      body {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+    <?php if (!$this->lHtmlEmbutido) { ?>
+
+      body.modelo-3 {
+        width: 100%;
+        text-align: center;
+        align-content: center;
+        margin: 0;
+        font-size: 11px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+    <?php } ?>
+
+    table.tabela-modelo-3 {
+      border: solid 1px #000;
+      text-align: center;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 11px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin-bottom: 5px;
+    }
+
+    table.tabela-modelo-3 tr td {
+      text-align: left;
+      padding-left: 5px;
+    }
+
+    table.tabela-modelo-3 tr td.center {
+      text-align: center;
+    }
+
+    table.tabela-modelo-3 tr td.titulo {
+      padding: 5px;
+      font-weight: bold;
+    }
+
+    table.tabela-modelo-3 tr td.imagem {
+      width: 120px;
+      height: 120px;
+    }
+
+    table.tabela-modelo-3 tr td.linha {
+      line-height: 2px;
+      background-color: black;
+    }
+
+    table.tabela-modelo-3 tr td.destacado {
+      font-weight: bold;
+    }
+
+    .nfse_cancelada {
+      position: absolute;
+    }
+
+    .nfse_cancelada_img {
+      margin: 25% 25% 0;
+    }
+
+    .underline {
+      text-decoration: underline;
+    }
+
+    .negrito {
+      font-weight: bold
+    }
+  </style>
+
+  <?php if (!$this->lHtmlEmbutido) { ?>
+    </head>
+    <body class="modelo-3">
+  <?php }?>
+<?php } ?>
+
+  <div class="nfse_cancelada">
+    <?php if ($oDadosPagina->oDadosCabecalho->sUrlTarja) { ?>
+      <img class="nfse_cancelada_img" src="<?php echo $oDadosPagina->oDadosCabecalho->sUrlTarja ?>">
+    <?php } ?>
+  </div>
+
+  <div style="border: #000000 solid 1px;">
+  <table class="tabela-modelo-3">
+    <tr>
+      <td align="c" class="imagem">
+        <?php if ($oDadosPagina->oDadosCabecalho->sBrasao) { ?>
+          <img src="<?php echo $oDadosPagina->oDadosCabecalho->sBrasao ?>" width="100px" height="100px">
+        <?php } ?>
+      </td>
+      <td colspan="4" width="80%" class="center">
+        <b><?php echo $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getNome() ?></b>
+        <br>
+        <?php echo $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getSecretaria() ?>
+        <br>
+        <span class="underline"><?php echo $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getSetor() ?></span>
+        <br>
+      <span class="underline">
+      <?php echo $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getEndereco() . ', ' .
+        $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getNumero() . ' - ' .
+        $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getBairro() . ' / ' .
+        $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getMunicipio() . ' - ' .
+        $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getUf() . ' / CEP: ' .
+        $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getCep();
+      ?>
+      </span>
+      </td>
+      <td rowspan="7" valign="center" class="center" style="border: #000000 solid 1px">
+        <table class="tabela-modelo-3">
+          <tr>
+            <td class="center titulo">Número da Nota</td>
+          </tr>
+          <tr>
+            <td class="center titulo"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getNota() ?></td>
+          </tr>
+          <tr>
+            <td class="center titulo"><?php echo 'Folha ' . $oDadosPagina->iPagina . '/' . count($this->aDadosNota)?></td>
+          </tr>
+          <tr>
+            <td class="center titulo">Código de Verificação</td>
+          </tr>
+          <tr>
+            <td class="center titulo"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getCod_verificacao() ?></td>
+          </tr>
+          <tr>
+            <?php if ($oDadosPagina->oDadosCabecalho->sQRCode) { ?>
+              <td class="center">
+                <img src="<?php echo $oDadosPagina->oDadosCabecalho->sQRCode ?>" width="120px" height="120px">
+              </td>
+            <?php } ?>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="linha"></td>
+    </tr>
+    <tr>
+      <td colspan="5" class="titulo center">Nota Fiscal de Serviços Eletrônica - NFSe</td>
+    </tr>
+    <tr>
+      <td class="negrito" width="20%">Data / Hora Emissão:</td>
+      <td>
+        <?php echo "{$oDadosPagina->oDadosServico->oDadosNota->formatedData()} - {$oDadosPagina->oDadosServico->oDadosNota->formatedHora()}" ?>
+      </td>
+      <td class="negrito" width="20%">Período de Competência:</td>
+      <td><?php echo str_pad($oDadosPagina->oDadosServico->oDadosNota->getComp(), 7, 0, STR_PAD_LEFT) ?></td>
+    </tr>
+    <tr>
+      <td class="negrito" width="22%">Município Prestação:</td>
+      <td><?php echo $oDadosPagina->oDadosServico->oDadosNota->getServicoMunicipio() ?></td>
+      <td class="negrito" width="22%">Reg. Especial Tributação:</td>
+      <td><?php echo $oDadosPagina->oDadosPrestador->sDescricaoRegimeTributario ?></td>
+    </tr>
+    <tr>
+      <td class="negrito" width="22%">Natureza da Operação:</td>
+      <td>
+        <?php echo Contribuinte_Model_NaturezaOperacao::getById($oDadosPagina->oDadosServico->oDadosNota->getNatureza_operacao()) ?>
+      </td>
+      <td class="negrito" width="22%">
+        <?php echo isset($oDadosPagina->oDadosServico->oDadosNotaSubstituida) ? 'Número da Nota Substituida:' : NULL ?>
+      </td>
+      <td><?php echo isset($oDadosPagina->oDadosServico->oDadosNotaSubstituida) ? $oDadosPagina->oDadosServico->oDadosNotaSubstituida->getNota() : NULL ?></td>
+    </tr>
+    <tr>
+      <td colspan="5" class="linha"></td>
+    </tr>
+  </table>
+
+  <table class="tabela-modelo-3">
+    <tr>
+      <td colspan="5" class="center negrito">PRESTADOR DE SERVIÇOS</td>
+    </tr>
+    <tr>
+      <td rowspan="6" class="center imagem">
+        <?php if ($oDadosPagina->oDadosPrestador->sLogoPrestador) { ?>
+          <img alt="" width="100px" height="100px" src="<?php echo $oDadosPagina->oDadosPrestador->sLogoPrestador ?>">
+        <?php } ?>
+      </td>
+      <td colspan="3">Razão Social</td>
+      <td>CPF/CNPJ</td>
+    </tr>
+    <tr>
+      <td colspan="3" class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getP_razao_social() ?></td>
+      <td class="destacado"><?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($oDadosPagina->oDadosServico->oDadosNota->getP_cnpjcpf()) ?></td>
+    </tr>
+    <tr>
+      <td>Inscrição Municipal</td>
+      <td>Fone/Fax</td>
+      <td>Simples Nacional</td>
+      <td>Inscrição Estadual</td>
+    </tr>
+    <tr>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getP_im() ?></td>
+      <td class="destacado"><?php echo DBSeller_Helper_Number_Format::maskPhoneNumber($oDadosPagina->oDadosServico->oDadosNota->getP_telefone()) ?></td>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosPrestador->sDescricaoOptanteSimples ?></td>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getP_ie() ?></td>
+    </tr>
+    <tr>
+      <td>Endereço</td>
+      <td>CEP</td>
+      <td colspan="2">Exibilidade</td>
+    </tr>
+    <tr>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getP_endereco() . ', ' .
+                                       $oDadosPagina->oDadosServico->oDadosNota->getP_endereco_numero() . ' ' .
+                                       $oDadosPagina->oDadosServico->oDadosNota->getP_endereco_comp() . ' - ' .
+                                       $oDadosPagina->oDadosServico->oDadosNota->getP_bairro() ?>
+      </td>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getP_cep() ?></td>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosPrestador->sDescricaoExibilidade; ?></td>
+      <td class="destacado"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getPrestadorMunicipio() . ' / ' . $oDadosPagina->oDadosServico->oDadosNota->getP_uf() ?></td>
+    </tr>
+    <tr>
+      <td colspan="5" class="linha"></td>
+    </tr>
+  </table>
+
+  <?php if ($oDadosPagina->iPagina == 1) {?>
+  <table class="tabela-modelo-3">
+    <tr>
+      <td colspan="4" class="center"><b>TOMADOR DE SERVIÇOS</b></td>
+    </tr>
+    <tr>
+      <td colspan="2" width="200px">Razão Social</td>
+      <td>CPF/CNPJ</td>
+      <td>Inscrição Estadual</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <?php if ($oDadosPagina->oDadosServico->oDadosNota->getT_razao_social()) { ?>
+          <b><?php echo $oDadosPagina->oDadosServico->oDadosNota->getT_razao_social() ?></b>
+        <?php } else { ?>
+          Não identificado
+        <?php } ?>
+      </td>
+      <td><b><?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($oDadosPagina->oDadosServico->oDadosNota->getT_cnpjcpf()) ?></b></td>
+      <td><b><?php echo $oDadosPagina->oDadosServico->oDadosNota->getT_ie() ?></b></td>
+    </tr>
+    <tr>
+      <td>Inscrição Municipal</td>
+      <td>Fone/Fax</td>
+      <td colspan="2">Email</td>
+    </tr>
+    <tr>
+      <td><b><?php echo $oDadosPagina->oDadosServico->oDadosNota->getT_im() ?></b></td>
+      <td><?php echo DBSeller_Helper_Number_Format::maskPhoneNumber($oDadosPagina->oDadosServico->oDadosNota->getT_telefone()) ?></td>
+      <td colspan="2"><?php echo $oDadosPagina->oDadosServico->oDadosNota->getT_email() ?></td>
+    </tr>
+    <tr>
+      <td colspan="4">Endereço</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <?php
+         if ( !is_null($oDadosPagina->oDadosServico->oDadosNota->getT_cod_pais()) && $oDadosPagina->oDadosServico->oDadosNota->getT_cod_pais() != '01058') {
+
+            echo $oDadosPagina->oDadosServico->oDadosNota->getT_endereco() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_endereco_numero() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_endereco_comp() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_bairro() . ' - ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_cep() . ' - ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_cidade_estado() . ' - ' . $oPaisTomador[0]->getNome();
+
+          } else if ($oDadosPagina->oDadosServico->oDadosNota->getT_cnpjcpf()) {
+
+            echo $oDadosPagina->oDadosServico->oDadosNota->getT_endereco() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_endereco_numero() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_endereco_comp() . ', ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_bairro() . ' - ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_cep() . ' - ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getTomadorMunicipio() . ' / ' .
+            $oDadosPagina->oDadosServico->oDadosNota->getT_uf();
+
+          }
+        ?>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="linha"></td>
+    </tr>
+  </table>
+
+  <?php } ?>
+  <table class="tabela-modelo-3">
+  <?php if ($oDadosPagina->iPagina == 1) {?>
+    <tr>
+      <td colspan="2" class="center"><b>DADOS COMPLEMENTARES</b></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        Código Tributação Municipio:
+        <?php
+        echo "{$oDadosPagina->oDadosServico->oDadosNota->getS_dados_item_lista_servico()} - {$oDadosPagina->oDadosServico->oDadosNota->getDescricaoListaServico()}";
+        ?>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        CNAE:
+        <?php echo "{$oDadosPagina->oDadosServico->oDadosNota->getS_dados_cod_cnae()}"; ?> -
+        <?php
+        $aServico = Contribuinte_Model_Servico::getByCodServico($oDadosPagina->oDadosServico->oDadosNota->getS_dados_cod_tributacao());
+        $oServico = reset($aServico);
+        echo ($oServico instanceof Contribuinte_Model_Servico) ? $oServico->attr('desc_cnae') : NULL;
+        ?>
+      </td>
+    </tr>
+    <?php if ($oDadosPagina->oDadosServico->oDadosNota->getS_codigo_obra() || $oDadosPagina->oDadosServico->oDadosNota->getS_art()) { ?>
+      <tr>
+        <td>Construção Civil - Obra: <?php echo $oDadosPagina->oDadosServico->oDadosNota->getS_codigo_obra() ?></td>
+        <td width="40%">ART: <?php echo $oDadosPagina->oDadosServico->oDadosNota->getS_art() ?></td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+    <?php } ?>
+    <?php } ?>
+    <tr>
+      <td class="linha" colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="center destacado titulo">DISCRIMINAÇÃO DOS SERVIÇOS</td>
+    </tr>
+    <tr>
+      <td colspan="2" height="130px" style="vertical-align: top;">
+        <?php
+            if (!is_null($oDadosPagina->oDadosServico->oDadosNota->getS_dados_cod_pais()) && $oDadosPagina->oDadosServico->oDadosNota->getS_dados_cod_pais() != '01058') {
+              echo $oDadosPagina->oDadosServico->oDadosNota->getS_dados_cidade_estado() . ' - ' . $oPaisServico[0]->getNome() . ' --- ';
+            }
+
+         echo  $oDadosPagina->oDadosServico->sDiscriminacaoServico; ?>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="linha"></td>
+    </tr>
+  </table>
+
+  <?php if ($oDadosPagina->iPagina == 1) {?>
+  <table class="tabela-modelo-3">
+    <tr>
+      <td colspan="6" class="center">
+        <b>
+          VALOR TOTAL DE SERVIÇOS = <?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_servicos(), 2, ',', '.') ?>
+        </b>
+      </td>
+    <tr>
+      <td colspan="6">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="linha" colspan="6"></td>
+    </tr>
+    <tr>
+      <td>PIS (R$)</td>
+      <td>COFINS(R$)</td>
+      <td>INSS (R$)</td>
+      <td>IR (R$)</td>
+      <td>CSLL (R$)</td>
+      <td>Outras Retenções (R$)</td>
+    </tr>
+    <tr>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_pis(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_cofins(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_inss(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_ir(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_csll(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_outras_retencoes(), 2, ',', '.') ?></td>
+    </tr>
+  </table>
+
+  <table class="tabela-modelo-3">
+    <tr>
+      <td colspan="6" style="line-height: 1px; background-color: #000000;"></td>
+    </tr>
+    <tr>
+      <td colspan="2">Deduções</td>
+      <td>Desconto Incondicionado</td>
+      <td>Base de Cálculo</td>
+      <td>Alíquota %</td>
+    </tr>
+    <tr>
+      <td colspan="2"><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_deducoes(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_desc_incondicionado(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_bc(), 2, ',', '.') ?></td>
+      <td>
+        <?php if ($iAliquota == 0) { ?>
+          -
+        <?php } else { ?>
+        <?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_aliquota(), 2, ',', '.') ?>
+        <?php } ?>
+      </td>
+    </tr>
+    <tr>
+      <td>ISS Prestador (R$)</td>
+      <td>ISS Tomador (R$)</td>
+      <td>Desconto Condicionado</td>
+      <td>Valor Total da Nota (R$)</td>
+      <td>Valor Liquido (R$)</td>
+    </tr>
+    <tr>
+       <?php
+
+          $sValorIss        = '-';
+          $sValorIssTomador = number_format(0, 2, ',', '.');
+
+          if ( $oDadosPagina->oDadosServico->oDadosNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::PRESTADOR_RETEM_ISS &&
+                !$oDadosPagina->oDadosServico->oDadosNota->getEmite_guia()                                                             ) {
+
+             if ($iAliquota != 0) {
+               $sValorIss = number_format(0, 2, ',', '.');
+             }
+
+             /**
+              * Se natureza de tributação fora do municipio deve exibir o valor do imposto
+              */
+             if( $oDadosPagina->oDadosServico->oDadosNota->getNatureza_operacao() == 2 ){
+               $sValorIss = number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_iss(), 2, ',', '.');
+             }
+
+          } else if ($oDadosPagina->oDadosServico->oDadosNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::TOMADOR_RETEM_ISS) {
+
+            if ($iAliquota != 0) {
+              $sValorIss = number_format(0, 2, ',', '.');
+            }
+            $sValorIssTomador = number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_iss(), 2, ',', '.');
+
+          } else {
+
+            if ($iAliquota != 0) {
+              $sValorIss = number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_iss(), 2, ',', '.');
+            }
+         }
+       ?>
+      <td><?php echo $sValorIss;        ?></td>
+      <td><?php echo $sValorIssTomador; ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_condicionado(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getS_vl_servicos(), 2, ',', '.') ?></td>
+      <td><?php echo number_format($oDadosPagina->oDadosServico->oDadosNota->getVl_liquido_nfse(), 2, ',', '.') ?></td>
+    </tr>
+    <tr>
+      <td colspan="6" style="font-weight: bold; text-align: center;">
+          <span>
+            <?php
+            $oContribuinte   = $oDadosPagina->oDadosPrestador->oPrestador;
+            $iAnoCompetencia = $oDadosPagina->oDadosServico->oDadosNota->getCompetenciaAno();
+            $fValorBase      = $oDadosPagina->oDadosServico->oDadosNota->getS_vl_bc();
+
+            echo Contribuinte_Model_ParametroContribuinteTributos::retornaMensagemTributos($oContribuinte, $iAnoCompetencia, $fValorBase);
+            ?>
+          </span>
+      </td>
+    </tr>
+    <?php if ( !empty($sTributacao) ) { ?>
+      <tr>
+        <td colspan="6" style="border: solid 1px #000; font-weight: bold">
+          <span><?php echo $sTributacao;?></span>
+        </td>
+      </tr>
+    <?php } ?>
+    <tr>
+      <td colspan="6" class="linha"></td>
+    </tr>
+  </table>
+
+  <?php  if ($oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getInformacoesComplementaresNfse() ||
+    $oDadosPagina->oDadosServico->oDadosNota->getS_informacoes_complementares()
+  ) {
+    ?>
+    <table class="tabela-modelo-3">
+      <tr>
+        <td class="titulo">OUTRAS INFORMAÇÕES</td>
+      </tr>
+      <tr>
+        <td>
+          <?php echo $oDadosPagina->oDadosCabecalho->oDadosPrefeitura->getInformacoesComplementaresNfse() ?>
+          <br>
+          <?php echo $oDadosPagina->oDadosServico->oDadosNota->getS_informacoes_complementares() ?>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="linha"></td>
+      </tr>
+    </table>
+
+  <?php } ?>
+<?php } ?>
+  </div>
+  <?php if (count($this->aDadosNota) > 1) {?>
+    <div style="height:161px;"></div>
+  <?php } ?>
+  <?php if (count($this->aDadosNota) == $oDadosPagina->iPagina && !$this->lHtmlEmbutido) {?>
+    </body>
+    </html>
+  <?php }?>
+<?php } ?>

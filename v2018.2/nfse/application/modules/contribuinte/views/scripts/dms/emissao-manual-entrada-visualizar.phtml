@@ -1,0 +1,15 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Informações do DMS') ?></legend>
+  
+  <?php echo $this->translate->_('Código:') ?>
+  <?php echo $this->iIdDms ?>&nbsp;&nbsp;<br>
+  
+  <?php echo $this->translate->_('Competência:') ?>
+  <?php echo DBSeller_Helper_Date_Date::mesExtenso($this->iCompetenciaMes)." de {$this->iCompetenciaAno}" ?>
+</fieldset>
+
+<div id="dms_lista" 
+     data-loading="<?php echo $this->translate->_('Processando...') ?>" 
+     data-url="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-entrada-lista-notas/visualizar/sim/id_dms/{$this->iIdDms}") ?>">
+  <!-- Via Ajax -->
+</div>

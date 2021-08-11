@@ -1,0 +1,129 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Resultado Pesquisa') ?></legend>
+  <table class="table table-bordered table-condensed table-striped table-hover" style="table-layout:fixed">
+    <thead>
+    <tr>
+      <th class="text-center consulta-coluna01"><?php echo $this->translate->_('Competência') ?></th>
+      <th class="text-center consulta-coluna02"><?php echo $this->translate->_('Número') ?></th>
+      <th class="text-center consulta-coluna03"><?php echo $this->translate->_('Data Emissão') ?></th>
+      <th class="text-center consulta-coluna04"><?php echo $this->translate->_('Tomador') ?></th>
+      <th class="text-center consulta-coluna05"><?php echo $this->translate->_('Base Cálculo (R$)') ?></th>
+      <th class="text-center consulta-coluna06"><?php echo $this->translate->_('ISS (R$)') ?></th>
+      <th class="text-center consulta-coluna07"><?php echo $this->translate->_('Situação') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    if (count($this->oDadosNota) > 0) {
+
+      $iTomadorRetemISS               = Contribuinte_Model_Nota::TOMADOR_RETEM_ISS;
+      $iOptanteSimplesTipoMEI         = Contribuinte_Model_ContribuinteAbstract::OPTANTE_SIMPLES_TIPO_MEI;
+      $sOptanteSimplesNacionalBaixado = Contribuinte_Model_ContribuinteAbstract::OPTANTE_SIMPLES_NACIONAL_BAIXADO;
+      $iPrestadorRetemISS             = Contribuinte_Model_Nota::PRESTADOR_RETEM_ISS;
+
+      foreach ($this->oDadosNota as $oNota) { ?>
+        <tr>
+          <td class="text-center consulta-coluna01">
+            <?php echo str_pad($oNota->getMes_comp(), 2, 0, STR_PAD_LEFT) . '/' . $oNota->getAno_comp() ?>
+          </td>
+          <td class="text-right consulta-coluna02">
+            <?php if ($oNota->oNotaSubstituida instanceof Contribuinte_Model_Nota) { ?>
+              <a class="tooltip-modal"
+                 data-content="Nota substituta da nº <?php echo $oNota->oNotaSubstituida->getNota() ?>"
+                 href="#">
+                <?php echo $oNota->getNota() ?>
+              </a>
+            <?php } else if ($oNota->oNotaSubstituta instanceof Contribuinte_Model_Nota) { ?>
+              <a class="tooltip-modal"
+                 data-content="Nota substituida pela nº <?php echo $oNota->oNotaSubstituta->getNota() ?>"
+                 href="#">
+                <?php echo $oNota->getNota() ?>
+              </a>
+            <?php } else { ?>
+              <?php echo $oNota->getNota() ?>
+            <?php } ?>
+          </td>
+          <td class="text-center consulta-coluna03"><?php echo $oNota->formatedData() ?></td>
+          <td class="consulta-coluna04">
+            <?php echo DBSeller_Helper_String_Format::wordsCap($oNota->getT_razao_social()) ?>
+          </td>
+          <td class="text-right consulta-coluna05">
+            <?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_bc(), 2) ?>
+          </td>
+          <td class="text-right consulta-coluna06">
+            <?php if ($oNota->getEmite_guia()
+                   && $oNota->getS_vl_iss() > 0
+                   && !$oNota->getCancelada()
+                   && !$oNota->getIdNotaSubstituta()) {
+
+                  echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_iss(), 2);
+              ?>
+            <?php } else { ?>
+              -
+            <?php } ?>
+          </td>
+          <td class="text-left consulta-coluna07">
+            <?php if ($oNota->getIdNotaSubstituta()) { ?>
+              <span class="label label-important db-label-situacao-documento">
+                <?php echo $this->translate->_('Nota Substituida') ?>
+              </span>
+            <?php } else if ($oNota->getCancelada()) { ?>
+              <span class="label label-important db-label-situacao-documento">
+                <?php echo $this->translate->_('Cancelada') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_iss_retido() == $iTomadorRetemISS) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Retida Tomador') ?>
+              </span>
+            <?php } else if ($oNota->getNatureza_operacao() == '2') { ?>
+              <span class="label label-warning db-label-situacao-documento">
+                <?php echo $this->translate->_('Fora do Município') ?>
+              </span>
+            <?php } else if ($oNota->oContribuinte->getOptanteSimplesCategoria() == $iOptanteSimplesTipoMEI) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('MEI') ?>
+              </span>
+            <?php } else if ($oNota->oContribuinte->getOptanteSimplesCategoria() != 0
+                          && $oNota->oContribuinte->getOptanteSimplesBaixado() != $sOptanteSimplesNacionalBaixado) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Simples Nacional') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_iss_retido() == $iPrestadorRetemISS && $oNota->lNaoGeraGuia) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Isenta') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_iss_retido() == $iPrestadorRetemISS) { ?>
+              <span class="label label-info db-label-situacao-documento">
+                <?php echo $this->translate->_('Tributada Prestador') ?>
+              </span>
+            <?php } else { ?>
+              -
+            <?php } ?>
+            <?php if ($oNota->lGuiaEmitida) { ?>
+              <span class="label label-success">
+                <?php echo $this->translate->_('Guia Emitida') ?>
+              </span>
+            <?php } else if ($oNota->getImportada()) { ?>
+              <span class="label label-success">
+                <?php echo $this->translate->_('Importada') ?>
+              </span>
+            <?php } ?>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="7"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+  <?php
+  $this->urlFor("/contribuinte/exportacao-arquivo/rps-consultar/{$this->sBusca}");
+
+  echo $this->paginationControl($this->oDadosNota,
+                                'Sliding',
+                                'layouts/pager.phtml',
+                                array('translate' => $this->translate));
+  ?>
+</fieldset>

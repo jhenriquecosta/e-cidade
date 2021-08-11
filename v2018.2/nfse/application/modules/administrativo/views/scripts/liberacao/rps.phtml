@@ -1,0 +1,109 @@
+<h3>Liberação para emissão de RPS</h3>
+
+<?php if (count($this->requisicoes)) { ?>
+<fieldset>
+  <legend>Requisições pendentes</legend>
+  <table class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Data da requisição</th>
+        <th>Contribuinte</th>
+        
+        <?php if ($this->sControleAidof == 'data') { ?>
+        <th>Data requisitada</th>
+        <?php } else { ?>
+        <th>Quantidade requisitada</th>
+        <?php } ?>
+        
+        <th>Nf Inicial</th>    
+        <th>Nf Final</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($this->requisicoes as $requisicao) { ?>
+      <tr>
+        <td><?php echo $requisicao->getDataRequerimentoString(); ?></td>
+        <td><?php echo $requisicao->getContribuinte()->attr('nome'); ?></td>
+        
+        <?php if ($this->sControleAidof == 'data') : ?>
+        <td><?php echo $requisicao->getDataRequeridaString(); ?></td>
+        <?php else : ?>
+        <td><?php echo $requisicao->getQtdRequerida(); ?></td>
+        <?php endif ?>
+        
+        <td><?php echo $requisicao->getNfInicial(); ?></td>
+        <td><?php echo $requisicao->getNfFinal(); ?></td>
+        <td><a href="<?php echo $this->baseUrl('administrativo/liberacao/rps/req/' . $requisicao->getId()) ?>" class="btn btn-success btn-small">Liberar</a></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  <?php ?>
+</fieldset>
+<?php } ?>
+
+<fieldset>
+  <legend>Buscar contribuinte</legend>
+  <form class="form-vertical" name="contribuinte" action="<?php echo $this->baseUrl("administrativo/liberacao/rps"); ?>">
+    <div class="control-group">
+      <label class="control-label" for="im">Inscrição Municipal: </label>
+      <div class="controls">
+        <div class="input-append">
+          <input type="text" id="im" name="im" />
+          <button class="btn" id="buscador"><i class="icon-search"></i></button>            
+        </div>
+        <span class="help-block" id="status"><b><?php echo $this->contribuinte_nome; ?></b></span>
+      </div>
+    </div>    
+  </form>
+</fieldset>
+
+<?php if (isset($this->liberacaoForm)) { ?>
+  <div>
+    <fieldset>
+      <legend>Liberação</legend>
+      <?php if ($this->liberacaoForm !== null) echo $this->liberacaoForm; ?>
+    </fieldset>
+  </div>
+<?php } ?>
+
+<?php if (isset($this->historico) && !empty($this->historico)) { ?>
+  <div>
+    <fieldset>
+      <legend>Histórico</legend>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Data da requisição</th>
+            <th>Data liberação</th>
+            <th>Quantidade requerida</th>
+            <th>Quantidade liberada</th>
+            <th>Data Requerida</th>
+            <th>Data liberada</th>
+            <th>Nf Inicial</th>
+            <th>Nf Final</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody>                
+          <?php $i = 0; foreach ($this->historico as $h) { $i++; ?>
+          <tr>
+            <td><?php echo $h->getId(); ?></td>
+            <td><?php echo $h->getDataRequerimentoString();?></td>
+            <td><?php echo $h->getDataLiberacaoString(); ?></td>  
+            <td><?php echo $h->getQtdRequerida();?></td>
+            <td><?php echo $h->getQtdLiberada();?></td>
+            <td><?php echo $h->getDataRequeridaString();?></td>
+            <td><?php echo $h->getDataLiberadaString();?></td>                        
+            <td><?php echo $h->getNfInicial();  ?></td>
+            <td><?php echo $h->getNfFinal(); ?></td>
+            <td><?php echo $h->getSituacaoString(); ?></td>  
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+<?php } ?>

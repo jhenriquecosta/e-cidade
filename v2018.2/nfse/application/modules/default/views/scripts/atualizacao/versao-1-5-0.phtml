@@ -1,0 +1,185 @@
+<!-- 1_5_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.5" ?></h4>
+  </div>
+  <div class="content-informativo" id="1_5_0">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <p>
+          <b><?php echo $this->translate->_('Novidades na emissão da NFSe') ?></b>
+        </p>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p>
+              <b><?php echo $this->translate->_('1. Substitutos tributários') ?>:</b>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora, ao preencher um CPF/CNPJ para um tomador do município cadastrado no sistema e-Cidade, será informado automaticamente se o tomador é um substituto tributário, conforme abaixo') ?>:
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span style="width: 496.00px; height: 105.00px;">
+              <img alt="V010500-1" src="/default/img/versao/V010500-1.png" title="V010500-1" style="width: 496.00px; height: 105.00px;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p class="texto-sublinhado">
+              <?php echo $this->translate->_('Substitutos Tributários') ?>:
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <ul class="content-informativo-versao outside none">
+              <li class="content-informativo-topico">
+                <p>
+                  <?php echo $this->translate->_('São as pessoas físicas/jurídicas, no papel de tomadores de serviços, responsáveis pelo recolhimento e pagamento do imposto devido pelo prestador.') ?>
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p>
+              <b><?php echo $this->translate->_('2. Tributação') ?>:</b>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A opção "Natureza da Operação" foi movida para "Tributação" e a partir de agora a retenção do imposto será determinada pela opção escolhida no campo "Retido".') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span style="width: 624.00px; height: 65.33px;">
+              <img alt="V010500-2" src="/default/img/versao/V010500-2.png" title="V010500-2" style="width: 624.00px; height: 65.33px;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p class="texto-sublinhado">
+              <?php echo $this->translate->_('Natureza da Operação') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <ul class="content-informativo-versao outside none">
+              <li class="content-informativo-topico">
+                <p>
+                  <?php echo $this->translate->_('Tributação Fora do Município: Imposto devido fora do município do prestador.') ?>
+                </p>
+              </li>
+              <li class="content-informativo-topico">
+                <p>
+                  <?php echo $this->translate->_('Tributação no Município: Imposto devido no município do prestador.') ?>
+                </p>
+              </li>
+            </ul>
+          </li>
+          <li class="content-informativo-topico">
+            <p class="texto-sublinhado">
+              <?php echo $this->translate->_('Retido') ?>:
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <ul class="content-informativo-versao outside none">
+              <li class="content-informativo-topico">
+                <p>
+                  <b>
+                    <?php echo $this->translate->_('Sim:') ?>&nbsp;
+                  </b>
+                  <?php echo $this->translate->_('O valor correspondente ao imposto será retido pelo tomador.') ?>
+                </p>
+              </li>
+              <li class="content-informativo-topico">
+                <p>
+                  <b>
+                    <?php echo $this->translate->_('Não:') ?>&nbsp;
+                  </b>
+                  <?php echo $this->translate->_('Não haverá retenção e o responsável pelo pagamento do imposto será o prestador.') ?>
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="content-informativo-topico">
+        <?php echo $this->translate->_('As opções "Natureza da Operação" e "Retido" serão disponibilizadas conforme o município do prestador, o serviço e o local da prestação, de acordo com o Art. 4 da Lei Complementar 116/2003.') ?>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Segurança') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p>
+              <b><?php echo $this->translate->_('1. Verificação de segurança no login') ?>:</b>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora, ao errar a senha mais de 3 vezes o sistema exibirá uma "verificação de segurança" para bloquear as tentativas de acesso indevidas por um determinado tempo.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span style="width: 390px; height: 381px;">
+              <img alt="V010500-3" src="/default/img/versao/V010500-3.png" title="V010500-3" style="width: 390px; height: 381px;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Serviços com tributação fixa') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p>
+              <b><?php echo $this->translate->_('1. Emissão') ?>:</b>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora, para serviços que possuem tributação fixa, não será exibido o campo “alíquota” e será informado, tanto na rotina de emissão quanto na nota, que o serviço possui tributação fixa.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span style="width: 690px; height: 135px;">
+              <img alt="V010500-4-1" src="/default/img/versao/V010500-4-1.png" title="V010500-4-1" style="width: 690px; height: 135px;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <span style="width: 690px; height: 135px;">
+              <img alt="V010500-4-2" src="/default/img/versao/V010500-4-2.png" title="V010500-4-2" style="width: 690px; height: 135px;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>

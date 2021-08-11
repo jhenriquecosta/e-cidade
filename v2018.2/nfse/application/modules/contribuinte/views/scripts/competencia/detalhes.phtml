@@ -1,0 +1,64 @@
+<?php
+$lExisteGuia = Contribuinte_Model_Guia::existeGuia(
+                                      $this->contribuinte, $this->competencia->getMesComp(),
+                                      $this->competencia->getAnoComp()
+);
+?>
+
+<fieldset>
+  <legend>Competência</legend>
+
+  <div style="margin-bottom:10px">
+    <b>Total de Serviços</b>:
+    <?php echo $this->competencia->getFormatedTotalServico() ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <b>Total de ISS</b>:
+    <?php echo $this->competencia->getFormatedTotalIss() ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <?php if (count($this->competencia->getGuia()) == 0 && $this->competencia->isCorrente()) { ?>
+      <a class="btn btn-small disabled">Competência corrente</a>
+    <?php } ?>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Notas</legend>
+
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+      <th>Data da emissao</th>
+      <th>Tomador</th>
+      <th>Valor total</th>
+      <th>Valor ISS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($this->competencia->getNotas()) { ?>
+      <?php foreach ($this->competencia->getNotas() as $nota) { ?>
+
+        <? if ($nota->getCancelada() || $nota->getImportada() || !is_null($nota->getIdNotaSubstituta())) { continue; } ?>
+
+        <tr>
+          <td><?php echo $nota->formatedData() ?></td>
+          <td>
+            <?php if ($nota->getT_razao_social()) { ?>
+              <?php echo $nota->getT_razao_social() ?>
+            <?php } else { ?>
+              Não identificado
+            <?php } ?>
+          </td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($nota->getS_vl_servicos(), 2, 'R$ ') ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($nota->getS_vl_iss(), 2, 'R$ ') ?></td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="4">Nenhum registro encontrado</td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+</fieldset>

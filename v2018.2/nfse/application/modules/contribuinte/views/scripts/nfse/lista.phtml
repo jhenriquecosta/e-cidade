@@ -1,0 +1,41 @@
+<h3>Requisição de nota</h3>
+
+<?php if ($this->bloqueado_msg) { ?>
+<div class="alert alert-error">Empresa não prestadora de serviço.</div>
+<?php } else { ?>
+Notas emitidas por este contribuinte: <b><?php echo $this->notasEmitidas ?></b>
+  
+<?php if (isset($this->requisicaoForm)) { ?>
+<fieldset>
+  <legend>Fazer requisição</legend>
+  
+  <?php echo $this->requisicaoForm ?>
+</fieldset>
+<?php } ?>
+
+<fieldset>    
+  <legend>Histórico de requisições</legend>
+  
+  <table id="lista" class="table table-bordered table-condensed table-striped table-hover">            
+    <thead>
+      <tr>
+        <th></th>
+        <th>Data da requisição</th>
+        <th>Data liberação</th>
+        <th>Qtde requerida</th>
+        <th>Qtde liberada</th>
+        <th>Data requerida</th>
+        <th>Data liberada</th>
+        <th>Nf Inicial</th>
+        <th>Nf Final</th>
+        <th>Situação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="10">Processando...</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
+<?php } ?>

@@ -1,0 +1,28 @@
+.db_form .form-horizontal .control-group {
+  margin-bottom: 5px;
+}
+
+.menu-links {
+  text-align: left;
+}
+
+.menu-links ul.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-links ul.links li.right-align {
+  padding: 0;
+  float: right;
+  margin-left: 20px;
+}
+
+.menu-links ul.links li.right-align a {
+  color: #334992;
+  font-size: 90%;
+}
+
+.menu-links ul.links li.right-align a:hover {
+  color: #333;
+}

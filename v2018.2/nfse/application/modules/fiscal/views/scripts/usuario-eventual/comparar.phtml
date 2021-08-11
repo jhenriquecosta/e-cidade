@@ -1,0 +1,92 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close fechar-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Conferência Cadastral') ?></h3>
+</div>
+
+<div class="modal-body">
+  <?php
+  $aEnderecoCgm = array(
+    $this->oCGM->getDescricaoLogradouro(),
+    $this->oCGM->getNumeroLogradouro(),
+    $this->oCGM->getCep(),
+    $this->oCGM->getDescricaoBairro(),
+    $this->oCGM->getDescricaoMunicipio()
+  );
+  
+  foreach ($aEnderecoCgm as $iIndice => $sEndereco) {
+    
+    if (trim($sEndereco) == '') {
+      unset($aEnderecoCgm[$iIndice]);
+    }
+  }
+  
+  $aEnderecoCadastro = array(
+    $this->oCadastroPessoa->getEndereco(),
+    $this->oCadastroPessoa->getNumero(),
+    $this->oCadastroPessoa->getCep(),
+    $this->oCadastroPessoa->getBairro(),
+    $this->oCadastroPessoa->getCidade(),
+  );
+  
+  foreach ($aEnderecoCadastro as $iIndice => $sEndereco) {
+    
+    if (trim($sEndereco) == '') {
+      unset($aEnderecoCadastro[$iIndice]);
+    }
+  }
+  ?>
+  
+  <fieldset>
+    <legend><?php echo $this->translate->_('Dados Cadastrais') ?></legend>
+    
+    <table class="table table-bordered table-condensed table-striped table-hover">
+      <thead>
+        <tr>
+          <th><?php echo $this->translate->_('Dados')    ?></th>
+          <th><?php echo $this->translate->_('Cadastro') ?></th>
+          <th><?php echo $this->translate->_('CGM')      ?></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b><?php echo $this->translate->_('Nome:')   ?></b></td>
+          <td><?php echo $this->oCadastroPessoa->getNome() ?>    </td>
+          <td><?php echo $this->oCGM->getNome()            ?>    </td>
+        </tr>
+        <tr>
+          <td><b>CPF / CNPJ:</b></td>
+          <td><?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($this->oCadastroPessoa->getCpfCnpj()) ?></td>
+          <td>
+            <?php
+            $sValorDocumento = $this->oCGM->getCpf();
+            
+            if ($this->oCGM->getCnpj() != '') {
+              $sValorDocumento = $this->oCGM->getCnpj();
+            }
+            
+            echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($sValorDocumento);
+            ?>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Email:</b>                                   </td>
+          <td><?php echo $this->oCadastroPessoa->getEmail() ?></td>
+          <td><?php echo $this->oCGM->getEmail()            ?></td>
+        </tr>
+        <tr>
+          <td><b>Endereço:</b>                               </td>
+          <td><?php echo implode(', ', $aEnderecoCadastro) ?></td>
+          <td><?php echo implode(', ', $aEnderecoCgm)      ?></td>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
+</div>
+
+<div class="modal-footer">
+  <button class="input-medium btn btn-danger fechar-modal"  data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Fechar') ?>
+  </button>
+</div>

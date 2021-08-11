@@ -1,0 +1,32 @@
+<?php $this->headLink()->prependStylesheet($this->baseUrl('/auth/css/module.css')) ?>
+
+<div class="row">
+  <div class="db_logotipo span7">
+    <?php echo $this->partial('layouts/logotipo.phtml', 'auth') ?>
+  </div>
+  
+  <div class="db_links span3">
+    <ul>
+      <li>
+        <a href="<?php echo $this->baseUrl('/auth/login') ?>" title="<?php echo $this->translate->_('Login') ?>">
+          <?php echo $this->translate->_('Login') ?>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo $this->baseUrl('/auth/nfse/autenticar') ?>" 
+           title="<?php echo $this->translate->_('Verificar NFSe') ?>">
+          <?php echo $this->translate->_('Verificar NFSe') ?>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<br>
+
+<div class="row  span10">
+  <div class="db_form">
+    <?php echo $this->form ?>
+    <div id="erros" class="db_form_error"></div>
+  </div>
+</div>

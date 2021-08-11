@@ -1,0 +1,15 @@
+#fieldset-group_competencia div.span3 div.control-group div.controls {
+  margin-left: 0 !important;
+}
+
+#fieldset-group_competencia div.span3 div.control-group label {
+  width: auto !important;
+}
+
+#fieldset-group_competencia div.span3 div.control-group div.controls select {
+  margin-left: 20px !important;
+}
+
+#fieldset-group_competencia div.span3 div.control-group div.controls input[type=submit] {
+  margin-left: -50px !important;
+}

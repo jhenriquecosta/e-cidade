@@ -1,0 +1,35 @@
+<?php $oBaseUrlHelper = new Zend_View_Helper_BaseUrl(); ?>
+<?php if($this->administrativo) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Busca Contribuinte') ?></legend>
+  
+  <form class="form-horizontal" name="busca">
+    <div class="control-group">
+      <label class="control-label" for="im"><?php echo $this->translate->_('Inscrição Municipal:') ?></label>
+      <div class="controls">
+        <div class="input-append">
+          <input type="text" id="im" name="im" />
+          <button class="btn" id="buscador"><i class="icon-search"></i></button>            
+        </div>
+        <span class="help-block" id="status"></span>
+      </div>
+    </div>    
+  </form>
+</fieldset>
+<?php } ?>
+<?php
+  // Verifica se existe o form
+  if (isset($this->form)) {
+
+    // Foi informado uma imagem de logo do prestador
+    if ($this->sLogoPrestador) {
+      $sImageURL = $oBaseUrlHelper->baseUrl("/tmp/{$this->sLogoPrestador}");
+    } else {
+      $sImageURL = $oBaseUrlHelper->baseUrl('/global/img/none.jpg?v=' . date('Ymdhis'));
+    }
+
+    $this->form->getElement('img_logo_content')->setAttrib('src', $sImageURL);
+
+    echo $this->form;
+  }
+?>

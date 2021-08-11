@@ -1,0 +1,88 @@
+<?php if ($this->bloqueado_msg == false) { ?>
+<?php if (isset($this->requisicaoForm)) { ?>
+<?php echo $this->requisicaoForm ?>
+<?php } ?>
+  
+<fieldset>    
+  <legend><?php echo $this->translate->_('Histórico de Requisições') ?></legend>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">            
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Código')                  ?></th>
+        <th><?php echo $this->translate->_('Data Requisição')         ?></th>
+        <th><?php echo $this->translate->_('Gráfica')                 ?></th>
+        <th><?php echo $this->translate->_('Tipo de Documento')       ?></th>
+        <th><?php echo $this->translate->_('Qtde Requerida')          ?></th>
+        <th><?php echo $this->translate->_('Qtde Liberada')           ?></th>
+        <th><?php echo $this->translate->_('Nota Inicial')            ?></th>
+        <th><?php echo $this->translate->_('Nota Final')              ?></th>
+        <th><?php echo $this->translate->_('Situação')                ?></th>
+        <th style="width:80px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->historico) > 0) { ?>
+      <?php 
+      foreach ($this->historico as $oHistorico) {
+        
+        switch ($oHistorico->status) {
+          
+          case 'B' : $sStatus = 'Bloqueada'; $sLabel = 'label-important'; break;
+          case 'C' : $sStatus = 'Cancelada'; $sLabel = 'label-important'; break;            
+          case 'L' : $sStatus = 'Liberada';  $sLabel = 'label-success';   break;
+          case 'P' : $sStatus = 'Pendente';  $sLabel = 'label-warning';   break;
+        }
+        
+        $dDataLancamento = new Zend_Date($oHistorico->data_lancamento);
+      ?>
+      <tr>
+        <td><?php echo $oHistorico->codigo_requisicaoaidof;                                             ?></td>
+        <td><?php echo $dDataLancamento->toString('dd/MM/y')                                            ?></td>
+        <td><?php echo DBSeller_Helper_String_Format::wordsCap($oHistorico->nome_grafica)               ?></td>
+        <td><?php echo DBSeller_Helper_String_Format::wordsCap($oHistorico->descricao_nota)             ?></td>            
+        <td><?php echo $oHistorico->quantidade_solicitada                                               ?></td>
+        <td><?php echo $oHistorico->quantidade_liberada ? $oHistorico->quantidade_liberada : '-'        ?></td>
+        <td><?php echo $oHistorico->nota_inicial > 0 ? $oHistorico->nota_inicial : '-'                  ?></td>
+        <td><?php echo $oHistorico->nota_final   > 0 ? $oHistorico->nota_final   : '-'                  ?></td>
+        <td><span class="label <?php echo $sLabel ?>"><?php echo $sStatus                        ?></span></td>
+        <td>
+          <?php if ($oHistorico->status == 'P') { ?>
+          <a class="btn btn-danger btn-mini cancelar-requisicao"
+             href="<?php echo $this->baseUrl("/contribuinte/dms/cancelar-requisicao/id/{$oHistorico->codigo_requisicaoaidof}") ?>" 
+             title="Cancelar">
+            <i class="icon-white icon-remove"></i>
+          </a>
+          <?php } else { ?>
+          <a class="btn btn-danger btn-mini disabled" title="Cancelar"><i class="icon-white icon-remove"></i></a>
+          <?php } ?>
+          
+          <?php if ($oHistorico->observacao) { ?>
+          <a class="btn btn-mini tooltip-modal" data-content="<?php echo $oHistorico->observacao ?>" href="#">
+            <i class="icon-info-sign"></i>
+          </a>
+          <?php } else { ?>
+          <a class="btn btn-mini disabled" title="<?php echo $this->translate->_('Nenhuma Observação') ?>">
+            <i class="icon-info-sign"></i>
+          </a>
+          <?php } ?>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="10"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+</fieldset>
+
+<?php } else { ?>
+
+<div class="alert alert-error">
+  <?php echo $this->bloqueado_msg ?><br/>
+  <?php echo $this->translate->_('Entre em contato com o setor de arrecadação da prefeitura.') ?>
+</div>
+
+<?php } ?>

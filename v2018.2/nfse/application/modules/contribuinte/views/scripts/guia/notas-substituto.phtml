@@ -1,0 +1,55 @@
+<h3>Detalhamento de guia</h3>
+
+<a href="/contribuinte/guia/substituto" class="btn">Voltar</a>
+
+<fieldset>
+  <legend>Guia</legend>
+  
+  <div style="margin-bottom:10px">
+    <b>Total de Serviços</b>: R$ <?php echo $this->guia->getFormatedTotalServico() ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <b>Total de ISS</b>: R$ <?php echo $this->guia->getFormatedTotalIss() ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <?php if ($this->guia->getSituacao() == Prestador_Model_Guia::$ABERTA) { ?>
+    <a modal-url="<?php echo $this->baseUrl('prestador/guia/reemitir/guia/' . $this->guia->getId()); ?>"             
+       role="button" data-toggle="modal" href="#myModal" class="btn btn-small btn-success" />Reemitir guia</a>
+    <?php } elseif ($this->guia->getSituacao() == Contribuinte_Model_Guia::$PAGA) { ?>
+    <a href="#" class="btn disabled btn-small btn-success" />Paga</a>
+    <?php }elseif ($this->guia->getSituacao() == Contribuinte_Model_Guia::$CANCELADA) { ?>
+    <a href="#" class="btn disabled btn-small btn-success" />Cancelada</a>
+    <?php }?>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Notas</legend>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Data da emissao</th>
+        <th>Prestador</th>
+        <th>Valor total</th>
+        <th>Valor ISS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->guia->getNotas()) > 0) { ?>
+      <?php foreach ($this->guia->getNotas() as $nota) { ?>
+      <tr>
+        <td><?php echo $nota->formatedData(); ?></td>
+        <td><?php echo $nota->getP_razao_social(); ?></td>
+        <td>R$ <?php echo number_format($nota->getS_vl_servicos(), 2, ',', '.'); ?></td>
+        <td>R$ <?php echo number_format($nota->getS_vl_iss(), 2, ',', '.'); ?></td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="4">Nenhum registro encontrado</td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+</fieldset>

@@ -1,0 +1,60 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Lista de Perfis') ?></legend>
+  
+  <div class="action-bar">
+    <a class="btn btn-primary" href="<?php echo $this->baseUrl('/administrativo/perfil/novo') ?>">
+      <?php echo $this->translate->_('Novo Perfil') ?>
+    </a>
+  </div>
+  
+  <div class="pull-right">
+    <?php echo $this->formBusca ?>
+    <div style="font-size:90%;margin-top:-20px">
+      <?php if ($this->busca != '') { ?>
+      Buscando por: "<?php echo $this->busca ?>"
+      (<a href="<?php echo $this->baseUrl('/administrativo/perfil/index') ?>">
+        <?php echo $this->translate->_('Cancelar') ?>
+       </a>)
+      <?php } ?>
+    </div>
+  </div>
+  
+  <br><br>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Descrição do Perfil') ?></th>
+        <th width="150px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->perfils) > 0) { ?>
+      <?php foreach ($this->perfils as $perfil) { ?>
+      <tr>
+        <td><?php echo $perfil->getNome() ?></td>
+        <td>
+          <a class="btn btn-small btn-primary" 
+             href="<?php echo $this->baseUrl("/administrativo/perfil/editar/id/{$perfil->getId()}") ?>">
+            <?php echo $this->translate->_('Editar') ?>
+          </a>
+          <a class="btn btn-small btn-danger" 
+             href="<?php echo $this->baseUrl("/administrativo/perfil/excluir/id/{$perfil->getId()}") ?>">
+            <?php echo $this->translate->_('Excluir') ?>
+          </a>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="2"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  
+  <?php $this->urlFor('administrativo/perfil/index/busca/' . $this->busca) ;
+    echo $this->paginationControl($this->perfils, 'Sliding', 'layouts/pager.phtml', 
+                                  array('translate' => $this->translate));
+  ?>
+</fieldset>

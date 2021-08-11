@@ -1,0 +1,43 @@
+<p>Caro (a) <strong><?php echo $this->tomadorNome ?></strong>,</p>
+<p>
+  Segue em anexo a Nota Fiscal de Prestação de Serviços número 
+  <strong><?php echo $this->nfseNumero ?></strong> referente aos serviços tomados.
+</p>
+<p>Informamos ainda que a mesma encontra-se em formato PDF.</p>
+<p>
+  Para que possa visualizar é necessário que tenha instalado em seu computador o ADOBE READER, 
+  caso não possua poderá acessar o link para instalação: 
+  <a href="http://get.adobe.com/br/reader/">http://get.adobe.com/br/reader/</a>
+</p>
+<p>
+  Para verificar a autenticidade poderá acessar o link: 
+  <a href="<?php echo $this->nfseUrl ?>"><?php echo $this->nfseUrl ?></a>
+</p>
+
+<br />
+<br />
+
+<div style="border:1px solid #f00;padding:10px">
+  <p style="font-weight:bold;color:#f00">
+    *Este documento substitui o documento de número <?php echo $this->oNotaSubstituida->getNota() ?>, emitido em
+    <?php echo $this->oNotaSubstituida->formatedData() ?>.
+  </p>
+  <p>
+    Para maiores informações sobre o documento substituido, acesse o link:
+    <a href="<?php echo $this->sUrlNotaSubstituida ?>"><?php echo $this->sUrlNotaSubstituida ?></a>
+  </p>
+  <p><strong>Informações adicionais enviadas pelo prestador:</strong></p>
+  <p><?php echo $this->oNotaSubstituida->getCancelamentoJustificativa() ?></p>
+</div>
+
+<br />
+<br />
+
+<p><strong><?php echo $this->prestadorNome ?></strong></p>
+<p><strong><?php echo $this->prestadorCnpj ?></strong></p>
+
+<br />
+
+<p style="font-weight:bold;color:#f00">
+  <strong>*Favor não responder este e-mail.</strong>
+</p>

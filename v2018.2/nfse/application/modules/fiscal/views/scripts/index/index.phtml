@@ -1,0 +1,35 @@
+<h3><?php echo $this->translate->_('Fiscal') ?></h3>
+
+<div class="well db-menu-inicial-modulo">
+  <?php
+
+  $aContainer = $this->navigation(Zend_registry::get('nav'))->getContainer()->getPages();
+
+  foreach ($aContainer as $oContainer) {
+
+  	foreach ($oContainer->getParent() as $oParent) {
+
+  		foreach ($oParent->getPages() as $oPage) {
+
+  			$sUrl = "{$oPage->getModule()}/{$oPage->getController()}/{$oPage->getAction()}";
+
+                  if ($sUrl == 'fiscal/procedimento/alteracao-regime-notas-simples'
+                      && (!in_array($this->usuarioLogado->getPerfil()->getId(), array(3, 5))
+                       || $this->usuarioLogado->getLogin() !== 'dbseller')) {
+
+                    $oParent->removePage($oPage);
+                  } else if (!DBSeller_Plugin_Auth::checkPermission($sUrl)) {
+  			  $oParent->removePage($oPage);
+  			}
+  		}
+
+  		// Retira o label do parent caso não haja page para o mesmo
+  		if (count($oParent->getPages()) == 0) {
+  			$oParent->setLabel(null);
+  		}
+  	}
+  }
+
+  echo $this->navigation(Zend_registry::get('nav'))->menu();
+   ?>
+</div>

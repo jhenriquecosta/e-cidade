@@ -1,0 +1,14 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel">Editar Ação</h3>
+</div>
+
+Para o controle <b><?php echo $this->controle->getModulo()->getNome() . '/' . $this->controle->getNome() ?></b>
+
+<div class="modal-body"><?php echo $this->form ?></div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+  <button class="btn btn-primary" id="envia-acao">Salvar</button>
+</div>

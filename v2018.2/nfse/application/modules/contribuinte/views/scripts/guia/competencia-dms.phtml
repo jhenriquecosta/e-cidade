@@ -1,0 +1,68 @@
+<h3>Detalhamento de competência de DMS</h3>
+
+<a href="/contribuinte/guia/index" class="btn">Voltar</a>
+
+<?php foreach ($this->oCompetenciaDMS as $iAnoComp => $oCompetencia) { ?>
+<?php foreach ($oCompetencia as $iMesComp => $oDadosComp) {            ?>
+<fieldset>
+  <legend>Competência</legend>
+  
+  <div style="margin-bottom:10px">
+    <b>Total de Serviços</b>: 
+    <?php echo DBSeller_Helper_Number_Format::toMoney($oDadosComp->fValorTotalNotas,   2, 'R$ ') ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <b>Total de ISS</b>: 
+    <?php echo DBSeller_Helper_Number_Format::toMoney($oDadosComp->fValorTotalImposto, 2, 'R$ ') ?>
+  </div>
+  <div style="margin-bottom:10px">
+    <?php //if ($this->competencia->getGuia() == null && $this->competencia->corrente()) { ?>
+    <a class="btn btn-small disabled">Competência corrente</a>
+    <?php //} elseif ($this->competencia->getGuia() === null && !$this->competencia->corrente()) { ?>
+    <a modal-url="<?php //echo $this->baseUrl('prestador/guia/fecha-competencia/ano/' . $this->competencia->getAnoComp() . '/mes/' . $this->competencia->getMesComp()) ?>"             
+       role="button" data-toggle="modal" href="#myModal" class="btn btn-small btn-success">Emitir guia</a>
+    <?php //} elseif ($this->competencia->getGuia()->getSituacao() == Prestador_Model_Guia::$ABERTA) { ?>
+    <a modal-url="<?php //echo $this->baseUrl('prestador/guia/reemitir/guia/' . $this->competencia->getGuia()->getId()) ?>"             
+       role="button" data-toggle="modal"
+       href="#myModal"
+       class="btn btn-small btn-success">Reemitir guia</a>
+    <?php //} elseif ($this->competencia->getGuia()->getSituacao() == Prestador_Model_Guia::$PAGA) { ?>
+    <a href="#" class="btn disabled btn-small btn-success">Paga</a>
+    <?php //} elseif ($this->competencia->getGuia()->getSituacao() == Prestador_Model_Guia::$CANCELADA) { ?>
+    <a href="#" class="btn disabled btn-small btn-success">Cancelada</a>
+    <?php //} ?>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Notas</legend>
+
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Data da emissao</th>
+        <th>Tomador</th>
+        <th>Valor total</th>
+        <th>Valor ISS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($oDadosComp->oNotas) > 0) {     ?>
+      <?php foreach ($oDadosComp->oNotas as $oNota) { ?>
+      <tr>
+        <td><?php echo $oNota->getServicoValorPagar()                                                   ?></td>
+        <td><?php echo $oNota->getTomadorCpfCnpj()                                                      ?></td>
+        <td><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getServicoValorPagar(), 2, 'R$ ') ?></td>
+        <td><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getServicoAliquota(),   2, 'R$ ') ?></td>
+      </tr>
+      <?php } ?>
+      <tr>
+        <td colspan="4">Nenhum registro encontrado</td>
+      </tr>
+      <?php } else { ?>
+      <?php } ?>
+    </tbody>
+  </table>
+</fieldset>
+<?php } ?>
+<?php } ?>

@@ -1,0 +1,182 @@
+<!-- 1_10_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.15" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('DES-IF') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p>
+              <b><?php echo $this->translate->_('A Declaração Eletrônica de Serviços de Instituições Financeiras (DES-IF) é um documento fiscal de existência exclusivamente digital. Objetiva registrar a apuração do Imposto Sobre Serviços de Qualquer Natureza (ISSQN) e as operações das Instituições Financeiras e equiparadas autorizadas a funcionar pelo Banco Central (BACEN), obrigadas a utilizar o Plano de Contas das Instituições do Sistema Financeiro Nacional (COSIF).') ?></b>
+            </p>
+          </li>
+         </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+      <b><?php echo $this->translate->_('1) Importação dos Arquivos: DES-IF > Importação') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('O primeiro passo para a Declaração Eletrônica de Serviços das Instituições Financeiras é a importação dos arquivos da instituição, que deve estar disposto conforme o modelo disponibilizado.') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('A declaração é composta por dois arquivos: o Arquivo de Contas e o Arquivo de Receitas. O  arquivo de contas se refere à descrição do Plano de Contas da Instituição da Instituição Financeira. O arquivo de Receitas se refere às declarações de valores de serviços prestados na competência, divididos por receitas.') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('O Plano de contas deve ser importado na opção “Arquivo de Contas” e as declarações de serviços prestados na competência através na opção “Arquivo de Receitas”, conforme a imagem abaixo:') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V011500-1.png" src="/default/img/versao/V011500/V011500-1.png" title="V011500-1.png" style="max-width:100%; width: auto; height: auto;">
+          </span>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('Após selecionados os arquivos correspondentes, estes devem ser processados. Uma vez que o processamento for concluído com sucesso, um protocolo será gerado e exibido na tela.') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V011500-2.png" src="/default/img/versao/V011500/V011500-2.png" title="V011500-2.png" style="max-width:100%; width: auto; height: auto;">
+          </span>
+        </li>
+      </ul>
+      </li>
+    </ul>
+
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('2) Consulta das Importações: DES-IF > Consulta Importação') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Uma vez importados os arquivos, o resultado das importações realizadas pode ser observado na Consulta de Importações.') ?></p>
+            <p><?php echo $this->translate->_('Ao acessar a consultar será exibida uma lista com todas as importações realizadas.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-3.png" src="/default/img/versao/V011500/V011500-3.png" title="V011500-3.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('As importações poderão também ser filtradas por competências para melhor visualização.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-4.png" src="/default/img/versao/V011500/V011500-4.png" title="V011500-4.png" style="max-width: 98%; width: auto; height: auto;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Para visualizar detalhes da importação, basta clicar no botão “Imprimir”, disponível ao lado de cada importação, e um relatório será gerado com detalhes dos valores importados para cada uma das contas declaradas, conforme a imagem a seguir.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-5.png" src="/default/img/versao/V011500/V011500-5.png" title="V011500-5.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('3) Geração de Guias: Guias > DES-IF > Geração') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Para gerar a guia para pagamento da competência basta clicar no botão “Emitir Guia” na rotina de geração de guias para DESIF.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-6.png" src="/default/img/versao/V011500/V011500-6.png" title="V011500-6.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Ao clicar em “Emitir Guia” uma mensagem de confirmação do encerramento da sua competência será exibida.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-7.png" src="/default/img/versao/V011500/V011500-7.png" title="V011500-7.png" style="max-width: 98%; width: auto; height: auto;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Ao confirmar a emissão da guia, esta ficará disponível para visualização.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-8.png" src="/default/img/versao/V011500/V011500-8.png" title="V011500-8.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('4) Consulta de Guias: Guias > DES-IF > Consulta') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Após emitidas, as guias poderão ser consultadas através da consulta de Guias da DES-IF.') ?></p>
+            <p><?php echo $this->translate->_('Nesta consulta é possível verificar a situação das Guias, que podem estar em aberto ou pagas, conforme a imagem a seguir.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-9.png" src="/default/img/versao/V011500/V011500-9.png" title="V011500-9.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('5) Consulta de Protocolo: Consultas > Protocolo') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Os protocolos gerados pelos arquivos importados da DES-IF poderão ser consultados na Consulta de Protocolo. O “Tipo” de proocolo indicará se o arquivo foi importado com sucesso ou se possui algum erro. As datas e horários das importações realizadas também poderão ser visualizadas nesta rotina, conforme a imagem a seguir:') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011500-10.png" src="/default/img/versao/V011500/V011500-10.png" title="V011500-10.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<!-- 1_6_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+<div>
+  <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.6" ?></h4>
+</div>
+<div class="content-informativo">
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <p>
+        <b><?php echo $this->translate->_('Novidades na NFS-e') ?></b>
+      </p>
+    </li>
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('1. Valor aproximado dos tributos na nota') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora o valor aproximado dos tributos será exibido nas notas fiscais emitidas pelo sistema, a fim de estar em conformidade com a Lei nº 12.741, de 8 de dezembro de 2012.') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_("A lei pode ser consultada no Portal da Legislação (<a href='http://www4.planalto.gov.br/legislacao' target='_blank'>http://www4.planalto.gov.br/legislacao</a>)") ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('Para que o valor aproximado dos tributos seja mostrado nas notas, o primeiro passo é configurar os “Parâmetros de Tributos” nos parâmetros do contribuinte.') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010600-1" src="/default/img/versao/V010600-1.png" title="V010600-1" style="max-width: 73%;">
+          </span>
+        </li>
+        <p>
+          <?php echo $this->translate->_("O valor aproximado dos tributos pode ser calculado no site do IBPT (<a href='https://www.ibpt.org.br/' target='_blank'>https://www.ibpt.org.br/</a>).") ?>
+        </p>
+        <p>
+          <?php echo $this->translate->_("Após configurado, o valor aproximado dos tributos será exibido em todas as notas fiscais, conforme abaixo:") ?>
+        </p>
+
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010600-2" src="/default/img/versao/V010600-2.png" title="V010600-2" style="max-width: 75%;;">
+          </span>
+        </li>
+
+        <p>
+          <?php echo $this->translate->_("<span style='color: #ff0000;font-weight: bold;'>Atenção:</span> A partir da versão 01.06 as notas fiscais só poderão ser emitidas após ser configurado o valor aproximado dos tributos.<br /> A informação é obrigatória para todos os prestadores de serviços, exceto para os optantes pelo Simples com regime tributário MEI.") ?>
+        </p>
+
+      </ul>
+    </li>
+  </ul>
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('2. Inscrição estadual do tomador nas notas fiscais') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora será exibida a inscrição estadual do tomador em todas as notas fiscais emitidas pelo sistema, conforme abaixo:') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010600-3" src="/default/img/versao/V010600-3.png" title="V010600-3" style="max-width: 75%;">
+          </span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+</div>

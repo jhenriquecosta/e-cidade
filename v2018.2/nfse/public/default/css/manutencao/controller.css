@@ -1,0 +1,36 @@
+body {
+  background: #ECF2F8;
+}
+div.content {
+  background: #FFF;
+  border: 1px solid #C2D1DF;
+  overflow: auto;
+  padding: 10px;
+  margin: 10px 20px;
+  /* CSS3 */
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+div.image img {
+  float: right;
+  max-width: 150px;
+}
+div.message {
+  margin-top: 40px;
+  color: #333;
+}
+div.footer {
+  background: #FFF;
+  border: 1px solid #C2D1DF;
+  overflow: auto;
+  padding: 10px;
+  margin: 10px 20px;
+  color: #808080;
+  text-align: center;
+  /* CSS3 */
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+div.footer img {
+  width: 150px;
+}

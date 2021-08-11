@@ -1,0 +1,25 @@
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <?php if ($this->rps) { ?>
+    <?php echo $this->translate->_('RPS emitido com sucesso.') ?>
+  <?php } else { ?>
+    <?php echo $this->translate->_('NFSe emitida com sucesso.') ?>
+    <?php if ($this->oDadosNota->getT_email()) { ?>
+      <?php $sMensagem = $this->translate->_('Uma versão em PDF foi enviada para o email "%s".');
+      echo sprintf($sMensagem, $this->oDadosNota->getT_email()); ?>
+    <?php } ?>
+  <?php } ?>
+</div>
+
+<?php echo $this->oForm ?>
+
+<fieldset>
+  <?php if ($this->rps) { ?>
+    <legend><?php echo $this->translate->_('Dados do RPS Emitido') ?></legend>
+  <?php } else { ?>
+    <legend><?php echo $this->translate->_('Dados da Nota Emitida') ?></legend>
+  <?php } ?>
+
+  <?php echo $this->notaImpressa ?>
+</fieldset>
+

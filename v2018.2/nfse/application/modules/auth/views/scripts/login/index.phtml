@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="db_logotipo span7">
+    <?php echo $this->partial('layouts/logotipo.phtml', 'auth') ?>
+  </div>
+  <div class="menu-links span4">
+    <ul class="links">
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/default/cadastro-eventual/') ?>"
+           title="<?php echo $this->translate->_('Cadastro Eventual') ?>">
+          <?php echo $this->translate->_('Cadastro Eventual') ?>
+        </a>
+      </li>
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/auth/nfse/autenticar') ?>"
+           title="<?php echo $this->translate->_('Verificar NFSe') ?>">
+          <?php echo $this->translate->_('Verificar NFSe') ?>
+        </a>
+      </li>
+      <!-- Notificações do sistema-->
+      <?php echo $this->partial('notificacao/listar.phtml', 'global', array('translate' => $this->translate)) ?>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="db_informacoes span7">
+
+    <span style="margin-top: -20px; float: right; color: #a2a2a2;font-size: 11px; padding-left: 5px;">
+      <?php echo DBSeller_Helper_String_Format::versionNfse(Zend_Registry::get('config')->ecidadeonline2->versao); ?>
+    </span>
+
+    <div class="db_informacoes_texto">
+      <?php echo $this->partial('helpers/informacao.phtml', 'auth', array('translate' => $this->translate)) ?>
+    </div>
+
+    <div class="db_informacoes_links">
+      <?php echo $this->partial('helpers/documentacao.phtml', 'auth', array('translate' => $this->translate)) ?>
+    </div>
+  </div>
+
+  <div class="db_form span3">
+    <fieldset>
+      <legend><?php echo $this->translate->_('Efetuar Login') ?></legend>
+      <?php echo $this->form ?>
+    </fieldset>
+
+    <div class="db_esqueci_minha_senha">
+      <a href="<?php echo $this->baseUrl('/auth/login/esqueci-minha-senha/') ?>" title="">
+        <?php echo $this->translate->_('Não consegue acessar a sua conta?') ?>
+      </a>
+    </div>
+
+    <div id="error-login" class="db_form_error alert alert-block alert-error slide up no-display">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4 class="alert-heading"><?php echo $this->translate->_('Não foi possível efetuar o login:') ?></h4>
+      <br>
+      <ul class="error-login-content"></ul>
+    </div>
+  </div>
+</div>

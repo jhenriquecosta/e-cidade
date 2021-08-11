@@ -1,0 +1,414 @@
+<!-- Arquivo PDF -->
+<html>
+<head>
+  <style type="text/css">
+    body{font-family:arial;color:#333}
+    h3{color:#01585C}
+    a{text-decoration:none;color:#333}
+    table{width:100%;border:1px solid #AEAEAE;border-collapse:collapse}
+    table thead th{text-align:left}
+    table td, table th{vertical-align:top;padding:3px;border-color:#AEAEAE;border-width:1px;border-style:none dotted solid none}
+    table tr th{background-color:#DFDFDF}
+    table tr:nth-child(even){background-color:#F2F7FC}
+    .col_posicao{width:30px}
+    .col_tipo_dado{width:200px}
+    .col_opcoes{width:300px}
+    .col_tamanho{width:80px}
+    .col_obrigatoriedade{width:80px}
+    .numero{text-align:right}
+  </style>
+</head>
+<body>
+  <h2>Sumário</h2>
+  <ul>
+    <li><a href="#descricao">Layout de importação de arquivo de DMS</a></li>
+    <li><a href="#contador">Identificação do Contador</a></li>
+    <li><a href="#contribuinte">Identificação do Contribuinte</a></li>
+    <li><a href="#documentos">Identificação de Documentos do Contribuinte</a></li>
+  </ul>
+  
+  <div style="page-break-before:always">&nbsp;</div>
+  
+  <h2 style="margin-top:-20px">Legenda de Obrigatoriedade</h2>
+  <ul>
+    <li><strong>OPC</strong>: Opcional</li>
+    <li><strong>OBR</strong>: Obrigatório</li>
+    <li><strong>OBC</strong>: Obrigatório somente para Contadores</li>
+    <li><strong>OBS</strong>: Obrigatório somente para Documentos de Serviços Prestados (Saída)</li>
+  </ul>
+  
+  <div style="page-break-before:always">&nbsp;</div>
+  <a name="descricao"></a>
+  
+  <div style="text-align:center">
+    <h2 style="margin-top:-40px">DMS - Prestador/Tomador de Serviços</h2>
+  </div>
+  <h3>Layout de importação de arquivo de DMS de serviços</h3>
+  Layout que define padrão de arquivo a ser gerado pelos prestadores/tomador de serviços com a finalidade de atender a 
+  Declaração Mensal de Serviços - DMS.
+  
+  <div style="page-break-before:always">&nbsp;</div>
+  <a name="contador"></a>
+  
+  <h3 style="margin-top:-40px">Identificação do Contador:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th class="col_posicao">Nº</th>
+        <th class="col_descricao">Descrição</th>
+        <th class="col_tipo_dado">Tipo de Dado</th>
+        <th class="col_opcoes">Opções Válidas</th>
+        <th class="col_tamanho">Tamanho</th>
+        <th class="col_obrigatoriedade">Obrigatoriedade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01</td>
+        <td>Identificador da Linha</td>
+        <td>Númerico</td>
+        <td>01</td>
+        <td class="numero">2</td>
+        <td>Obc</td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td>CPF/CNPJ</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">11/14</td>
+        <td>Obc</td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td>Nome/Razão Social</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">100</td>
+        <td>Obc</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div style="page-break-before:always">&nbsp;</div>
+  <a name="contribuinte"></a> 
+  
+  <h3 style="margin-top:-40px">Identificação do Contribuinte:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th class="col_posicao">Nº</th>
+        <th class="col_descricao">Descrição</th>
+        <th class="col_tipo_dado">Tipo de Dado</th>
+        <th class="col_opcoes">Opções Válidas</th>
+        <th class="col_tamanho">Tamanho</th>
+        <th class="col_obrigatoriedade">Obrigatoriedade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01</td>
+        <td>Identificador da Linha</td>
+        <td>Númerico</td>
+        <td>02</td>
+        <td class="numero">2</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td>Inscrição Municipal</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">5</td>
+        <td>OBS</td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td>CPF/CNPJ</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">11/14</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td>Nome/Razão Social</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">100</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td>Ano de Competência</td>
+        <td>Numérico</td>
+        <td>&nbsp;</td>
+        <td class="numero">4</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>06</td>
+        <td>Mês de Competência</td>
+        <td>Numérico</td>
+        <td>&nbsp;</td>
+        <td class="numero">2</td>
+        <td>OBR</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div style="page-break-before:always">&nbsp;</div>
+  <a name="documentos"></a> 
+  
+  <h3 style="margin-top:-40px">Identificação de Documentos do Contribuinte:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th class="col_posicao">Nº</th>
+        <th class="col_descricao">Descrição</th>
+        <th class="col_tipo_dado">Tipo de Dado</th>
+        <th class="col_opcoes">Opções Válidas</th>
+        <th class="col_tamanho">Tamanho</th>
+        <th class="col_obrigatoriedade">Obrigatoriedade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01</td>
+        <td>Identificador da linha</td>
+        <td>Númerico</td>
+        <td>03</td>
+        <td class="numero">2</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td>Número do Documento</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">8</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td>Série do Documento</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">5</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td>Tipo de Documento</td>
+        <td>Númerico</td>
+        <td>
+          <?php foreach ($this->aTiposDocumento as $iCodigoTipoDocumento => $sDescricaoTipoDocumento) { ?>
+            <?php echo "\"{$iCodigoTipoDocumento}\" ({$sDescricaoTipoDocumento})" ?><br>
+          <?php } ?>
+        </td>
+        <td class="numero">1</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td>Situação do documento</td>
+        <td>Texto</td>
+        <td>
+          "C" (Cancelado)<br>
+          "E" (Extraviado)<br>
+          "Im" (Imune)<br>
+          "Is" (Isento)<br>      
+          "N" (Não tributado)<br>
+          "R" (Retido)<br>
+          "S" (Suspenso de tributação)<br>
+          "T" (Tributado)<br>
+        </td>
+        <td class="numero">2</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>06</td>
+        <td>Data de Emissão da Nota</td>
+        <td>Data <i>(2013-12-31)</i></td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>07</td>
+        <td>Data da Prestação do Serviço</td>
+        <td>Data <i>(2013-12-31)</i></td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>08</td>
+        <td>Código do Serviço (Conforme lista de serviços LC 116)</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">7</td>
+        <td>OBS</td>
+      </tr>
+      <tr>
+        <td>09</td>
+        <td>Código da Atividade</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">5</td>
+        <td>OBS</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Inscricao Municipal</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBS</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>CPF/CNPJ Tomador ou Prestador</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">11/14</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Nome/Razão Social do Tomador ou Prestador</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">100</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Cidade do Tomador ou Prestador (Código IBGE)</td>
+        <td>Númerico</td>
+        <td>&nbsp;</td>
+        <td class="numero">7</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Descrição do Serviço</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">100</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>Valor do Serviço</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td>Valor da Líquido</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td>Valor da Dedução</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td>Valor do Desconto Condicional</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td>Valor do Desconto Incondicional</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td>Base de Cálculo</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td>Alíquota (%)</td>
+        <td>Decimal (99.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">5</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>22</td>
+        <td>Valor ISSQN</td>
+        <td>Decimal (9999999.99)</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>23</td>
+        <td>Tipo de Operação</td>
+        <td>Texto</td>
+        <td>
+          "E" (Entrada)<br>
+          "S" (Saída)
+        </td>
+        <td class="numero">1</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td>Natureza da Operação</td>
+        <td>Numérico</td>
+        <td>
+          "1" (Tributação Dentro do Município)<br>
+          "2" (Tributação Fora do Município)
+        </td>
+        <td class="numero">1</td>
+        <td>OBR</td>
+      </tr>
+      <tr>
+        <td>25</td>
+        <td>Código da Obra</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>26</td>
+        <td>ART (Anotação de Responsabilidade Técnica)</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">10</td>
+        <td>OPC</td>
+      </tr>
+      <tr>
+        <td>27</td>
+        <td>Outras Informações</td>
+        <td>Texto</td>
+        <td>&nbsp;</td>
+        <td class="numero">100</td>
+        <td>OPC</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

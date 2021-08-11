@@ -1,0 +1,87 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Competências') ?></legend>
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Competência')        ?></th>
+        <th><?php echo $this->translate->_('Total Serviços')     ?></th>
+        <th><?php echo $this->translate->_('Total ISS')          ?></th>
+        <th><?php echo $this->translate->_('Situação')          ?></th>
+        <th width="250px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+
+        if(count($this->oCompetencias) > 0){
+          foreach($this->oCompetencias as $iIndice => $oCompetencia){
+      ?>
+      <tr>
+        <td><?php echo str_pad($oCompetencia->getCompetencia(), 7, '0', STR_PAD_LEFT) ?></td>
+        <td><?php echo $oCompetencia->getFormatedTotalServico()                       ?></td>
+        <td><?php echo $oCompetencia->getFormatedTotalIss()                           ?></td>
+        <td><?php echo $oCompetencia->getFormatedSituacao()                           ?></td>
+        <td>
+          <?php
+
+          $sDetalheDisable = "";
+          $sDetalheHref    = "/contribuinte/competencia/detalhes/ano/{$oCompetencia->getAnoComp()}/mes/{$oCompetencia->getMesComp()}";
+
+          if (    $oCompetencia->getSituacao() == Contribuinte_Model_Competencia::SITUACAO_EM_ABERTO_SEM_MOVIMENTO
+               || $oCompetencia->getSituacao() == Contribuinte_Model_Competencia::SITUACAO_ENCERRANDO_SEM_MOVIMENTO ) {
+
+            $sDetalheDisable = "disabled";
+            $sDetalheHref    = "#";
+          }
+
+          $sEncerrarDisable = "disabled";
+          $sEncerrarHref    = "#";
+
+          if ( $oCompetencia->isHabilitado() ) {
+
+            $sEncerrarDisable = "";
+            $sEncerrarHref    = "#myModal";
+          }
+          ?>
+
+          <a class="btn btn-small btn-success <?php echo $sDetalheDisable ?>"
+             href="<?php echo $sDetalheHref ?>">
+            <?php echo $this->translate->_('Detalhes') ?>
+          </a>
+          <?php if($oCompetencia->isCorrente()){ ?>
+          <a class="btn btn-small disabled">
+            <?php echo $this->translate->_('Competência corrente') ?>
+          </a>
+          <?php
+                }elseif($oCompetencia->isSituacaoAberto()){
+          ?>
+          <a modal-url="/contribuinte/competencia/confirmar-encerramento/<?php echo "ano/".$oCompetencia->getAnoComp()."/mes/".$oCompetencia->getMesComp(); ?>"
+            role="button" data-toggle="modal" href="<?php echo $sEncerrarHref ?>" class="btn btn-small btn-success <?php echo $sEncerrarDisable ?>">
+            <?php echo $this->translate->_('Encerrar') ?>
+          </a>
+          <?php } ?>
+        </td>
+      </tr>
+      <?php
+          }
+        }else{
+      ?>
+      <tr>
+        <td colspan="4"><?php echo $this->translate->_('Nenhum registro encontrado') ?></td>
+      </tr>
+      <?php
+        }
+      ?>
+    </tbody>
+  </table>
+
+  <?php
+  $this->urlFor("/contribuinte/competencia/nfse-encerramento");
+  echo $this->paginationControl(
+    $this->oCompetencias,
+    'Sliding',
+    'layouts/pager.phtml',
+    array('translate' => $this->translate)
+  );
+  ?>
+</fieldset>

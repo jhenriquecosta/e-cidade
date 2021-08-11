@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $this->translate->_('Nota Fiscal Eletrônica') ?></title>
+    <link rel="shortcut icon" type="image/jpeg" href="<?php echo $this->baseUrl('/global/img/brasao.jpg') ?>">
+    <link href="<?php echo $this->baseUrl('/global/css/twitter-bootstrap/bootstrap.min.css') ?>" media="screen" rel="stylesheet" type="text/css" >
+    <link href="<?php echo $this->baseUrl('/global/css/twitter-bootstrap/bootstrap-responsive.min.css') ?>" media="screen" rel="stylesheet" type="text/css" >
+    <link href="<?php echo $this->baseUrl('/default/css/error/controller.css') ?>" media="screen" rel="stylesheet" type="text/css" >
+  </head>
+  <body>
+    <div class="error-content">
+      <div class="error-image">
+        <a href="<?php echo $this->baseUrl('/') ?>" 
+           title="<?php echo $this->translate->_('Ir para a página inicial') ?>">
+          <img src="<?php echo $this->baseUrl('/global/img/brasao.jpg') ?>" alt="">
+        </a>
+      </div>
+      
+      <div class="error-title">
+        <h3><?php echo $this->title ?></h3>
+      </div>
+      
+      <div class="error-message">
+        <div class="error-message-text">
+          <h4><?php echo $this->message ?></h4>
+        </div>
+        
+        <?php if (isset($this->exception)) { ?>
+        <div class="error-exception">
+          <h5>Exception information:</h5>
+          <pre class="text-error"><?php echo $this->exception->getMessage() ?></pre>
+          <h5>Stack trace:</h5>
+          <pre class="text-error"><?php echo $this->exception->getTraceAsString() ?></pre>
+          <h5>Request Parameters:</h5>
+          <pre class="text-error"><?php $this->escape(var_export($this->request->getParams())) ?></pre>
+        </div>
+        <?php } ?>
+        
+        <div class="error-button">
+          <a class="btn btn-inverse" href="<?php echo $this->baseUrl('/') ?>" 
+             title="<?php echo $this->translate->_('Ir para a página inicial') ?>">
+            <?php echo $this->translate->_('Ir para a página inicial') ?>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="error-footer">
+      <a href="http://www.dbseller.com.br/" title="">
+        <img src="<?php echo $this->baseUrl('/global/img/logotipo-dbseller.gif') ?>" alt="">
+      </a>
+    </div>
+  </body>
+</html>

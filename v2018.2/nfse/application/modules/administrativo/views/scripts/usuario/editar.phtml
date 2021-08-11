@@ -1,0 +1,138 @@
+<?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/editar')) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Editar Usuário') ?></legend>
+  <br>
+  <?php echo $this->form ?>
+</fieldset>
+<?php } ?>
+
+<?php if ($this->user->getAdministrativo()) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Permissões Administrativas/Fiscais') ?></legend>
+  
+  <form class="form-horizontal" 
+        name="form_acoes" 
+        action="<?php echo $this->baseUrl('/administrativo/usuario/set-permissao-adm') ?>">
+    <input type="hidden" name="usuario" value="<?php echo $this->usuario->getId(); ?>" />
+    <table style="width: 100%">
+      <tr>
+        <td width="50%" valign="top">
+            <ul>
+              <li>
+                <strong><?php echo $this->modulosAdm->getNome() ?></strong>
+                <ul>
+                  <?php foreach ($this->modulosAdm->getControles() as $c) { ?>
+                    <?php if ($c->getVisivel() == false) continue; ?>
+                  <li>
+                    <?php echo $c->getNome() ?>
+                    <ul>
+                      <?php foreach ($c->getAcoes() as $a) { ?>
+                      <li>
+                        <input type="checkbox" id="acao_<?php echo $a->getId() ?>"
+                          name="acao[<?php echo $a->getId() ?>]"
+                          <?php if (in_array($a->getId(), $this->permissoesAdm)) { echo 'checked'; } ?>>
+                        <?php echo $a->getNome() ?>
+                      </li>
+                      <?php } ?>
+                    </ul>
+                  </li>
+                  <?php } ?>
+                </ul>
+              </li>
+            </ul>
+        </td>
+        <td valign="top">
+            <ul>
+              <li>
+                <strong><?php echo $this->modulosFiscal->getNome() ?></strong>
+                <ul>
+                  <?php foreach ($this->modulosFiscal->getControles() as $c) { ?>
+                    <?php if ($c->getVisivel() == false) continue; ?>
+                  <li>
+                    <?php echo $c->getNome() ?>
+                    <ul>
+                      <?php foreach ($c->getAcoes() as $a) { ?>
+                      <li>
+                        <input type="checkbox" id="acao_<?php echo $a->getId() ?>"
+                          name="acao[<?php echo $a->getId() ?>]"
+                          <?php if (in_array($a->getId(), $this->permissoesAdm)) { echo 'checked'; } ?>>
+                        <?php echo $a->getNome() ?>
+                      </li>
+                      <?php } ?>
+                    </ul>
+                  </li>
+                  <?php } ?>
+                </ul>
+              </li>
+            </ul>
+        </td>
+      </tr>
+    </table>
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" class="btn btn-success" value="Salvar" name="submit" />
+      </div>
+    </div>
+  </form>
+</fieldset>
+<?php } ?>
+<?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/set-permissao-adm') &&
+         $this->user->getAdministrativo()) { ?>
+<fieldset>
+  <?php if ($this->user->getTipo() != '1') {?>
+  <legend><?php echo $this->translate->_('Contribuintes / Permissões') ?></legend>
+  <?php } else { ?>
+  <legend><?php echo $this->translate->_('Permissões do Contribuinte') ?></legend>
+  <?php } ?>
+  
+  <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/contribuintes') &&
+          $this->usuario->getTipo() !== Administrativo_Model_TipoUsuario::$CONTRIBUINTE) { ?>
+    <?php echo $this->formVincularContribuinte; ?>
+  <?php } ?>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Inscrição/CGM') ?></th>
+        <th><?php echo $this->translate->_('Nome')      ?></th>
+        <th><?php echo $this->translate->_('Ações')     ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->contribuintes) > 0) { ?>
+      <?php foreach ($this->contribuintes as $id => $c) { ?>
+      <tr>
+        <td><?php echo $c->getInscricaoMunicipal(); ?><?php echo $c->getCodigoCgm();?></td>
+        <td><?php echo $c->getNome()?></td>
+        <td>
+          <a class="btn btn-mini" href="#myModal" role="button"
+             data-toggle="modal"
+             modal-url="<?php echo $this->baseUrl("administrativo/usuario/permissao/id/{$id}") ?>">
+            Permissões</a>
+          <?php if(DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/contribuintes')){ ?>
+            <a class="btn btn-mini btn-danger"
+               href="<?php echo $this->baseUrl("administrativo/usuario/desvincular/id/{$id}") ?>">
+               <?php echo $this->translate->_('Desvincular') ?>
+            </a>
+          <?php } ?>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="3"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  
+  <?php
+  // Necessário para setar a url que o paginador vai apontar
+  $this->urlFor("/administrativo/usuario/editar/id/{$this->usuario->getId()}");
+  
+  echo $this->paginationControl(
+    $this->paginator, 'Sliding', 'layouts/pager.phtml', array('translate' =>$this->translate)
+  );
+  ?>
+</fieldset>
+<?php } ?>

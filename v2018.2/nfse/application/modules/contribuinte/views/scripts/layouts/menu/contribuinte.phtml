@@ -1,0 +1,95 @@
+<?php 
+$oTradutor     = $this->layout()->translate;
+$lEmissorNfse  = $this->contribuinte && $this->contribuinte->attr('tipo_emissao') == 10;
+$lEmissorDms   = $this->contribuinte && $this->contribuinte->attr('tipo_emissao') == 11;
+?>
+
+<?php if ($lEmissorNfse) { ?>
+<li class="dropdown">    
+  <a id="drop1" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+    <?php echo $oTradutor->_('NFSE') ?> <b class="caret"></b>
+  </a>
+  
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/nota/consulta')) { ?>
+      <li><a href="/contribuinte/nota/consulta"><?php echo $oTradutor->_('Consulta') ?></a></li>
+    <?php } ?>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/nota')) { ?>
+      <li><a href="/contribuinte/nota"><?php echo $oTradutor->_('Emissão') ?></a></li>
+    <?php } ?>
+  </ul>
+</li>
+
+<li class="dropdown">    
+  <a id="drop1" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+    <?php echo $oTradutor->_('RPS') ?> <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+    <li><a href="/contribuinte/rps"><?php echo $oTradutor->_('Emissão') ?></a></li>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/nota/requisicao')) { ?>
+    <li><a href="/contribuinte/rps/requisicao"><?php echo $oTradutor->_('Requisição') ?></a></li>
+    <?php } ?>
+  </ul>
+</li>
+<?php } ?>
+
+<?php if ($this->contribuinte) { ?>
+<li class="dropdown">    
+  <a id="drop1" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+    <?php echo $oTradutor->_('DMS') ?> <b class="caret"></b>
+  </a>
+  
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/dms/emissao-manual-entrada')) { ?>
+    <li><a href="/contribuinte/dms/emissao-manual-entrada-competencia"><?php echo $oTradutor->_('Entrada') ?></a></li>
+    <?php } ?>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/dms/emissao-manual-saida')) { ?>
+    <li><a href="/contribuinte/dms/emissao-manual-saida-competencia"><?php echo $oTradutor->_('Saída') ?></a></li>
+    <?php } ?>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/dms/importacao')) { ?>
+    <li class="divider"></li>
+    <li><a href="/contribuinte/dms/importacao"><?php echo $oTradutor->_('Importação por Arquivo') ?></a></li>
+    <?php } ?>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/dms/requisicao')) { ?>
+    <li class="divider"></li>
+    <li><a href="/contribuinte/dms/requisicao"><?php echo $oTradutor->_('Requisição') ?></a></li>
+    <?php } ?>
+  </ul>
+</li>
+
+<li class="dropdown">
+  <a id="drop2" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+    <?php echo $oTradutor->_('Guia') ?> <b class="caret"></b>
+  </a>
+  
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/guia/consulta')) { ?>
+      <li><a href="/contribuinte/guia/consulta"><?php echo $oTradutor->_('Consulta (DMS)') ?></a></li>
+    <?php } ?>
+    <?php if (DBSeller_Plugin_Auth::checkPermission('contribuinte/guia/emissao-dms')) { ?>
+      <li><a href="/contribuinte/guia/emissao-dms"><?php echo $oTradutor->_('Geração (DMS)') ?></a></li>
+    <?php } ?>
+    <?php if ($lEmissorNfse && DBSeller_Plugin_Auth::checkPermission('contribuinte/guia/consulta')) { ?>
+    <li class="divider"></li>
+      <li><a href="/contribuinte/guia/consulta"><?php echo $oTradutor->_('Consultar (NFSE)') ?></a></li>
+    <?php } ?>
+    <?php if ($lEmissorNfse && DBSeller_Plugin_Auth::checkPermission('contribuinte/guia')) { ?>
+      <li><a href="/contribuinte/guia"><?php echo $oTradutor->_('Gerar (NFSE)') ?></a></li>
+    <?php } ?>
+    <?php if (($lEmissorDms || $lEmissorNfse) && 
+              (DBSeller_Plugin_Auth::checkPermission('contribuinte/guia/declaracao-sem-movimento'))) { ?>
+      <li class="divider"></li>
+      <li>
+        <a href="/contribuinte/guia/declaracao-sem-movimento">
+          <?php echo $oTradutor->_('Declaração sem Movimento') ?>
+        </a>
+      </li>
+    <?php } ?>
+  </ul>
+</li>
+<?php } ?>

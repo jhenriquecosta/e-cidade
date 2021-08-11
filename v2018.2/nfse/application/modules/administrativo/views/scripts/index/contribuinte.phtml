@@ -1,0 +1,17 @@
+<h3>Administrativo</h3>
+
+Escolha um dos contribuintes abaixo para utilizar o sistema:
+
+<div class="well">
+  <?php foreach ($this->contribuintes as $contribuinte) { ?>
+  <div style="margin-bottom:5px">
+    <?php if (empty($this->user->getAcoes($contribuinte->inscricao, 'administrativo'))) { ?>
+    <?php echo $contribuinte->nome ?>
+    <?php } else { ?>
+    <a href="<?php echo $this->baseUrl("/administrativo/index/set-contribuinte/id/{$contribuinte->inscricao}") ?>">
+      <?php echo $contribuinte->nome ?>
+    </a>
+    <?php } ?>
+  </div>
+  <?php } ?>
+</div>

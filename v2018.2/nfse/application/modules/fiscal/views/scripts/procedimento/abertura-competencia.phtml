@@ -1,0 +1,18 @@
+<?php
+
+echo $this->oFormProcedimentoAberturaCompetencia;
+
+if ($this->lErro) {
+?>
+<div class="alert alert-error">
+  <?php echo $this->sMsg; ?>
+</div>
+<?php
+} else if (!empty($this->sMsg)) {
+?>
+<div class="alert alert-success">
+  <?php echo $this->sMsg; ?>
+</div>
+<?php
+}
+?>

@@ -1,0 +1,14 @@
+<?php echo $this->oForm ?>
+
+<div id="dms_erros"><!-- Via Ajax --></div>
+<div id="dms_lista_notas" 
+     data-url="<?php echo $this->baseUrl('/contribuinte/dms/emissao-manual-saida-lista-notas') ?>" 
+     data-loading="<?php echo $this->translate->_('Aguarde...') ?>"><!-- Via Ajax --></div>
+
+<?php if (!isset($this->oDms) || $this->oDms->getStatus() != 'fechado') { ?>
+<fieldset id="fieldset-fechar-dms" style="text-align:center !important">
+  <button data-url="<?php echo $this->baseUrl('/contribuinte/dms/emissao-manual-saida-lista-dms-alterar-status/status/fechado/id_dms/') ?>"
+          id="btn_fechar_dms" 
+          class="input-medium btn btn-success" disabled="disabled"><?php echo $this->translate->_('Fechar DMS') ?></button>
+</fieldset>
+<?php } ?>

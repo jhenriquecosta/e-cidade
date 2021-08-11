@@ -1,0 +1,119 @@
+<!-- 1_10_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.16" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Encerramento de Competência') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('O encerramento de competência tem como objetivo finalizar a escrituração de NFS-e da competência.') ?></p>
+          </li>
+         </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('1) Encerramento de Competência: Competência > NFS-e Encerramento') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <?php echo $this->translate->_('Para realizar o encerramento da competência, basta acessar a rotina Competência > Encerramento. Nesta rotina, serão exibidas todas as competências anteriores, assim como a competência corrente, e as suas situações, que poderão ser:') ?>
+          </li>
+Encerrada sem movimento: A competência foi encerrada sem nenhuma NFS-e emitida.
+
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('<u>Em aberto</u>: A competência encontra-se em aberto.') ?><br/>
+              <?php echo $this->translate->_('<u>Encerrada</u>: A competência foi encerrada.') ?><br/>
+              <?php echo $this->translate->_('<u>Encerrada sem imposto</u>: A competência foi encerrada, porém não há valor de imposto à pagar.') ?><br/>
+              <?php echo $this->translate->_('<u>Encerrada sem movimento</u>: A competência foi encerrada sem nenhuma NFS-e emitida.') ?>
+            </p>
+            <p><?php echo $this->translate->_('Quando a situação da competência estiver Em aberto e esta não for  competência corrente, ela poderá ser encerrada através do botão “Encerrar”, conforme a imagem a seguir.') ?></p>
+            <p>
+            <?php echo $this->translate->_('<span style="color: #ff0000;font-weight: bold;">Atenção:</span> Após o encerramento da competência, a emissão de notas será bloqueada, ou seja, não será mais possível emitir notas na competência.') ?>
+
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="1.png" src="/default/img/versao/V011600/1.png" title="1.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+          </li>
+          <br/>
+          <br/>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('Ao encerrar a competência será exibida uma janela indicando qual a situação da competência que está sendo encerrada, que pode ser:') ?></p>
+            <p><?php echo $this->translate->_('<u>Encerramento com valor à pagar</u>: Competências onde há notas emitidas e um valor a ser pago através da geração de guia no sistema NFS-e. Nesse caso, ao encerrar a competência, a guia para pagamento ficará disponível para geração.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="2.png" src="/default/img/versao/V011600/2.png" title="2.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+          </li>
+          <br/>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('<u>Encerramento com valor à pagar</u>: Esse é o caso de competências onde há notas emitidas, porém não há imposto à pagar, como competências onde foram emitidas notas apenas com imposto retido ou com tributação fora do município. Nesses casos, ao encerrar a competência não será gerada guia para o pagamento e a situação do contribuinte ficará regular na prefeitura.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="3.png" src="/default/img/versao/V011600/3.png" title="3.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+          </li>
+          <br/>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('<u>Encerramento sem movimentação</u>: Os encerramentos sem movimentação acontecerão quando os prestadores de serviços encerrarem a competência sem terem emitido notas naquele mês. Neste caso, a competência será encerrada e a situação do contribuinte ficará regularizada na prefeitura.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="4.png" src="/default/img/versao/V011600/4.png" title="4.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+          </li>
+          <br/>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('<u>Regimes de tributação diferenciados (Simples, MEI, Fixado, Estimativa e Sociedade de Profissionais)</u>: Os encerramentos de competência desses regimes tributários não implicam em alteração do imposto à ser pago pelas empresas. Quando a competência for encerrada, ainda assim o contribuinte deverá realizar a quitação do seu valor mensal de imposto com a prefeitura (ou com a Receita Federal, no caso de Simples e MEI).') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="5.png" src="/default/img/versao/V011600/5.png" title="5.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+          </li>
+          <br/>
+          <li class="content-informativo-topico">
+            <p><?php echo $this->translate->_('<u>Imunes e Isentos</u>: Empresas com imunidade ou isenção ao imposto também poderão realizar o encerramento da competência. Nesses casos a competência será encerrada e a situação da empresa ficará regular na prefeitura.') ?></p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="6.png" src="/default/img/versao/V011600/6.png" title="6.png" style="max-width:90%; width: auto; height: auto;">
+            </span>
+            <p>
+            <?php echo $this->translate->_('<span style="color: #ff0000;font-weight: bold;">OBS:</span> A competência corrente não pode ser encerrada. Poderão ser encerradas apenas competências após a virada do mês.') ?>
+
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

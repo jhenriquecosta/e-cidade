@@ -1,0 +1,106 @@
+<!-- 1_10_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.11" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFS-e > Consulta') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Consulta de Tomador por Razão Social') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora é possível buscar as notas emitidas para um tomador através da Razão Social do mesmo. Para isso, basta digitar a Razão Social do tomador no campo “Razão Social”, e todas as notas emitidas para o mesmo serão exibidas, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011100-1.png" src="/default/img/versao/V011100-1.png" title="V011100-1.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+         </ul>
+      </li>
+      <br>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Cancelamento de notas fora do período de retroatividade') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora é possível solicitar o cancelamento de notas após passado o período de retroatividade. Todos os cancelamentos solicitados após o período de retroatividade deverão passar pela aprovação do fiscal.') ?>
+            </p>
+            <p>
+              <span class="alert">
+                <?php echo $this->translate->_('Atenção: Só poderá ser solicitado o cancelamento de notas antes da emissão da guia da competência.') ?>
+              </span>
+            </p>
+          </li>
+         </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFS-e > Emissão') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Emissão de notas no cadastro de novos prestadores') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora, quando uma nova empresa for cadastrada no sistema, será possível emitir notas retroativas para datas dentro do período de retroatividade estabelecido pela prefeitura.') ?>
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Administrativo > Usuários') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Consulta de usuários por perfil') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora é possível buscar usuários pelo seu perfil. Para isso basta escolher o perfil do usuário, que pode ser Fiscal, Administrativo, Tomador, Prestador NFSe, Prestador Eventual, Prestador DMS ou Contador.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('Ao clicar em “Buscar” serão exibidos todos os usuários com o perfil selecionado, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011100-2.png" src="/default/img/versao/V011100-2.png" title="V011100-2.png" style="max-width:100%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

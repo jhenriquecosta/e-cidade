@@ -1,0 +1,31 @@
+[webservice]
+DB_id_usuario          = '{$ID_USUARIO_DBSELLER}';
+DB_login               = '{$LOGIN_USUARIO_DBSELLER}';
+DB_administrador       = '1';
+DB_ip                  = '{$IP_ECIDADE}';
+REQUEST_URI            = '';
+DB_configuracao_ok     = '';
+DB_acessado            = '1325613';
+DB_instit              = '1';
+DB_totalmodulos        = '55';
+DB_use_pcasp           = 'f';
+DB_Area                = '1';
+DB_modulo              = '578';
+DB_nome_modulo         = 'Configurações';
+DB_coddepto            = '1';
+DB_nomedepto           = 'COINF';
+DB_itemmenu_acessado   = '1576';
+
+SERVER_ADDR            = '{$SERVER_ADDR}';
+SERVER_PORT            = '{$SERVER_PORT}';
+DOCUMENT_ROOT          = '/var/www';
+SERVER_ADMIN           = '{$SERVER_ADMIN_HOST}';
+PHP_SELF               = 'webservices/requisicao.webservice.php';
+REQUEST_URI            = '';
+HTTP_HOST              = '{$HTTP_HOST}';
+
+[consultar : webservice]
+DB_itemmenu_acessado   = '9604';
+
+[processar : webservice]
+DB_itemmenu_acessado   = '9638';

@@ -1,0 +1,15 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel">Cadastro de Tomador</h3>
+</div>
+
+<div class="modal-body">
+  <?php echo $this->form->render() ?>
+</div>
+
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+  <button class="btn btn-primary" id="enviaTomador">Enviar</button>
+</div>

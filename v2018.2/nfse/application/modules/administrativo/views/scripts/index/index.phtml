@@ -1,0 +1,100 @@
+<h3><?php echo $this->translate->_('Administrativo') ?></h3>
+
+<div class="well">
+  <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/index')) { ?>
+  <div class="modulo-url">
+    <a href="<?php echo $this->baseUrl('/administrativo/modulo') ?>">
+      <?php echo $this->translate->_('Módulos') ?>
+    </a>
+  </div>
+  <?php } ?>
+  
+  <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/index')) { ?>
+  <div class="modulo-url">
+    <a href="<?php echo $this->baseUrl('/administrativo/usuario') ?>">
+      <?php echo $this->translate->_('Usuários') ?>
+    </a>
+  </div>
+  <?php } ?>
+  
+  <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/parametro/prefeitura')) { ?>
+  <div class="modulo-url">
+    <a href="<?php echo $this->baseUrl('/administrativo/parametro/prefeitura') ?>">
+      <?php echo $this->translate->_('Parâmetros Prefeitura') ?>
+    </a>
+  </div>
+  <?php } ?>
+</div>
+
+<?php if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') { ?>
+
+<fieldset>
+  <legend>Configurações do Sistema:</legend>
+  <span class="label label-important">*Estas configurações são visíveis somente no ambiente de desenvolvimento.</span>
+  <br><br>
+  <!-- Configurações do Sistema -->
+  <?php
+  $aApplicationConfig = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+  
+  $aDoctrineConfig    = $aApplicationConfig->getOption('doctrine');
+  $aDoctrineConfig    = $aDoctrineConfig['connectionParameters'];
+  
+  $aWebServiceConfig  = $aApplicationConfig->getOption('webservice');
+  $aWebServiceConfig  = $aWebServiceConfig['client'];
+  
+  $aEmailConfig       = $aApplicationConfig->getOption('resources');
+  $aEmailConfig       = $aEmailConfig['mail']['transport'];
+  ?>
+  
+  <fieldset class="well">
+    <legend>Webservice:</legend>
+    <div class="span10">
+      <span class="span2"><strong>Webservice:</strong></span>
+      <a href="<?php echo "{$aWebServiceConfig['uri']}" ?>" target="_blank">
+        <?php echo "{$aWebServiceConfig['uri']}" ?>
+      </a>
+    </div>
+  </fieldset>
+  
+  <fieldset class="well">
+    <legend>Banco de Dados:</legend>
+    <div class="span10">
+      <span class="span2"><strong>Host / Porta:</strong></span>
+      <?php echo "{$aDoctrineConfig['host']}:{$aDoctrineConfig['port']}" ?>
+    </div>
+    
+    <div class="span10">
+      <span class="span2"><strong>Banco:</strong></span>
+      <?php echo $aDoctrineConfig['dbname'] ?>
+    </div>
+    
+    <div class="span10">
+      <span class="span2"><strong>Usuário:</strong></span>
+      <?php echo $aDoctrineConfig['user'] ?>
+    </div>
+    
+    <div class="span10">
+      <span class="span2"><strong>Senha:</strong></span>
+      <?php echo $aDoctrineConfig['password'] ?>
+    </div>
+  </fieldset>
+  
+  <fieldset class="well">
+    <legend>Email (smtp):</legend>
+    <div class="span10">
+      <span class="span2"><strong>Host / Porta:</strong></span>
+      <?php echo "{$aEmailConfig['host']}:{$aEmailConfig['port']}" ?>
+    </div>
+    
+    <div class="span10">
+      <span class="span2"><strong>Usuário:</strong></span>
+      <?php echo $aEmailConfig['username'] ?>
+    </div>
+    
+    <div class="span10">
+      <span class="span2"><strong>Senha:</strong></span>
+      <?php echo $aEmailConfig['password'] ?>
+    </div>
+  </fieldset>
+</fieldset>
+<?php } ?>

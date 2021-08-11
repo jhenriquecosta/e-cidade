@@ -1,0 +1,20 @@
+<h3>Notificações</h3>
+
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <td style="width: 20%">Tipo</td>
+            <td>Status</td>
+            <td style="width: 10%"></td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->notif as $n) { ?>
+    <tr>
+        <td><?php echo $n->getTipo(); ?></td>
+        <td><?php echo $n->getStatus() ?></td>
+        <td><a class="btn btn-small btn-success" href="<?php echo $this->baseUrl($n->getUrl()); ?>">Ver mais</a></td>
+    </tr>
+        <?php } ?>
+    </tbody>
+</table>

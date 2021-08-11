@@ -1,0 +1,8 @@
+<?php if ($this->bloqueado_msg == false) { ?>
+<?php echo $this->form ?>
+<?php } else { ?>
+<div class="alert alert-error">
+  <?php echo $this->bloqueado_msg ?><br/>
+  <?php echo $this->translate->_('Entre em contato com o setor de arrecadação da prefeitura.') ?>
+</div>
+<?php } ?>

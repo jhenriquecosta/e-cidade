@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu modulo='administrativo'>
+  <nivel uid='100' label='Cadastro' acl='cadastro' ordem='0'>
+    <nivel uid='110' label='Usuários' acl='usuarios' ordem='0'>
+      <programa uid='111' acl='adiciona' ordem='0'>Adicionar</programa>
+      <programa uid='112' acl='edita'    ordem='1'>Editar</programa>
+    </nivel>
+  </nivel>
+</menu>

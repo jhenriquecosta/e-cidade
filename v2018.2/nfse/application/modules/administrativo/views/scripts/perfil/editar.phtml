@@ -1,0 +1,87 @@
+<?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/perfil/editar')) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Editar Informações') ?></legend>
+
+  <?php echo $this->form ?>
+</fieldset>
+
+<?php if (!$this->perfil->getAdministrativo()) {?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Usuários Perfis') ?></legend>
+
+  <form class="form-horizontal" 
+        name="form_perfilperfis" 
+        action="<?php echo $this->baseUrl('/administrativo/perfil/set-perfil-perfis') ?>">
+    <input type="hidden" name="id" value="<?php echo $this->perfil->getId() ?>">
+    <ul>
+      <?php foreach ($this->aPerfis as $oPerfil) {
+      
+      $oDadosPerfil  = $oPerfil->getEntity();
+      $lMarcarPerfil = in_array($oDadosPerfil->getId(), $this->aPerfilPerfis);
+      ?>
+      <li>
+        <input type="checkbox" 
+               id="perfilperfis_<?php echo $oDadosPerfil->getId() ?>" 
+               name="perfilperfis[<?php echo $oDadosPerfil->getId() ?>]"
+               <?php echo $lMarcarPerfil ? ' checked="checked" ' : NULL ?>>
+          <?php echo $oDadosPerfil->getNome(); ?>
+      </li>
+      <?php } ?>
+    </ul>
+
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" class="btn btn-success" value="Salvar" name="submit">
+      </div>
+    </div>
+  </form>
+</fieldset>
+<?php } ?>
+
+<?php } ?>
+
+<fieldset>
+  <legend><?php echo $this->translate->_('Permissões') ?></legend>
+
+  <form class="form-horizontal" name="form_acoes"
+    action="<?php echo $this->baseUrl('/administrativo/perfil/set-permissao-perfil') ?>">
+    
+    <input type="hidden" name="perfil" value="<?php echo $this->perfil->getId() ?>">
+    <?php foreach ($this->modulosAdm as $oModulo) { ?>
+    <?php if ($oModulo->getVisivel() == false) continue; ?>
+    <ul>
+      <li>
+        <strong><?php echo $oModulo->getNome() ?></strong>
+        <ul>
+          <?php foreach ($oModulo->getControles() as $oControle) { ?>
+          <?php 
+          if ($oControle->getVisivel() == false) {
+            continue;
+          }
+          ?>
+          <li>
+            <?php echo $oControle->getNome() ?>
+            <ul>
+              <?php foreach ($oControle->getAcoes() as $oAcao) { ?>
+              <?php $lMarcarAcao = in_array($oAcao->getId(), $this->aPerfilAcoes); ?>
+              <li>
+                <input type="checkbox" id="acao_<?php echo $oAcao->getId() ?>" name="acao[<?php echo $oAcao->getId() ?>]"
+                <?php echo $lMarcarAcao ? " checked='checked' " : NULL ?>>
+                <?php echo $oAcao->getNome(); ?>
+              </li>
+              <?php } ?>
+            </ul>
+          </li>
+          <?php } ?>
+        </ul>
+      </li>
+    </ul>
+    <?php } ?>
+
+    <div class="control-group">
+      <div class="controls">
+        <input type="submit" class="btn btn-success" value="Salvar" name="submit">
+      </div>
+    </div>
+  </form>
+</fieldset>

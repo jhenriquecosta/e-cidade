@@ -1,0 +1,46 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
+  <button type="button" id='btnClose' class="close fechar" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Encerramento de Competência') ?></h3>
+</div>
+
+<div id="divGuiaEmitida" style="text-align:center;margin:10px 5px;min-width:730px;display:none;">
+
+  <div class="alert alert-success" id="divSucesso"></div>
+
+  <a class="btn btn-success" id="btnBaixarGuia" href="/default/index/get/file/" target="_blank" style="display:none;">
+    <?php echo $this->translate->_('Abrir guia de pagamento') ?>
+  </a>
+</div>
+
+<div id="divFormEncerramentoCompetencia">
+
+  <div class="alert alert-error" id="divErro" style="text-align:center;margin:10px 5px;min-width:730px;display:none;"></div>
+
+  <div class="alert alert-warning" id="mensagemAlerta" style="text-align:center;margin:10px 5px;min-width:730px;">
+    <?php echo $this->translate->_('<b>Atenção:</b> O encerramento desta competência implicará no bloqueio das emissões de NFS-e durante este mês.') ?>
+  </div>
+
+  <?php if(!empty($this->form->sMensagemSituacao)){ ?>
+    <div id="mensagemSituacao" class="alert alert-error" style="text-align:center;margin:10px 5px;min-width:730px;">
+      <?php echo $this->form->sMensagemSituacao; ?>
+    </div>
+  <?php } ?>
+
+  <div class="dadosCompetencia">
+    <?php echo $this->form ?>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn fechar" id="btnCancelar" data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Cancelar') ?>
+  </button>
+  <button class="btn btn-success" id="btnEncerrarCompetencia">
+    <?php echo $this->translate->_('Encerrar Competência') ?>
+  </button>
+  <button class="btn fechar" id="btnFechar" style="display:none;">
+    <?php echo $this->translate->_('Fechar') ?>
+  </button>
+</div>

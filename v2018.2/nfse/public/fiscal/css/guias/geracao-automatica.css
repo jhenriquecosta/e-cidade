@@ -1,0 +1,53 @@
+#fieldset-group_guias_geracao div.control-group div.controls {
+  margin-left: 0 !important;
+}
+
+#fieldset-group_guias_geracao div.control-group label {
+  width: auto !important;
+}
+
+#fieldset-group_guias_geracao div.control-group div.controls select {
+  margin-left: 20px !important;
+}
+
+#fieldset-group_guias_geracao div.control-group div.controls button {
+  margin-left: -50px !important;
+}
+
+#fieldset-group_guias_geracao div.control-group div.controls button#btn_gerar {
+  margin-left: -150px !important;
+}
+
+@media (max-width: 780px) {
+  #fieldset-group_guias_geracao div.control-group div.controls select {
+    margin-left: 0 !important;
+  }
+
+  #fieldset-group_guias_geracao div.control-group div.controls button {
+    margin-left: 0 !important;
+  }
+}
+
+.consulta-coluna01 {
+  width: 10%;
+}
+
+.consulta-coluna02 {
+  width: 10%;
+}
+
+.consulta-coluna03 {
+  width: 10%;
+}
+
+.consulta-coluna04 {
+  width: 45%;
+}
+
+.consulta-coluna05 {
+  width: 10%;
+}
+
+.consulta-coluna06 {
+  width: 15%;
+}

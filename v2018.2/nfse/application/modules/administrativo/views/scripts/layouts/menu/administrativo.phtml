@@ -1,0 +1,21 @@
+<?php $oTradutor = $this->layout()->translate ?>
+
+<li class="dropdown">
+  <a id="drop1" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+    <?php echo $oTradutor->_('Cadastro') ?> <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/usuario/index')) { ?>
+    <li>
+      <a href="/administrativo/usuario"><?php echo $oTradutor->_('Usuários') ?></a></li>
+    <?php } ?>
+    
+    <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/modulo/index')) { ?>
+    <li><a href="/administrativo/modulo"><?php echo $oTradutor->_('Módulos') ?></a></li>
+    <?php } ?>
+     
+    <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/perfil/novo')) { ?>
+    <li><a href="/administrativo/perfil"><?php echo $oTradutor->_('Perfis') ?></a></li>
+    <?php } ?>
+  </ul>
+</li>

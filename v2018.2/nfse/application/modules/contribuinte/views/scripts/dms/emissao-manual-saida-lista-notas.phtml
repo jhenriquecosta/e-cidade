@@ -1,0 +1,114 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Notas Lançadas') ?></legend>
+
+  <table id="dms-lista-notas" class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+      <th><?php echo $this->translate->_('Tipo') ?></th>
+      <th><?php echo $this->translate->_('Nota') ?></th>
+      <th><?php echo $this->translate->_('Série') ?></th>
+      <th><?php echo $this->translate->_('Data') ?></th>
+      <th><?php echo $this->translate->_('Razão Social') ?></th>
+      <th><?php echo $this->translate->_('Valor Bruto') ?></th>
+      <th><?php echo $this->translate->_('Aliq.') ?></th>
+      <th><?php echo $this->translate->_('Valor Imposto') ?></th>
+      <th><?php echo $this->translate->_('Situação') ?></th>
+      <?php if (!$this->visualizar) { ?>
+        <th style="width:75px"><?php echo $this->translate->_('Ação') ?></th>
+      <?php } ?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (count($this->aDmsNota) > 0) { ?>
+      <?php foreach ($this->aDmsNota as $oDmsNota) {
+
+        $iIdNota     = $oDmsNota->getCodigoNota();
+        $oDms        = $oDmsNota->getDms();
+        $sUrlEditar  = '/contribuinte/dms/emissao-manual-saida/id_dms/%s/id_nota/%s';
+        $sUrlExcluir = '/contribuinte/dms/emissao-manual-lista-notas-excluir/id_dms_nota/%s';
+
+        // Descrição ou Código do tipo de documento (Prestador eventual informa apenas a descrição)
+        if ($oDmsNota->getTipoDocumentoDescricao()) {
+          $sTipoNota = $oDmsNota->getTipoDocumentoDescricao();
+        } else {
+
+          $aTipoNota = Contribuinte_Model_Nota::getDescricaoTipoNota($oDmsNota->getTipoDocumento());
+          $sTipoNota = $aTipoNota[$oDmsNota->getTipoDocumento()];
+        }
+        ?>
+        <tr>
+          <td><?php echo DBSeller_Helper_String_Format::wordsCap($sTipoNota) ?></td>
+          <td><?php echo $oDmsNota->getNotaNumero() ?></td>
+          <td><?php echo $oDmsNota->getNotaSerie() ?></td>
+          <td><?php echo $oDmsNota->getNotaData()->format('d/m/Y') ?></td>
+          <td><?php echo DBSeller_Helper_String_Format::wordsCap($oDmsNota->getTomadorRazaoSocial()) ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oDmsNota->getServicoValorPagar(), 2, 'R$ ') ?></td>
+          <td><?php echo $oDmsNota->getServicoAliquota() ?>%</td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oDmsNota->getServicoValorImposto(), 2, 'R$ ') ?></td>
+          <td>
+            <?php if ($oDmsNota->getSituacaoDocumento() == 'C') { ?>
+              <span class="label label-important db-label-situacao-documento">
+            <?php echo $this->translate->_('Cancelada') ?>
+          </span>
+            <?php } else if ($oDmsNota->getSituacaoDocumento() == 'E') { ?>
+              <span class="label label-important db-label-situacao-documento">
+            <?php echo $this->translate->_('Extraviada') ?>
+          </span>
+            <?php } else if ($oDmsNota->getStatus() == 5) { ?>
+              <span class="label label-important db-label-situacao-documento">
+            <?php echo $this->translate->_('Anulada') ?>
+          </span>
+            <?php } else if ($oDmsNota->getNaturezaOperacao() == 2) { ?>
+              <span class="label label-warning db-label-situacao-documento">
+            <?php echo $this->translate->_('Fora do Município') ?>
+          </span>
+            <?php } else if (!$oDmsNota->getServicoImpostoRetido() && $oDmsNota->getEmiteGuia()) { ?>
+              <span class="label label-info db-label-situacao-documento">
+            <?php echo $this->translate->_('Tributada Prestador') ?>
+          </span>
+            <?php
+            } else if ($oDmsNota->getServicoImpostoRetido() && !$oDmsNota->getEmiteGuia() ||
+              $oDmsNota->getSituacaoDocumento() == 'R'
+            ) {
+              ?>
+              <span class="label db-label-situacao-documento">
+            <?php echo $this->translate->_('Retida Tomador') ?>
+          </span>
+            <?php } else if (!$oDmsNota->getEmiteGuia()) { ?>
+              <span class="label db-label-situacao-documento">
+            <?php echo $this->translate->_('Isento') ?>
+          </span>
+            <?php } else { ?>
+              <span class="label label-info db-label-situacao-documento">
+            <?php echo $this->translate->_($oDmsNota->getSituacaoDocumento()) ?>
+          </span>
+            <?php } ?>
+
+            <?php if ($oDmsNota->getNumpre() && !in_array($oDmsNota->getSituacaoDocumento(), array('C', 'E'))) { ?>
+              <span class="label label-success">
+            <?php echo $this->translate->_('Guia Emitida') ?>
+          </span>
+            <?php } ?>
+          </td>
+          <?php if (!$this->visualizar) { ?>
+            <td>
+              <a href="<?php echo $this->baseUrl(sprintf($sUrlEditar, $oDms->getId(), $iIdNota)) ?>"
+                 class="btn btn-mini" title="<?php echo $this->translate->_('Editar Nota') ?>">
+                <i class="icon-edit"></i>
+              </a>
+              <a href="<?php echo $this->baseUrl(sprintf($sUrlExcluir, $iIdNota)) ?>"
+                 class="btn btn-mini btn-danger btn_excluir" title="<?php echo $this->translate->_('Excluir Nota') ?>">
+                <i class="icon-remove icon-white"></i>
+              </a>
+            </td>
+          <?php } ?>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="10"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+</fieldset>

@@ -1,0 +1,46 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Resultado Pesquisa') ?></legend>
+  <table class="table table-bordered table-condensed table-striped table-hover" style="table-layout:fixed">
+    <thead>
+    <tr>
+      <th class="text-center consulta-coluna01"><?php echo $this->translate->_('Competência') ?></th>
+      <th class="text-center consulta-coluna02"><?php echo $this->translate->_('Valor total') ?></th>
+      <th class="text-center consulta-coluna03"><?php echo $this->translate->_('Valor ISS') ?></th>
+      <th class="text-center consulta-coluna04"><?php echo $this->translate->_('Contribuinte') ?></th>
+      <th class="text-center consulta-coluna05"><?php echo $this->translate->_('Inscrição') ?></th>
+      <th class="text-center consulta-coluna06"><?php echo $this->translate->_('CPF/CNPJ') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    if (count($this->oGuiasCompetencia) > 0) {
+
+      foreach ($this->oGuiasCompetencia as $oGuia) { ?>
+        <tr>
+          <td class="text-left consulta-coluna01"><?php echo $oGuia->getCompetencia() ?></td>
+          <td class="text-left consulta-coluna02"><?php echo $oGuia->getFormatedTotalServico() ?></td>
+          <td class="text-left consulta-coluna03"><?php echo $oGuia->getFormatedTotalIss() ?></td>
+          <td class="text-left consulta-coluna04"><?php echo $oGuia->getContribuinte()->getNome() ?></td>
+          <td class="text-left consulta-coluna05"><?php echo $oGuia->getContribuinte()->getInscricaoMunicipal() ?></td>
+          <td class="text-right consulta-coluna06">
+            <?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($oGuia->getContribuinte()->getCgcCpf()) ?>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="7"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+  <?php
+  $this->urlFor("/fiscal/guias/consultar/{$this->sBusca}");
+
+  echo $this->paginationControl($this->oGuiasCompetencia,
+                                'Sliding',
+                                'layouts/pager.phtml',
+                                array('translate' => $this->translate));
+
+  ?>
+</fieldset>

@@ -1,0 +1,19 @@
+label {
+  min-width: 165px;
+}
+
+fieldset legend {
+  padding: 0 0.4em 0 0.4em !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+  box-shadow:  0px 0px 0px 0px #000;
+}
+
+.validation-accept legend {
+  background:url('/global/img/validation_accept.png') no-repeat 95% 50% !important;
+  padding-right: 2.6em !important;
+}
+
+.validation-cancel legend {
+  background:url('/global/img/validation_cancel.png') no-repeat 95% 50% !important;
+  padding-right: 2.6em !important;
+}

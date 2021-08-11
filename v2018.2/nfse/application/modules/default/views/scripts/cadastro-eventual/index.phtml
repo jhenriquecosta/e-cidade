@@ -1,0 +1,48 @@
+<?php $this->headLink()->prependStylesheet($this->baseUrl('/auth/css/module.css')) ?>
+<div class="row">
+  <div class="db_logotipo span7">
+    <?php echo $this->partial('layouts/logotipo.phtml', 'auth') ?>
+  </div>
+  <div class="menu-links span4">
+    <ul class="links">
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/auth/login') ?>" title="<?php echo $this->translate->_('Login') ?>">
+          <?php echo $this->translate->_('Login') ?>
+        </a>
+      </li>
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/auth/nfse/autenticar') ?>"
+           title="<?php echo $this->translate->_('Verificar NFSe') ?>">
+          <?php echo $this->translate->_('Verificar NFSe') ?>
+        </a>
+      </li>
+      <!-- Notificações do sistema-->
+      <?php echo $this->partial('notificacao/listar.phtml', 'global', array('translate' => $this->translate)) ?>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="db_informacoes span7">
+    <span style="float: right; color: #a2a2a2;font-size: 11px; padding-left: 5px;">
+      <?php echo DBSeller_Helper_String_Format::versionNfse(Zend_Registry::get('config')->ecidadeonline2->versao); ?>
+    </span>
+  </div>
+</div>
+<div class="row  span10">
+  <div class="db_form">
+    <fieldset>
+      <legend class="text-error">
+        <?php echo $this->translate->_('Cadastro para Prestador de Serviços Eventuais e Tomadores de Serviço') ?>
+      </legend>
+      <div class="alert alert-error">
+        <strong><?php echo $this->translate->_('Atenção:') ?></strong>
+        <?php
+        echo $this->translate->_('Este cadastro é exclusivo para Prestadores de Serviços Eventuais e Tomadores de Serviço. <br/>');
+        echo $this->translate->_('Os Prestadores de Serviço do Município deverão comparecer à Prefeitura.');
+        ?>
+      </div>
+      <?php echo $this->oForm ?>
+      <div id="erros" class="db_form_error"></div>
+    </fieldset>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<!-- 1_7_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+<div>
+  <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.7" ?></h4>
+</div>
+<div class="content-informativo">
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <p>
+        <b><?php echo $this->translate->_('Novas regras na emissão de RPS
+') ?></b>
+      </p>
+    </li>
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('RPS > Emissão') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora, as regras para emissão de RPS seguirão o mesmo padrão das regras para emissão de notas fiscais, conforme descrito abaixo:') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('Ao preencher um CPF/CNPJ para um tomador do município cadastrado no sistema e-Cidade, será informado automaticamente se o tomador é um substituto tributário, conforme abaixo:') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010700-1" src="/default/img/versao/V010700-1.png" title="V010700-1" style="max-width: 90%;">
+          </span>
+        </li>
+        <p>
+          <?php echo $this->translate->_("<small><u>Substitutos Tributários</u> - São as pessoas físicas/jurídicas, no papel de tomadores de serviços, responsáveis pelo recolhimento e pagamento do imposto devido pelo prestador.</small>") ?>
+        </p>
+        <br/>
+        <p>
+          <?php echo $this->translate->_("A opção “Natureza da Operação” foi movida para “Tributação” e a partir de agora a retenção do imposto será determinada pela opção escolhida no campo “Retido”.") ?>
+        </p>
+
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010700-2" src="/default/img/versao/V010700-2.png" title="V010700-2" style="max-width: 85%;;">
+          </span>
+        </li>
+        <small>
+          <p>
+            <u><?php echo $this->translate->_("Natureza da Operação:") ?></u>
+            <ul>
+              <li><?php echo $this->translate->_("Tributação Fora do Município: Imposto devido fora do município do prestador.") ?></li>
+              <li><?php echo $this->translate->_("Tributação no Município: Imposto devido no município do prestador.") ?></li>
+            </ul>
+          </p>
+          <p>
+            <u><?php echo $this->translate->_("Retido:") ?></u>
+            <ul>
+              <li><?php echo $this->translate->_("Sim: O valor correspondente ao imposto será retido pelo tomador.") ?></li>
+              <li><?php echo $this->translate->_("Não: Não haverá retenção e o responsável pelo pagamento do imposto será o prestador.") ?></li>
+            </ul>
+          </p>
+        </small>
+        <p>
+          <?php echo $this->translate->_("As opções “Natureza da Operação” e “Retido” serão disponibilizadas conforme o município do prestador, o serviço e o local da prestação, de acordo com o Art. 4 da Lei Complementar 116/2003.") ?>
+        </p>
+      </ul>
+    </li>
+  </ul>
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <b><?php echo $this->translate->_('Regras de substituição tributária - MEI e Sociedade de Profissionais') ?></b>
+    </li>
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('NFSe > Emissão') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora, na emissão de notas fiscais, não será permitira a retenção de imposto de empresas enquadradas no regime tributário MEI ou Sociedade de Profissionais.') ?>
+          </p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+</div>

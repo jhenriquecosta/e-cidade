@@ -1,0 +1,24 @@
+<?php if ($this->empresa_nao_prestadora) { ?>
+<div class="alert alert-error">
+  Empresa não prestadora de serviço.<br>
+  Entre em contato com o setor de arrecadação da prefeitura.
+</div>
+<?php } else if ($this->empresa_nao_emissora_nfse) { ?>
+<div class="alert alert-error">
+  Empresa não emissora de NFS-E.<br>
+  Entre em contato com o setor de arrecadação da prefeitura.
+</div>
+<?php } ?>
+
+<?php
+if ($this->bloqueado_msg == false) {
+  echo $this->form;
+} else {
+  ?>
+  <div class="alert alert-error">
+    <?php echo $this->bloqueado_msg ?><br>
+    Entre em contato com o setor de arrecadação da prefeitura.
+  </div>
+  <?php 
+}
+?>

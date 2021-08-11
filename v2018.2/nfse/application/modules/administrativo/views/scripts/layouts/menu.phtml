@@ -1,0 +1,142 @@
+<?php $oTradutor = $this->layout()->translate ?>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    
+    <div class="nav-collapse">
+      <?php if ($this->user !== null) { ?>
+      <?php echo $this->navigation(Zend_registry::get('nav'))->menu()->setPartial('layouts/menu/navigation.phtml') ?>
+
+      <ul class="nav pull-right">
+        <li class="dropdown">
+          <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+            <i class="icon icon-user"></i>
+            <?php echo DBSeller_Helper_String_Format::wordsCap($this->user->getNome()) ?>
+            <?php echo ($this->contribuinte) ?
+                       '(' . DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getNome()) . ')' :
+                       NULL ?>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="drop3" style="min-width:250px">
+            <li>
+              <span style="padding:0 20px;font-weight:bold">
+                <i class="icon icon-user"></i> <?php echo $oTradutor->_('Informações do Usuário') ?>
+              </span>
+            </li>
+            <li class="divider"></li>
+            <li><a href="<?php echo $this->baseUrl('/default/index') ?>">Alterar Módulo</a></li>
+            <li><a href="<?php echo $this->baseUrl('/administrativo/usuario/trocar-senha') ?>">Alterar Senha</a></li>
+            <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/parametro/prefeitura')) { ?>
+            <li>
+              <a href="<?php echo $this->baseUrl('/administrativo/parametro/prefeitura') ?>">
+                <?php echo $oTradutor->_('Parâmetros Prefeitura') ?>
+              </a>
+            </li>
+            <?php } ?>
+           
+            <?php if (is_object($this->contribuinte)) { ?>
+            
+            <li class="divider" style="margin-top:15px"></li>
+            <li>
+              <span style="padding:0 20px;font-weight:bold">
+                <i class="icon icon-briefcase"></i> <?php echo $oTradutor->_('Informações do Contribuinte') ?></span>
+              </li>
+            <li class="divider"></li>
+            <li style="min-width:450px;padding-bottom:10px;">
+              <div style="font-size:0.8em;padding:0 20px;color:#707070">
+                <table class="menu-table-contribuinte">
+                  <tr>
+                    <th><?php echo $oTradutor->_('CPF / CNPJ:') ?></th>
+                    <td>
+                      <?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($this->contribuinte->getCgcCpf()) ?>
+                    </td>
+                    <th class="col2"><?php echo $oTradutor->_('Inscrição Municipal:') ?></th>
+                    <td><?php echo $this->contribuinte->getInscricaoMunicipal(); ?></td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Endereço:') ?></th>
+                    <td colspan="3">
+                      <?php
+                      echo DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getTipoLogradouro() . ' ' .
+                                                                   $this->contribuinte->getDescricaoLogradouro() . ', ' .
+                                                                   $this->contribuinte->getLogradouroNumero() . ' - ' .
+                                                                   $this->contribuinte->getLogradouroBairro());
+                      ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Complemento:') ?></th>
+                    <td colspan="3">
+                      <?php echo DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getLogradouroComplemento()) ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Município / UF:') ?></th>
+                    <td colspan="3">
+                      <?php echo DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getDescricaoMunicipio()). ' / '.
+                                 $this->contribuinte->getEstado(); ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Telefone:') ?></th>
+                    <td colspan="3"><?php echo $this->contribuinte->getTelefone() ?></td>
+                  </tr>
+                  <?php
+                    if ($this->contribuinte instanceof Contribuinte_Model_Contribuinte) {
+                  ?>
+                  <tr>
+                    <td colspan="4"><hr style="margin:5px 0"></td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Simples:') ?></th>
+                    <td><?php echo $this->contribuinte->getDescricaoOptanteSimples() ?></td>
+                    <th class="col2">Substituto Tributário:</th>
+                    <td><?php echo $this->contribuinte->getDescricaoSubstituicaoTributaria()?></td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Exigível:') ?></th>
+                    <td><?php echo $this->contribuinte->getDescricaoExigibilidade()?></td>
+                    <th class="col2"><?php echo $oTradutor->_('Incentivo:') ?></th>
+                    <td><?php echo $this->contribuinte->getDescricaoIncentivoFiscal() ?></td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Regime:') ?></th>
+                    <td><?php echo $this->contribuinte->getDescricaoRegimeTributario() ?></td>
+                    <th class="col2"><?php echo $oTradutor->_('Empresa:') ?></th>
+                    <td>
+                      <?php echo DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getDescricaoTipoClassificacao()) ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><?php echo $oTradutor->_('Tipo de Emissão:') ?></th>
+                    <td colspan="3">
+                      <?php echo DBSeller_Helper_String_Format::wordsCap($this->contribuinte->getDescricaoTipoEmissao()) ?>
+                    </td>
+                  </tr>
+                  <?php
+                  }
+                  ?>
+                </table>
+              </div>
+            </li>
+            <?php } ?>
+          </ul>
+        </li>
+        <!-- Notificações do sistema-->
+        <?php echo $this->partial('notificacao/listar.phtml', 'global', array('translate' => $oTradutor)) ?>
+        <li class="divider-vertical"></li>
+        <li>
+          <a href="<?php echo $this->baseUrl('/auth/logout') ?>">
+            <i class="icon icon-off"></i> <?php echo $oTradutor->_('Logout') ?>
+          </a>
+        </li>
+      </ul>
+      <?php } ?>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<?php if ($this->pageCount) { ?>
+<div class="pagination pagination-centered">
+  <ul>
+    
+    <!-- Link para primeira página -->
+    <?php if (isset($this->first) && $this->current != $this->first) { ?>
+    <li>
+      <a href="<?php echo $this->url(array('page' => $this->first)); ?>">
+        <?php echo $this->translate->_('&lt;&lt; Primeiro') ?>
+      </a>
+    </li>
+    <?php } else { ?>
+    <li class="disabled"><span><?php echo $this->translate->_('&lt;&lt; Primeiro') ?></span></li>
+    <?php } ?>
+    
+    <!-- Link para página anterior -->
+    <?php if (isset($this->previous)) { ?>
+    <li>
+      <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+        <?php echo $this->translate->_('&lt; Anterior') ?>
+      </a>
+    </li> 
+    <?php } else { ?>
+    <li class="disabled"><span><?php echo $this->translate->_('&lt; Anterior') ?></span></li>
+    <?php } ?>
+
+    <!-- Links com a numeração das páginas -->
+    <?php foreach ($this->pagesInRange as $sPage) { ?>
+    
+    <?php if ($sPage != $this->current) { ?>
+    <li>
+      <a href="<?php echo $this->url(array('page' => $sPage)); ?>">
+        <?php echo $sPage ?>
+      </a>
+    </li>
+    <?php } else { ?>
+    <li class="active"><span><?php echo $sPage ?></span></li>
+    <?php } ?>
+    
+    <?php } ?>
+
+    <!-- Link para a pŕoxima página -->
+    <?php if (isset($this->next)) { ?>
+    <li>
+      <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+        <?php echo $this->translate->_('Próximo &gt;') ?>
+      </a>
+    </li>
+    <?php } else { ?>
+    <li class="disabled"><span><?php echo $this->translate->_('Próximo &gt;') ?></span></li>
+    <?php } ?>
+    
+    <!-- Link para a última página -->
+    <?php if (isset($this->last)  && $this->current != $this->last) { ?>
+    <li>
+      <a href="<?php echo $this->url(array('page' => $this->last)); ?>">
+        <?php echo $this->translate->_('Último &gt;&gt;') ?>
+      </a>
+    </li>
+    <?php } else { ?>
+    <li class="disabled"><span><?php echo $this->translate->_('Último &gt;&gt;') ?></span></li>
+    <?php } ?>
+    
+  </ul>
+</div>
+<?php } ?>

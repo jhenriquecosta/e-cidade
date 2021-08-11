@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="db_logotipo span7">
+    <?php echo $this->partial('layouts/logotipo.phtml', 'auth') ?>
+  </div>
+  <div class="menu-links span4">
+    <ul class="links">
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/auth/login') ?>"
+           title="<?php echo $this->translate->_('Login') ?>">
+          <?php echo $this->translate->_('Login') ?>
+        </a>
+      </li>
+      <li class="right-align">
+        <a href="<?php echo $this->baseUrl('/default/cadastro-eventual/') ?>"
+           title="<?php echo $this->translate->_('Cadastre-se') ?>">
+          <?php echo $this->translate->_('Cadastre-se') ?>
+        </a>
+      </li>
+      <!-- Notificações do sistema-->
+      <?php echo $this->partial('notificacao/listar.phtml', 'global', array('translate' => $this->translate)) ?>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="db_informacoes span7">
+    <span style="float: right; color: #a2a2a2;font-size: 11px; padding-left: 5px;">
+      <?php echo DBSeller_Helper_String_Format::versionNfse(Zend_Registry::get('config')->ecidadeonline2->versao); ?>
+    </span>
+  </div>
+</div>
+<div class="row span10">
+  <div class="db_form">
+    <?php echo $this->oForm ?>
+    <div id="erros" class="db_form_error"></div>
+  </div>
+</div>

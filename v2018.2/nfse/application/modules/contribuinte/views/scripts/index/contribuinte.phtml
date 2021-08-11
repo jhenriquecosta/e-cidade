@@ -1,0 +1,54 @@
+<h3><?php echo $this->translate->_('Bem vindo') ?></h3>
+<?php if (count($this->contribuintes) == 1) { ?>
+
+<?php foreach ($this->contribuintes as $contribuinte) { ?>
+
+<?php echo $this->translate->_('Contribuinte:') ?>
+<strong>
+  <?php echo DBSeller_Helper_String_Format::wordsCap($contribuinte->getNome()); ?>
+  (<?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($contribuinte->getCgcCpf()) ?>)
+</strong>
+<?php } 
+        if(!empty($this->descricao)) {
+
+?>
+          <br>
+          <br>
+            <div class="well" style="padding: 1px">
+              <div>
+                <h4>Informativo do Fiscal:</h4>
+              </div>
+              <div style="background-color: #ffffff;border-top: 1px solid #cccccc;padding: 5px">
+                  <?php echo nl2br($this->descricao);?>
+              </div>
+            </div>
+
+ <?php  }
+      } else { ?>
+
+<?php echo $this->translate->_('Selecione um contribuinte:') ?>
+
+<select id="cb_contribuinte" class="input-xlarge">
+  <option value=""></option>
+  <?php foreach ($this->contribuintes as $contribuinte) {
+
+    if (!$contribuinte instanceof Contribuinte_Model_Contribuinte) {
+      continue;
+    }
+
+    $iCodigo  = $contribuinte->getIdUsuarioContribuinte();
+    $sNome    = trim(DBSeller_Helper_String_Format::wordsCap($contribuinte->getNome()));
+    $sCnpjCpf = DBSeller_Helper_Number_Format::maskCPF_CNPJ($contribuinte->getCgccpf());
+
+  ?>
+  <option value="<?php echo $this->baseUrl("/contribuinte/index/set-contribuinte/id/{$iCodigo}") ?>">
+    <?php echo "{$sNome} ({$sCnpjCpf})" ?>
+  </option>
+  <?php } ?>
+</select>
+
+<a id="url_contribuinte" class="btn btn-primary">
+  <?php echo $this->translate->_('Selecionar') ?>
+</a>
+
+<?php } ?>

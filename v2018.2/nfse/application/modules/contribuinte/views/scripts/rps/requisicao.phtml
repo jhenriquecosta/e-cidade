@@ -1,0 +1,113 @@
+<?php if ($this->sMensagemBloqueio) { ?>
+
+  <div class="alert alert-error">
+    <?php echo $this->sMensagemBloqueio ?><br>
+    <?php echo $this->translate->_('Entre em contato com o setor de arrecadação da prefeitura.') ?>
+  </div>
+
+<?php } else { ?>
+
+  <?php if (isset($this->oFormRequisicao)) { ?>
+    <?php echo $this->oFormRequisicao ?>
+  <?php } ?>
+
+  <fieldset>
+    <legend><?php echo $this->translate->_('Histórico de Requisições') ?></legend>
+
+    <table class="table table-bordered table-condensed table-striped table-hover">
+      <thead>
+      <tr>
+        <th width=5%><?php echo $this->translate->_('Código') ?></th>
+        <th width=10%><?php echo $this->translate->_('Data da Requisição') ?></th>
+        <th width=10%><?php echo $this->translate->_('Tipo de Documento') ?></th>
+        <th width=18%><?php echo $this->translate->_('Gráfica') ?></th>
+        <th width=10%><?php echo $this->translate->_('Qtde Requerida') ?></th>
+        <th width=10%><?php echo $this->translate->_('Qtde Liberada') ?></th>
+        <th width=10%><?php echo $this->translate->_('Numeração Inicial') ?></th>
+        <th width=10%><?php echo $this->translate->_('Numeração Final') ?></th>
+        <th width=7%><?php echo $this->translate->_('Situação') ?></th>
+        <th width=10%><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php if (count($this->aListaRequisicao) > 0) { ?>
+        <?php
+        foreach ($this->aListaRequisicao as $oRequisicao) {
+
+          $sUrlImpressao = DBSeller_Helper_Url_Encrypt::encrypt(
+              array('module'     => 'contribuinte',
+                    'controller' => 'rps',
+                    'action'     => 'aidof-impressa',
+                    'url'        => array('inicial' => $oRequisicao->nota_inicial,
+                                          'final'   => $oRequisicao->nota_final)));
+
+          switch ($oRequisicao->status) {
+
+            case 'B' :
+              $sStatus = $this->translate->_('Bloqueada');
+              $sLabel  = 'label label-important';
+              break;
+            case 'C' :
+              $sStatus = $this->translate->_('Cancelada');
+              $sLabel  = 'label label-important';
+              break;
+            case 'L' :
+              $sStatus = $this->translate->_('Liberada');
+              $sLabel  = 'label label-success';
+              break;
+            case 'P' :
+              $sStatus = $this->translate->_('Pendente');
+              $sLabel  = 'label label-warning';
+              break;
+            default  :
+              $sStatus = '-';
+              $sLabel  = NULL;
+          }
+
+          $dDataLancamento = new Zend_Date($oRequisicao->data_lancamento);
+          ?>
+          <tr>
+            <td><?php echo $oRequisicao->codigo_requisicaoaidof ?></td>
+            <td><?php echo $dDataLancamento->toString('dd/MM/Y') ?></td>
+            <td><?php echo $this->aTipoDocumento[$oRequisicao->tipo_nota] ?></td>
+            <td><?php echo $oRequisicao->nome_grafica ?></td>
+            <td><?php echo $oRequisicao->quantidade_solicitada ?></td>
+            <td><?php echo $oRequisicao->quantidade_liberada ? : '-' ?></td>
+            <td><?php echo $oRequisicao->nota_inicial ? : '-' ?></td>
+            <td><?php echo $oRequisicao->nota_final ? : '-' ?></td>
+            <td><span class="<?php echo $sLabel ?>"><?php echo $sStatus ?></span></td>
+            <td width=100px>
+              <?php if ($oRequisicao->status == 'P') { ?>
+                <a class="btn btn-mini cancelar-requisicao" title="<?php echo $this->translate->_('Cancelar') ?>"
+                   href="<?php echo $this->baseUrl("/contribuinte/rps-novo/cancelar-requisicao/id/{$oRequisicao->codigo_requisicaoaidof}") ?>">
+                  <i class="icon-remove"></i>
+                </a>
+              <?php } ?>
+
+              <?php if ($oRequisicao->observacao) { ?>
+                <a class="btn btn-mini tooltip-modal" data-content="<?php echo $oRequisicao->observacao ?>" href="#">
+                  <i class="icon-info-sign"></i>
+                </a>
+              <?php } ?>
+
+              <?php if($oRequisicao->quantidade_liberada > 0) {?>
+                <a
+                  href="<?php echo $sUrlImpressao; ?>"
+                  title="<?php echo $this->translate->_('Imprimir') ?>"
+                  class="btn btn-mini">
+                  <i class="icon-print"></i>
+                </a>
+              <?php }?>
+            </td>
+          </tr>
+        <?php } ?>
+      <?php } else { ?>
+        <tr>
+          <td colspan="10"><?php echo $this->translate->_('Nenhum registro foi encontrado.') ?></td>
+        </tr>
+      <?php } ?>
+      </tbody>
+    </table>
+  </fieldset>
+
+<?php } ?>

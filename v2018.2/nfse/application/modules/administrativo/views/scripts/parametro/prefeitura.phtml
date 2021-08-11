@@ -1,0 +1,144 @@
+<!-- Abas -->
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#dados" data-toggle="tab"><?php echo $this->translate->_('Dados da Prefeitura'); ?></a>
+  </li>
+  <li>
+    <a href="#geral" data-toggle="tab"><?php echo $this->translate->_('Geral'); ?></a>
+  </li>
+  <li>
+    <a href="#nfse" data-toggle="tab"><?php echo $this->translate->_('NFS-e'); ?></a>
+  </li>
+  <li>
+    <a href="#rps" data-toggle="tab"><?php echo $this->translate->_('RPS'); ?></a>
+  </li>
+</ul>
+
+<!-- Conteúdo Abas -->
+<div class="tab-content dbseller-tab-content">
+
+  <!-- Aba Dados da Prefeitura -->
+  <div class="tab-pane active" id="dados">
+    <form id    ="<?php echo $this->formPrefeitura->getId(); ?>"
+          class ="<?php echo $this->formPrefeitura->getAttrib('class'); ?>"
+          action="<?php echo $this->formPrefeitura->getAction(); ?>"
+          method="<?php echo $this->formPrefeitura->getMethod(); ?>">
+
+      <div class="form_erros"><!-- Conteudo Dinamico via Ajax --></div>
+
+      <!-- Logotipo da prefeitura -->
+      <div class="logo-prefeitura pull-right">
+        <?php echo $this->formPrefeitura->logo; ?>
+      </div>
+
+      <div class="pull-left">
+        <?php echo $this->formPrefeitura->ibge; ?>
+        <?php echo $this->formPrefeitura->cnpj; ?>
+        <?php echo $this->formPrefeitura->nome; ?>
+        <?php echo $this->formPrefeitura->nome_relatorio; ?>
+        <hr>
+        <?php echo $this->formPrefeitura->endereco; ?>
+        <?php echo $this->formPrefeitura->numero; ?>
+        <?php echo $this->formPrefeitura->complemento; ?>
+        <?php echo $this->formPrefeitura->bairro; ?>
+        <?php echo $this->formPrefeitura->municipio; ?>
+        <?php echo $this->formPrefeitura->uf; ?>
+        <?php echo $this->formPrefeitura->cep; ?>
+        <hr>
+        <?php echo $this->formPrefeitura->telefone; ?>
+        <?php echo $this->formPrefeitura->fax; ?>
+        <?php echo $this->formPrefeitura->email; ?>
+        <?php echo $this->formPrefeitura->url; ?>
+
+        <div class="control-group">
+          <div class="controls">
+            <?php echo $this->formPrefeitura->btn_atualizar; ?>
+          </div>
+        </div>
+      </div>
+
+      <div class="form_erros_dados_prefeitura"><!-- Conteudo Dinamico via Ajax --></div>
+    </form>
+  </div>
+
+  <!-- Aba Dados Gerais -->
+  <div class="tab-pane" id="geral">
+    <form id    ="<?php echo $this->formGeral->getId(); ?>"
+          class ="<?php echo $this->formGeral->getAttrib('class'); ?>"
+          action="<?php echo $this->formGeral->getAction(); ?>"
+          method="<?php echo $this->formGeral->getMethod(); ?>">
+
+      <div class="form_erros"><!-- Conteudo Dinamico via Ajax --></div>
+
+      <?php echo $this->formGeral->nota_retroativa; ?>
+      <?php echo $this->formGeral->avisofim_emissao_nota; ?>
+      <?php echo $this->formGeral->verifica_autocadastro; ?>
+      <?php echo $this->formGeral->solicita_cancelamento; ?>
+      <?php echo $this->formGeral->reter_pessoa_fisica; ?>
+      <?php echo $this->formGeral->requisicao_nfse; ?>
+      <?php echo $this->formGeral->tempo_bloqueio; ?>
+
+      <div class="control-group">
+        <div class="controls">
+          <?php echo $this->formGeral->btn_salvar_geral; ?>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Aba Dados da NFS-e -->
+  <div class="tab-pane" id="nfse">
+    <div id="imagem-modelo" class="pull-right hide">
+      <a href="#modal-modelo-nfse" role="button" data-toggle="modal">
+        <img src="<?php echo $this->baseUrl('/administrativo/img/nfse/modelo_.png'); ?>"
+             alt=""
+             class="img-rounded img-polaroid">
+      </a>
+    </div>
+
+    <div class="pull-left">
+      <form id    ="<?php echo $this->formNfse->getId(); ?>"
+            class ="<?php echo $this->formNfse->getAttrib('class'); ?>"
+            action="<?php echo $this->formNfse->getAction(); ?>"
+            method="<?php echo $this->formNfse->getMethod(); ?>">
+
+        <div class="form_erros"><!-- Conteudo Dinamico via Ajax --></div>
+
+        <?php echo $this->formNfse->modelo_importacao_rps; ?>
+        <?php echo $this->formNfse->modelo_impressao_nfse; ?>
+        <?php echo $this->formNfse->informacoes_complementares_nfse; ?>
+        <?php echo $this->formNfse->secretaria; ?>
+        <?php echo $this->formNfse->setor; ?>
+
+        <div class="control-group">
+          <div class="controls">
+            <?php echo $this->formNfse->btn_salvar_nfse; ?>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Aba Dados da RPS -->
+  <div class="tab-pane" id="rps">
+    <div class="pull-left">
+      <div class="form_erros_rps"><!-- Ajax --></div>
+
+      <?php echo $this->formRps; ?>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id             ="modal-modelo-nfse"
+     class          ="modal hide fade"
+     tabindex       ="-1"
+     role           ="dialog"
+     aria-labelledby="modal-lbl"
+     aria-hidden    ="true">
+
+  <div class="modal-body">
+    <img class="modal-img" src="<?php echo $this->baseUrl('/administrativo/img/nfse/modelo_.png'); ?>" alt="">
+  </div>
+
+</div>

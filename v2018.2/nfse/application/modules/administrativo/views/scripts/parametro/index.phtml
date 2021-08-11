@@ -1,0 +1,28 @@
+<h3>Parâmetros por contribuinte</h3>
+
+<?php if ($this->administrativo) { ?>
+<fieldset>
+  <legend>Busca contribuinte</legend>
+  
+  <form class="form-horizontal" name="busca">
+    <div class="control-group">
+      <label class="control-label" for="im">Inscrição Municipal: </label>
+      
+      <div class="controls">
+        <div class="input-append">
+          <input type="text" id="im" name="im" />
+          <button class="btn" id="buscador"><i class="icon-search"></i></button>            
+        </div>
+        
+        <span class="help-block" id="status"></span>
+      </div>
+    </div>    
+  </form>
+</fieldset>
+<?php } ?>
+
+<fieldset>
+  <legend>Parâmetros</legend>
+  
+  <?php echo $this->parametrosForm ?>
+</fieldset>

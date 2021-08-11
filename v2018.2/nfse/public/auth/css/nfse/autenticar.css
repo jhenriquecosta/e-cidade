@@ -1,0 +1,73 @@
+.db_form .db_esqueci_minha_senha {
+  width: 100%;
+  text-align: right !important;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 90%;
+}
+.db_form .db_esqueci_minha_senha a {
+  color: #334992;
+  text-decoration: underline;
+}
+.db_form .db_esqueci_minha_senha a:hover {
+  color: #333;
+}
+.db_informacoes {
+  font-size: 90%;
+  margin-top: 30px;
+  margin-right: 50px;
+}
+.db_informacoes_texto ul li {
+  color: #334992;
+  padding: 5px;
+  list-style-position: inside;
+  text-align: right;
+}
+.db_informacoes .db_informacoes_links {
+  text-align: right;
+  margin-top: 30px;
+}
+.db_informacoes .db_informacoes_links ul li {
+  text-align: center;
+  margin-left: 30px;
+}
+.db_informacoes .db_informacoes_links ul li:hover {
+  opacity: 0.8;
+}
+.db_informacoes .db_informacoes_links ul li a {
+  text-align: center;
+  color: #808080;
+  font-weight: bold;
+}
+.db_informacoes .db_informacoes_links ul li a {
+  text-decoration: none;
+}
+.db_informacoes .db_informacoes_links img {
+  text-align: center;
+  width: 80px;
+}
+
+.menu-links {
+  text-align: left;
+}
+
+.menu-links ul.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-links ul.links li.right-align {
+  padding: 0;
+  float: right;
+  margin-left: 20px;
+}
+
+.menu-links ul.links li.right-align a {
+  color: #334992;
+  font-size: 90%;
+}
+
+.menu-links ul.links li.right-align a:hover {
+  color: #333;
+}

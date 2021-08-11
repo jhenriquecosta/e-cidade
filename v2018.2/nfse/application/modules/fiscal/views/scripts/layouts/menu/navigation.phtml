@@ -1,0 +1,131 @@
+<?php
+
+$oTranslate   = Zend_Registry::get('Zend_Translate');
+$oSession     = new Zend_Session_Namespace('nfse');
+
+class Menu {
+  
+  public static function adicionaPagina ($aPagina) {
+    
+    $sHtml = '';
+    
+    $iQuantidadeSubPaginas = count($aPagina->pages);
+    
+    $sHtml .= '<li' . ($iQuantidadeSubPaginas ? ' class="dropdown"' : '') . '>';
+    $sHtml .= '<a href="'.($iQuantidadeSubPaginas ? '#' : $aPagina->getHref()).'" '.' class="dropdown-toggle" data-toggle="dropdown">';
+    
+    if ($aPagina->get('icon')) {
+      $sHtml .= '<i class="icon-' . $aPagina->get('icon') . '"></i>';
+    }
+    
+    $sHtml .= $aPagina->getLabel();
+    
+    if ($iQuantidadeSubPaginas > 0) {
+      $sHtml .= '<b class="caret"></b>';
+    }
+    
+    $sHtml .= '</a>';
+    
+    if ($iQuantidadeSubPaginas == 0) {
+      $sHtml .= '</li>';
+    }
+    
+    return $sHtml; 
+  }
+  
+  public static function adicionaSubPagina ($aSubPagina) {
+    
+    $sHtml = '';
+    $lExisteSubPaginaLiberada = FALSE;
+    $lExisteSubPaginas = count($aSubPagina->pages) > 0;
+    
+    
+    if ($lExisteSubPaginas) {
+      
+      foreach ($aSubPagina as $aSubSubPaginas) {
+        
+        if (DBSeller_Plugin_Auth::checkPermission("{$aSubSubPaginas->getModule()}/{$aSubSubPaginas->getController()}/{$aSubSubPaginas->getAction()}")) {
+          $lExisteSubPaginaLiberada = TRUE;
+        }
+      }
+      
+    } else {
+      
+      if (!DBSeller_Plugin_Auth::checkPermission("{$aSubPagina->getModule()}/{$aSubPagina->getController()}/{$aSubPagina->getAction()}")) {
+        return;
+      }
+    }
+    
+    if ($lExisteSubPaginaLiberada || !$lExisteSubPaginas) {
+      
+      $sElmClass  = $aSubPagina->get('class') ? ' ' . $aSubPagina->get('class') : NULL;
+      $sElmClass .= $lExisteSubPaginas ? ' dropdown-submenu ' : NULL; 
+      
+      $sHtml .= "<li class='submenu-link {$sElmClass}'>";
+      $sHtml .= "<a " . (!$lExisteSubPaginas ? "href='{$aSubPagina->getHref()}'" : '#') . "'>";
+      $sHtml .= $aSubPagina->getLabel();
+      $sHtml .= $lExisteSubPaginaLiberada ? '<b class="right-caret submenu-caret"></b>' : NULL;
+      $sHtml .= '</a>';
+    }
+    
+    if ($lExisteSubPaginas) {
+      
+      $sSubSubPagina = '<ul class="dropdown-menu">';
+      
+      foreach ($aSubPagina as $aSubSubPaginas) {
+        
+        $sSubSubPagina .= Menu::adicionaSubPagina($aSubSubPaginas);
+        
+        if (empty($sSubSubPagina)) {
+          return;
+        }
+      }
+      
+      $sHtml .= $sSubSubPagina;
+      $sHtml .= '</ul>'; 
+    }
+    
+    $sHtml .= '</li>';
+    
+    return $sHtml;
+  }
+}
+
+
+// Varre os menus
+$aHtml[] = '<ul class="nav">';
+
+foreach ($this->container as $aPagina) {
+  
+  $sPagina = Menu::adicionaPagina($aPagina);
+  
+  if (empty($sPagina)) {
+    continue;
+  }
+  
+  $aHtmlPagina  = $sPagina;
+  $aHtmlPagina .= '<ul class="dropdown-menu">';
+  
+  $lSubPagina = FALSE;
+  
+  foreach ($aPagina->pages as $aSubPagina) {
+    
+    $sSubPagina = Menu::adicionaSubPagina($aSubPagina);
+    
+    if (!empty($sSubPagina)) {
+      
+      $lSubPagina   = TRUE;
+      $aHtmlPagina .= $sSubPagina;
+    }
+  }
+  
+  $aHtmlPagina .= '</ul>';
+  
+  if ($lSubPagina) {
+    $aHtml[] = $aHtmlPagina;
+  }
+}
+
+$aHtml[] = '</ul>';
+
+echo join(PHP_EOL, $aHtml);

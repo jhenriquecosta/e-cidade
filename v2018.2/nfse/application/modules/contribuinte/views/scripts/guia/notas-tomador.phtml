@@ -1,0 +1,23 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel">Emissão de guia</h3>
+</div>
+
+<?php echo $this->form ?>
+
+<?php if (isset($this->arquivo)) { ?>
+<div style="text-align: center; margin: 5px;">
+  <a class="btn btn-success" href="/default/index/get/file/<?php echo $this->arquivo ?>" target="_blank">Abrir guia</a>
+</div>
+<?php } ?>
+
+<div class="modal-footer">
+  <?php if (!isset($this->arquivo)) { ?>
+  <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</a>
+  <a href="#" class="btn btn-success" id="fechar">Gerar guia</a> 
+  <?php } else { ?>
+  <a href="#" class="btn" id="ok-btn">Ok</a>
+  <?php } ?>
+</div>

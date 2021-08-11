@@ -1,0 +1,36 @@
+
+
+<?php if (count($this->contribuintes) == 1) { ?>
+
+  <?php foreach ($this->contribuintes as $contribuinte) { ?>
+
+    <?php echo $this->translate->_('Contribuinte:') ?>
+
+  <?php } ?>
+
+<?php } else { ?>
+
+  <?php echo $this->translate->_('Selecione um Usuário:') ?>
+
+  <select id="cb_contribuinte" class="input-xlarge">
+    <option value=""></option>
+    <?php foreach ($this->aUsuarios as $oUsuario) {
+
+      if (!$oUsuario instanceof Administrativo_Model_Usuario) {
+        continue;
+      }
+
+      $iCodigo  = $oUsuario->getId();
+      $sNome    = trim(DBSeller_Helper_String_Format::wordsCap($oUsuario->getNome()));
+      $sCnpjCpf = DBSeller_Helper_Number_Format::maskCPF_CNPJ($oUsuario->getLogin());
+
+      ?>
+      <option value="<?php echo $this->baseUrl("/fiscal/usuario-acesso/set-usuario/id/{$iCodigo}") ?>"><?php echo "{$sNome} ({$sCnpjCpf})" ?></option>
+    <?php } ?>
+  </select>
+
+  <a id="url_contribuinte" class="btn btn-primary">
+    <?php echo $this->translate->_('Selecionar') ?>
+  </a>
+
+<?php } ?>

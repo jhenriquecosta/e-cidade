@@ -1,0 +1,75 @@
+<!-- 1_10_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.12" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFSe > Emissão') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Emissão de Notas de Cooperativas para Associados') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora será possível que as Cooperativas emitam notas para os seus Associados, sem que haja tributação sobre a prestação do serviço.
+    Para identificar que um tomador de serviços é um associado da Cooperativa basta, nas informações do tomador, selecionar a opção “Sim” no campo “Associado”, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011200-1.png" src="/default/img/versao/V011200-1.png" title="V011200-1.png" style="max-width:70%; width: auto; height: auto;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Quando esta opção estiver selecionada, não haverá incidência de imposto.
+    Atenção: A opção de informar que um tomador de serviços é associado só estará disponível para as empresas com regime tributário “Cooperativa”.') ?>
+            </p>
+          </li>
+         </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Guia > NFSe > Consulta') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Cancelamento de Notas') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora é possível buscar usuários pelo seu perfil. Para isso basta escolher o perfil do usuário, que pode ser Fiscal, Administrativo, Tomador, Prestador NFSe, Prestador Eventual, Prestador DMS ou Contador.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011200-2.png" src="/default/img/versao/V011200-2.png" title="V011200-2.png" style="max-width:70%; width: auto; height: auto;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

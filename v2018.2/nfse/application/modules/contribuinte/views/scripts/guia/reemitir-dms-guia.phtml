@@ -1,0 +1,34 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Reemisão de Guia') ?></h3>
+</div>
+
+<div style="text-align:center;margin:10px 5px;padding:10px 0">
+  <?php if ($this->message) { ?>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <?php echo $this->message ?>
+  </div>
+  <?php } ?>
+  
+  <?php if (isset($this->arquivo)) { ?>
+  <div class="alert alert-success"><?php echo $this->translate->_('Guia emitida com sucesso.') ?></div>
+  <a class="btn btn-success" href="/default/index/get/file/<?php echo $this->arquivo ?>" target="_blank">
+    <?php echo $this->translate->_('Abrir guia de pagamento') ?>
+  </a>
+  <br><br>
+  <?php } else { ?>
+  <?php echo $this->form ?>
+  <?php } ?>
+</div>
+
+<div class="modal-footer">
+  <?php if (!isset($this->arquivo)) { ?>
+  <a href="#" class="btn" data-dismiss="modal" aria-hidden="true"><?php echo $this->translate->_('Cancelar') ?></a>
+  <a href="#" class="btn btn-success" id="fechar"><?php echo $this->translate->_('Reemitir') ?></a> 
+  <?php } else { ?>
+  <a href="#" class="btn" id="ok-btn"><?php echo $this->translate->_('Fechar') ?></a>
+  <?php } ?>
+</div>

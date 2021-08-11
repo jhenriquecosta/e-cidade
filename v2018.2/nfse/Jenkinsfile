@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    environment {
+        PRODUCT_NAME = 'e-cidadeonline2'
+        PACKAGE_EXTENSION = '.tar.gz'
+        NAMESPACE = 'dbseller'
+        REGISTRY_URL = 'registry.dbseller.com.br:5000'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'git archive --prefix="$PRODUCT_NAME/" --format=tar.gz -o ' + env.PRODUCT_NAME + env.PACKAGE_EXTENSION + ' HEAD'
+                archiveArtifacts env.PRODUCT_NAME + env.PACKAGE_EXTENSION
+                stash includes: env.PRODUCT_NAME + env.PACKAGE_EXTENSION, name: 'package'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                dir('docker') {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '5804a38b-8d3e-431b-bbba-2c424458ed14', url: 'git@gitlab.dbseller.com.br:DBSeller/docker-library.git']]])
+                    unstash 'package'
+                    sh 'mv ' + env.PRODUCT_NAME + env.PACKAGE_EXTENSION + ' ' + env.PRODUCT_NAME + '/resources/'
+                    script {    
+                        def ref = env.BRANCH_NAME;
+
+                        if ( ref.startsWith("tags/") ) {
+                            ref = ref.replace("tags/", "");
+                        }
+
+                        if ( ref.startsWith("mr/") ) {
+                            ref = ref.replace("/head", "")
+                        }
+
+                        ref = ref.replaceAll("/", "-")
+
+                        def imageName = env.REGISTRY_URL + "/" + env.NAMESPACE + '/' + env.PRODUCT_NAME + ":" + ref
+                        def image = docker.build(imageName, env.PRODUCT_NAME);
+                        image.push();
+                    }
+                }
+            }
+        }
+    }
+}

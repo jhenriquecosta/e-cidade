@@ -1,0 +1,31 @@
+<p>Caro (a) <strong><?php echo $this->tomadorNome ?></strong>,</p>
+<p>
+  Nota Fiscal de Prestação de Serviços número
+  <strong><?php echo $this->nfseNumero ?></strong> referente aos serviços tomados.
+</p>
+
+<p>
+  Para verificar a autenticidade poderá acessar o link:
+  <a href="<?php echo $this->nfseUrl ?>"><?php echo $this->nfseUrl ?></a>
+</p>
+
+<br />
+<br />
+
+  <div style="border:1px solid #f00;padding:10px">
+    <p style="font-weight:bold;color:#f00">*Este documento teve o seu cancelamento rejeitado pelo fiscal.</p>
+    <p><strong>Informações adicionais enviadas pelo fiscal:</strong></p>
+    <p><?php echo $this->justificativa_fiscal ?></p>
+  </div>
+
+<br />
+<br />
+
+<p><strong><?php echo $this->prestadorNome ?></strong></p>
+<p><strong><?php echo $this->prestadorCnpj ?></strong></p>
+
+<br />
+
+<p style="font-weight:bold;color:#f00">
+  <strong>*Favor não responder este e-mail.</strong>
+</p>

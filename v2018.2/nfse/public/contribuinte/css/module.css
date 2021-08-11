@@ -1,0 +1,12 @@
+@media ( max-width : 980px) {
+  .db-container {
+    margin-top: -20px;
+    margin-bottom: 0;
+  }
+  
+  .nfse-header {
+    background-color: #fff;
+    display: block !important;
+    width: auto !important;
+  }
+}

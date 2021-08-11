@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+  <nav>
+    <cadastro>
+      <label>Cadastros</label>
+      <menu>sideNav</menu>
+      <uri></uri>
+      <pages>
+        <usuario>
+          <label>Usuários</label>
+          <module>administrativo</module>
+          <controller>usuario</controller>
+          <action>index</action>
+        </usuario>
+        <perfil>
+          <label>Perfis</label>
+          <module>administrativo</module>
+          <controller>perfil</controller>
+          <action>index</action>
+        </perfil>
+      </pages>
+    </cadastro>
+    <consultas>
+      <label>Consultas</label>
+      <menu>sideNav</menu>
+      <uri></uri>
+      <pages>
+        <protocolo>
+          <label>Protocolo</label>
+          <module>administrativo</module>
+          <controller>protocolo</controller>
+          <action>consulta</action>
+        </protocolo>
+      </pages>
+    </consultas>
+  </nav>
+</configdata>

@@ -1,0 +1,71 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Resultado Pesquisa') ?></legend>
+  <table class="table table-bordered table-condensed table-striped table-hover table-responsive" style="table-layout:fixed">
+    <thead>
+    <tr>
+      <th class="text-center db-coluna01"><?php echo $this->translate->_('Protocolo') ?></th>
+      <th class="text-center db-coluna02"><?php echo $this->translate->_('Data') ?></th>
+      <th class="text-center db-coluna03"><?php echo $this->translate->_('Tipo') ?></th>
+      <th class="text-center db-coluna04"><?php echo $this->translate->_('Sistema') ?></th>
+      <th class="text-center db-coluna05"><?php echo $this->translate->_('Ações') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    if (count($this->protocolos) > 0) {
+
+      $sUrlFormEmail    = '/administrativo/protocolo/email/id/%s';
+      $sUrlImprimirPDF  = '/administrativo/protocolo/imprimir/id/%s';
+      foreach ($this->protocolos as $oProtocolo) {
+
+        $sMensagemTooltip = "Código: {$oProtocolo->getProtocolo()} / Mensagem: {$oProtocolo->getMensagem()}";
+    ?>
+        <tr>
+          <td class="text-left db-coluna01">
+            <a class="tooltip-modal"
+               data-content="<?php echo $sMensagemTooltip ?>"
+               href="#">
+               <?php echo $oProtocolo->getId() ?>
+            </a>
+          </td>
+          <td class="text-center db-coluna02">
+            <?php echo $oProtocolo->getDataProcessamento()->format('d/m/Y H:m:s');?>
+          </td>
+          <td class="text-left db-coluna03"><?php echo $oProtocolo->retornaDescricaoTipo($oProtocolo->getTipo()) ?></td>
+          <td class="text-left db-coluna04"><?php echo $oProtocolo->getSistema() ?></td>
+          <td class="text-center db-coluna05">
+            <a href="<?php echo $this->serverUrl(sprintf($sUrlImprimirPDF, $oProtocolo->getId())) ?>"
+               title="<?php echo $this->translate->_('Imprimir') ?>"
+               class="btn btn-mini">
+              <i class="icon-print"></i>
+            </a>
+            <a href="#myModal" 
+               title="<?php echo $this->translate->_('Enviar por Email') ?>" 
+               class="btn btn-mini"
+               data-toggle="modal"
+               modal-url="<?php echo $this->serverUrl(sprintf($sUrlFormEmail, $oProtocolo->getId())) ?>"
+               modal-width="500">
+              <i class="icon-envelope"></i>
+            </a>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="5">
+          <?php echo $this->translate->_('Nenhum registro encontrado.') ?>
+        </td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+  <?php
+  $this->urlFor("/administrativo/protocolo/consulta-processar/{$this->sBusca}");
+  echo $this->paginationControl(
+          $this->protocolos,
+          'Sliding',
+          'layouts/pager.phtml',
+          array('translate' => $this->translate)
+        );
+  ?>
+</fieldset>

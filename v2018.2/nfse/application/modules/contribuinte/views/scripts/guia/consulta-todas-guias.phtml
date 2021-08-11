@@ -1,0 +1,125 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Guias') ?></legend>
+
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+      <th><?php echo $this->translate->_('Competência') ?></th>
+      <th><?php echo $this->translate->_('Data Vencimento') ?></th>
+      <th><?php echo $this->translate->_('Valor Original') ?></th>
+      <th><?php echo $this->translate->_('Valor Débito') ?></th>
+      <th><?php echo $this->translate->_('Valor Corrigido') ?></th>
+      <th><?php echo $this->translate->_('Valor Pago') ?></th>
+      <th><?php echo $this->translate->_('Situação') ?></th>
+      <th class="table-th-acao"><?php echo $this->translate->_('Ação') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (count($this->oGuias) > 0) { ?>
+      <?php foreach ($this->oGuias as $oGuia) {
+
+        $oSituacaoGuia = new stdclass();
+        $mSituacao = (isset($oGuia->situacao)) ? $oGuia->situacao : NULL;
+        $nValorOrigem = (isset($oGuia->valor_origem)) ? $oGuia->valor_origem : 0;
+
+        switch ($mSituacao) {
+          case 'a' :
+
+            $oSituacaoGuia->sClassLabel = 'label label-warning';
+
+            if ($this->iTipoEmissao == Contribuinte_Model_ContribuinteAbstract::TIPO_EMISSAO_NOTA) {
+
+              $oSituacaoGuia->sUrlBotao = 'reemitir';
+              $iModalHeight             = 250;
+            } else {
+
+              $oSituacaoGuia->sUrlBotao = 'reemitir-dms-guia';
+              $iModalHeight             = 200;
+            }
+            break;
+          case 'p' :
+            $oSituacaoGuia->sClassLabel = 'label label-success';
+            break;
+          case 'c' :
+            $oSituacaoGuia->sClassLabel = 'label label-important';
+            break;
+          case 'd' :
+          case 'x' :
+          default  :
+            $oSituacaoGuia->sClassLabel = 'label';
+        }
+      ?>
+        <tr>
+          <td><?php echo $oGuia->competencia ?></td>
+          <td><?php echo DBSeller_Helper_Date_Date::invertDate($oGuia->data_vencimento, '/') ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($nValorOrigem, 2, 'R$ ') ?></td>
+          <td>
+            <?php
+              if (Contribuinte_model_guia::$PAGA == $mSituacao) {
+                echo '-';
+              } else {
+                echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_historico, 2, 'R$ ');
+              }
+            ?>
+          </td>
+          <td>
+            <?php
+            if (Contribuinte_model_guia::$PAGA == $mSituacao) {
+              echo '-';
+            } else {
+              echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_corrigido, 2, 'R$ ');
+            }
+            ?>
+          </td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_pago, 2, 'R$ ') ?></td>
+          <td>
+          <?php if (isset($oGuia->situacao)) { ?>
+            <span class="<?php echo $oSituacaoGuia->sClassLabel ?>">
+              <?php echo Contribuinte_model_guia::$SITUACAO[$oGuia->situacao] ?>
+            </span>
+            <?php if (isset($oGuia->pagamento_parcial)) { ?>
+              <span class="label label-info">Pagamento Parcial</span>
+            <?php } ?>
+          <?php } else { ?>
+            <span class="label label-success">Paga</span>
+          <?php } ?>
+          </td>
+          <td>
+            <?php if (isset($oSituacaoGuia->sUrlBotao)) { ?>
+              <button modal-height="<?php echo $iModalHeight; ?>"
+                      modal-width="500"
+                      modal-url="/contribuinte/guia/<?php echo $oSituacaoGuia->sUrlBotao ?>/guia/<?php echo $oGuia->id ?>"
+                      data-toggle="modal"
+                      role="button"
+                      href="#myModal"
+                      class="btn btn-mini btn-success input-mini">
+                <?php echo $this->translate->_('Reemitir'); ?>
+              </button>
+            <?php } else if (isset($oGuia->situacao)) { ?>
+              <button class="btn btn-mini input-mini" disabled="disabled">
+                <?php echo $this->translate->_('Reemitir'); ?>
+              </button>
+            <?php } else { ?>
+              <span class="label db-label-situacao-documento">
+                 <?php echo $this->translate->_('Simples Nacional') ?>
+              </span>
+            <?php } ?>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="8"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+    <?php
+    echo $this->paginationControl(
+          $this->oGuias,
+          'Sliding',
+          'layouts/pager.phtml',
+          array('translate' => $this->translate)
+        );
+  ?>
+</fieldset>

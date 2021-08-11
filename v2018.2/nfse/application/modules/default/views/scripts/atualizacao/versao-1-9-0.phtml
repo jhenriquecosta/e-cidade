@@ -1,0 +1,151 @@
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.9" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Guia > NFS-e/DMS') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Pagamento Parcial de Guias') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora será possível efetuar pagamentos parciais de débitos de ISS gerados pelo sistema NFSe.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('Quando um pagamento parcial for realizado, na consulta de guias constará a guia com os estados “Em aberto” e “Pagamento Parcial”, assim como valor pago pelo contribuinte, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-1.png" src="/default/img/versao/V010900-1.png" title="V010900-1.png" style="max-width: 90%;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFSe > Consulta > Cancelamento') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Cancelamento de notas de competência fechada') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora será possível solicitar o cancelamento de notas de competências fechadas, respeitando o período de retroatividade e desde que não tenha sido gerada a guia da competência.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('O cancelamento de notas de competência fechada sempre deverá passar por aprovação do fiscal, mesmo para as prefeituras que optem por liberar para os contribuintes cancelarem notas.') ?>
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('Administrativo > Usuários > Editar') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Mudança do Login do usuário') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora não será mais possível alterar o Login dos usuários do sistema.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-2.png" src="/default/img/versao/V010900-2.png" title="V010900-2.png" style="max-width: 90%;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFSe > Requisição') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Requisição para emissão de Notas') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora a prefeitura poderá optar se os contribuintes precisarão ou não fazer requisições para emitir notas fiscais (como acontece na RPS).') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('Para isso, é necessário selecionar a opção “Requisição NFS-e” na configuração dos parâmetros da Prefeitura, no módulo administrativo.') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-3.png" src="/default/img/versao/V010900-3.png" title="V010900-3.png" style="max-width: 90%;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de quando esse parâmetro for ativado, os contribuintes serão obrigados à requisitar a emissão de notas fiscais, através da rotina de Requisição, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-4.png" src="/default/img/versao/V010900-4.png" title="V010900-4.png" style="max-width: 90%;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Todas as requisições feitas pelos contribuintes serão encaminhadas para aprovação dos fiscais, através da rotina “Requisição Aidof”, no e-Cidade, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-5.png" src="/default/img/versao/V010900-5.png" title="V010900-5.png" style="max-width: 90%;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('O fiscal poderá escolher a quantidade de notas à liberar, que poderá ser igual, maior, ou menor à quantidade solicitada.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('Após aprovadas, as requisições passarão à somar o número de notas que o contribuinte poderá emitir.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('No topo da tela de emissão de notas será exibido um contador que indicará quantas notas ainda restam para o contribuinte:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V010900-6.png" src="/default/img/versao/V010900-6.png" title="V010900-6.png" style="max-width: 90%;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

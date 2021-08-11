@@ -1,0 +1,45 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
+  <button type="button" id='btnClose' class="close fechar" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Fechar Competência') ?></h3>
+</div>
+
+<div style="text-align:center;margin:10px 5px;min-width:730px">
+  <?php if ($this->mensagem_erro) { ?>
+  <div class="alert alert-error">
+    <strong>Ocorreu um erro ao emitir a guia:</strong>
+    <br>
+    <?php echo $this->mensagem_erro ?>
+  </div>
+  <br><br>
+  <?php } else if (isset($this->arquivo)) { ?>
+  <div class="alert alert-success">
+    <?php echo $this->translate->_('Guia emitida com sucesso.') ?>
+  </div>
+  <a class="btn btn-success" href="/default/index/get/file/<?php echo $this->arquivo ?>" target="_blank">
+    <?php echo $this->translate->_('Abrir guia de pagamento') ?>
+  </a>
+  <br><br>
+  <?php } else { ?>
+  <div class="alert alert-warning">
+    <?php echo $this->translate->_('<b>Atenção:</b> O fechamento desta competência implicará no bloqueio das emissões de NFSe durante este mês.') ?>
+  </div>
+  <?php echo $this->form ?>
+  <?php } ?>
+</div>
+
+<div class="modal-footer">
+  <?php if (!isset($this->arquivo)) { ?>
+  <button class="btn fechar" data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Cancelar') ?>
+  </button>
+  <button class="btn btn-success" id="btnFecharCompetencia">
+    <?php echo $this->translate->_('Fechar Competência') ?>
+  </button>
+  <?php } else { ?>
+  <button class="btn" id="ok-btn">
+    <?php echo $this->translate->_('Fechar') ?>
+  </button>
+  <?php } ?>
+</div>

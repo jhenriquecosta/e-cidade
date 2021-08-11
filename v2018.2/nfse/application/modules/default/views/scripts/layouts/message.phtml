@@ -1,0 +1,11 @@
+<?php
+if (!empty($this->messages)) {
+    foreach ($this->messages as $message) { ?>
+        <div class="alert <?php echo 'alert-' . key($message); ?>">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo current($message) ?> 
+        </div>
+    <?php
+    }
+}
+?>

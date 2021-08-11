@@ -1,0 +1,20 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close fechar-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Confirmar Cadastro de Usuário') ?></h3>
+</div>
+
+<div class="modal-body">
+  <div id="erros"><!-- Dinamico Ajax --></div>
+  <?php echo $this->form ?>
+</div>
+
+<div class="modal-footer">
+  <button id="cancelar"  class="input-medium btn btn-danger" data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Cancelar') ?>
+  </button>
+  <button id="confirmar" class="input-medium btn btn-success">
+    <?php echo $this->translate->_('Confirmar') ?>
+  </button>
+</div>

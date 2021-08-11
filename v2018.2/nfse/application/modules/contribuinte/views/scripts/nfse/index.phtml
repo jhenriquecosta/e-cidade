@@ -1,0 +1,35 @@
+<?php
+
+if ($this->bloqueado_msg == false) {
+
+  if (isset($this->oForm)) {
+
+    $this->oForm->getElement('reter_pessoa_fisica')->setValue($this->bReterImposto);
+    $this->oForm->getElement('dt_nota')->setMultiOptions($this->aDiasRetroativosEmissao);
+    $this->oForm->getElement('t_cod_pais')->setMultiOptions($this->aPaises)->setValue('01058'); // Código Bacen do Brasil
+    $this->oForm->getElement('s_dados_cod_pais')->setMultiOptions($this->aPaises)->setValue('01058'); // Código Bacen do Brasil
+    $this->oForm->getElement('grupo_nota')->setValue(Contribuinte_Model_Nota::GRUPO_NOTA_NFSE);
+    $this->oForm->getElement('s_vl_aliquota')->setValue(0);
+    $this->oForm->getElement('s_tributacao_municipio')->setValue('f');
+
+    // Estado e município do tomador
+    $this->oForm->getElement('t_uf')->setAttrib('data-estado-origem', $this->sUfEstado);
+    $this->oForm->getElement('t_cod_municipio')->setAttrib('data-municipio-origem', $this->iCodigoIbge);
+
+    // Estado e município do serviço
+    $this->oForm->getElement('estado')->setAttrib('data-estado-origem', $this->sUfEstado);
+    $this->oForm->getElement('s_dados_municipio_incidencia')->setAttrib('data-municipio-origem', $this->iCodigoIbge);
+
+    // Retido
+    $this->oForm->getElement('s_dados_iss_retido')->setValue(0);
+
+    echo $this->oForm->render();
+  }
+} else {
+  ?>
+  <div class="alert alert-error">
+    <?php echo $this->bloqueado_msg; ?><br />
+    Entre em contato com o setor de arrecadação da prefeitura.
+  </div>
+  <?php
+}

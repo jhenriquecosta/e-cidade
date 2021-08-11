@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Editar Permissões') ?></h3>
+</div>
+
+<form class="form-horizontal" 
+      name="form_acoes" 
+      action="<?php echo $this->baseUrl('/administrativo/usuario/set-permissao') ?>">
+  <div class="modal-body">
+    <h4><?php echo $this->contribuinte->getNome() ?></h4>
+    
+    <input type="hidden" name="usuario" value="<?php echo $this->usuario->getId() ?>"> 
+    <input type="hidden" name="contribuinte" value="<?php echo $this->usuario_contribuinte ?>">
+    
+    <ul>
+      <?php foreach ($this->modulos as $m) { ?>
+      <?php if ($m->getVisivel() == false) continue; ?>
+      <li><?php echo $m->getNome(); ?>
+        <ul>
+          <?php foreach ($m->getControles() as $c) { ?>
+          <?php if ($c->getVisivel() == false) continue; ?>
+          <li><?php echo $c->getNome() ?>
+            <ul>
+              <?php foreach ($c->getAcoes() as $a) { ?>
+              <li>
+                <input type="checkbox" id="acao_<?php echo $a->getId() ?>" name="acao[<?php echo $a->getId() ?>]"
+                <?php if (array_search($a->getId(), $this->permissoes) !== false) echo 'checked' ?>>
+                <?php echo $a->getNome() ?>
+              </li>
+              <?php } ?>
+            </ul>
+          </li>
+          <?php } ?>
+        </ul>
+      </li>
+      <?php } ?>
+    </ul>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo $this->translate->_('Fechar') ?></button>
+    <button class="btn btn-primary" id="enviaPermissao"><?php echo $this->translate->_('Salvar') ?></button>
+  </div>
+</form>

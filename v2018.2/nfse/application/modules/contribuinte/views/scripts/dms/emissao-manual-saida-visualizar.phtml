@@ -1,0 +1,17 @@
+<h3>
+  <?php echo $this->translate->_('Detalhes do DMS') ?> 
+  <small>
+    (
+      <a href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida-lista-dms/mes/{$this->iCompetenciaMes}/ano/{$this->iCompetenciaAno}") ?>">
+        <?php echo $this->translate->_('Código:') . ' ' .$this->iIdDms ?>&nbsp;&nbsp;
+        <?php echo $this->translate->_('Competência:') . ' ' . DBSeller_Helper_Date_Date::mesExtenso($this->iCompetenciaMes)."/{$this->iCompetenciaAno}" ?>
+      </a>
+    )
+  </small>
+</h3>
+
+<div id="dms_lista" 
+     data-loading="<?php echo $this->translate->_('Processando...') ?>" 
+     data-url="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida-lista-notas/visualizar/sim/id_dms/{$this->iIdDms}") ?>">
+  <!-- Via Ajax -->
+</div>

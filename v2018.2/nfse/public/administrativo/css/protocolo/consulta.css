@@ -1,0 +1,23 @@
+.db-coluna01 {
+  width: 3px;
+}
+
+.db-coluna02 {
+  width: 10px; 
+}
+
+.db-coluna03 {
+  width: 10px;
+}
+
+.db-coluna04 {
+  width: 20px;
+}
+
+.db-coluna05 {
+  width: 5px;
+}
+
+.popover-medium {
+  max-width: 450px;
+}

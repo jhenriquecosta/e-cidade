@@ -1,0 +1,91 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Lista de Usuários') ?></legend>
+
+  <div class="action-bar">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('/administrativo/usuario/novo')) { ?>
+    <a class="btn btn-primary" href="<?php echo $this->baseUrl('/administrativo/usuario/novo') ?>">
+      <?php echo $this->translate->_('Novo Usuário') ?>
+    </a>
+    <?php } ?>
+  </div>
+
+  <div class="pull-right">
+    <?php echo $this->formBusca ?>
+
+    <div style="font-size:90%;margin-top:-20px">
+      <?php if ($this->busca != '') { ?>
+      Buscando por: "<?php echo $this->busca ?>"
+      (<a href="<?php echo $this->baseUrl('/administrativo/usuario/index') ?>">
+        <?php echo $this->translate->_('Cancelar') ?>
+       </a>)
+      <?php } ?>
+
+    </div>
+  </div>
+
+  <br><br>
+
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Login')                     ?></th>
+        <Th><?php echo $this->translate->_('Nome')                      ?></th>
+        <th><?php echo $this->translate->_('Perfil')                    ?></th>
+        <th><?php echo $this->translate->_('Admin')                     ?></th>
+        <th style="width:120px"><?php echo $this->translate->_('Ações') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->usuarios) > 0) { ?>
+      <?php foreach ($this->usuarios as $usuario) { ?>
+      <tr>
+        <td><?php echo $usuario->getLogin()                             ?></td>
+        <td><?php echo $usuario->getNome()                              ?></td>
+        <td><?php echo $usuario->getPerfil()->getNome()                 ?></td>
+        <td><?php echo $usuario->getAdministrativoString()              ?></td>
+        <td>
+          <?php if (DBSeller_Plugin_Auth::checkPermission('/administrativo/usuario/editar')) { ?>
+          <a class="btn btn-mini btn-primary"
+             href="<?php echo $this->baseUrl("/administrativo/usuario/editar/id/{$usuario->getId()}") ?>">
+            <?php echo $this->translate->_('Editar') ?>
+          </a>
+          <?php }?>
+
+          <?php
+          if ($usuario->getHabilitado() &&
+              DBSeller_Plugin_Auth::checkPermission('/administrativo/usuario/desativar') &&
+              $this->user->getId() != $usuario->getId()) {
+          ?>
+          <a class="btn btn-mini btn-danger"
+             href="<?php echo $this->baseUrl("/administrativo/usuario/desativar/id/{$usuario->getId()}") ?>">
+            <?php echo $this->translate->_('Desativar') ?>
+          </a>
+
+          <?php
+          } else if (DBSeller_Plugin_Auth::checkPermission('/administrativo/usuario/ativar') &&
+                     $this->user->getAdministrativo() && $this->user->getId() != $usuario->getId()) {
+          ?>
+          <a class="btn btn-mini btn-danger"
+             href="<?php echo $this->baseUrl("/administrativo/usuario/ativar/id/{$usuario->getId()}") ?>">
+            <?php echo $this->translate->_('Habilitar') ?>
+          </a>
+          <?php } ?>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="5"><?php echo $this->translate->_('Nenhum registro foi encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+
+  <?php
+  // Necessario para setar a url que o paginador vai apontar
+  $this->urlFor("/administrativo/usuario/index/busca/{$this->busca}/id_perfil/{$this->id_perfil}");
+
+  echo $this->paginationControl($this->usuarios, 'Sliding', 'layouts/pager.phtml',
+                                array('translate' => $this->translate));
+  ?>
+</fieldset>

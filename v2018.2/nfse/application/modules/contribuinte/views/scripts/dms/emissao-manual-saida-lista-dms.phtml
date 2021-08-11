@@ -1,0 +1,131 @@
+<?php if (isset($this->competencia)) {?>
+  <fieldset>
+    <legend>
+      <?php echo $this->translate->_('Competência:') ?>
+      <a href="<?php echo $this->baseUrl('/contribuinte/dms/emissao-manual-saida-competencia') ?>"
+         style="font-weight:normal">
+        <?php echo DBSeller_Helper_Date_Date::mesExtenso($this->competencia->mes) ?>/<?php echo $this->competencia->ano ?>
+      </a>
+    </legend>
+
+    <div class="pull-left" style="margin: 10px 10px 10px 0">
+      <?php if ($this->sem_requisicao || $this->declarado_sem_movimento) { ?>
+        <a class="btn disabled">
+          <?php echo $this->translate->_('Novo DMS') ?>
+        </a>
+      <?php } else { ?>
+        <a
+          href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida/mes/{$this->competencia->mes}/ano/{$this->competencia->ano}") ?>"
+          class="btn">
+          <?php echo $this->translate->_('Novo DMS') ?>
+        </a>
+      <?php } ?>
+    </div>
+
+    <?php if ($this->declarado_sem_movimento) { ?>
+      <div class="pull-left text-error" style="padding:4px;margin-top:10px">
+        <?php
+        echo $this->translate->_('Não é possível emitir um novo DMS, pois a competência foi declarada como sem movimento.
+          Entre em contato com o setor de arrecadação da prefeitura.');
+        ?>
+      </div>
+    <?php } else if ($this->sem_requisicao) { ?>
+      <div class="pull-left text-error" style="padding:4px;margin-top:10px">
+        <?php
+        printf(
+          $this->translate->_('Nenhuma requisição foi encontrada, %sclique aqui%s para emitir uma nova requisição.'),
+          '<a href=" ' . $this->baseUrl('/contribuinte/dms/requisicao') . ' ">',
+          '</a>'
+        );
+        ?>
+      </div>
+    <?php } ?>
+
+    <table id="dms-lista" class="table table-bordered table-condensed table-striped table-hover">
+      <thead>
+      <tr>
+        <th><?php echo $this->translate->_('DMS') ?></th>
+        <th><?php echo $this->translate->_('Data Criação') ?></th>
+        <th><?php echo $this->translate->_('Mês/Ano Competência') ?></th>
+        <th><?php echo $this->translate->_('Valor Imposto') ?></th>
+        <th><?php echo $this->translate->_('Status') ?></th>
+        <th style="width:130px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php if (count($this->aDms) > 0) { ?>
+        <?php foreach ($this->aDms as $oDms) {
+          $aStatus     = array(
+            ''             => '',
+            'aberto'       => 'warning',
+            'fechado'      => 'info',
+            'anulada'      => 'important',
+            'pago'         => 'success',
+            'emitida_guia' => 'info'
+          );
+          $sStatusGuia = str_replace(' ', '_', strtolower(trim($oDms->status_guia)));
+          ?>
+          <tr>
+            <td><?php echo $oDms->id ?></td>
+            <td><?php echo $oDms->data_operacao ?></td>
+            <td><?php echo $oDms->competencia ?></td>
+            <td><?php echo $oDms->valor_imposto ?></td>
+            <td><span class="label label-<?php echo $aStatus[$sStatusGuia] ?>"><?php echo $oDms->status_guia ?></span>
+            </td>
+            <td>
+              <a
+                href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida-visualizar/id_dms/{$oDms->id}") ?>"
+                class="btn btn-mini"
+                title="<?php echo $this->translate->_('Visualizar Notas') ?>">
+                <i class="icon-eye-open"></i>
+              </a>
+              <?php if (in_array(strtolower($oDms->status_guia), array('aberto', 'fechado'))) { ?>
+                <a href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida/id_dms/{$oDms->id}") ?>"
+                   class="btn btn-mini"
+                   title="<?php echo $this->translate->_('Editar') ?>">
+                  <i class="icon-edit"></i>
+                </a>
+              <?php } else { ?>
+                <a class="btn btn-mini disabled"
+                   title="<?php echo $this->translate->_('Editar') ?>">
+                  <i class="icon-edit"></i>
+                </a>
+              <?php } ?>
+
+              <?php if (in_array(strtolower($oDms->status_guia), array('aberto', 'fechado'))) { ?>
+                <a
+                  href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-lista-dms-excluir/id_dms/{$oDms->id}") ?>"
+                  class="btn btn-mini btn-danger btn_excluir"
+                  title="<?php echo $this->translate->_('Excluir') ?>">
+                  <i class="icon-remove icon-white"></i>
+                </a>
+              <?php } else { ?>
+                <a class="btn btn-mini btn-danger disabled" title="<?php echo $this->translate->_('Excluir') ?>">
+                  <i class="icon-remove icon-white"></i>
+                </a>
+              <?php } ?>
+
+              <?php if (in_array(strtolower($oDms->status_guia), array('aberto'))) { ?>
+                <a
+                  href="<?php echo $this->baseUrl("/contribuinte/dms/emissao-manual-saida-lista-dms-alterar-status/status/fechado/id_dms/{$oDms->id}") ?>"
+                  class="btn btn-mini btn-success btn_fechar"
+                  title="<?php echo $this->translate->_('Fechar DMS') ?>">
+                  <i class="icon-ok icon-white"></i>
+                </a>
+              <?php } else { ?>
+                <a class="btn btn-mini btn-success disabled" title="<?php echo $this->translate->_('Fechar DMS') ?>">
+                  <i class="icon-ok icon-white"></i>
+                </a>
+              <?php } ?>
+            </td>
+          </tr>
+        <?php } ?>
+      <?php } else { ?>
+        <tr>
+          <td colspan="5"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+        </tr>
+      <?php } ?>
+      </tbody>
+    </table>
+  </fieldset>
+<?php }?>

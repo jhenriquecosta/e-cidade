@@ -1,0 +1,10 @@
+ul.modules {
+  margin-left: 0;
+}
+ul.modules li {
+  width: 100px;
+  text-align: center;
+}
+ul.modules li a:hover {
+  opacity: 0.8
+}

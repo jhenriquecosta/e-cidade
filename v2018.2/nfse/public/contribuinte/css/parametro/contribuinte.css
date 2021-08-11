@@ -1,0 +1,11 @@
+.logo-contribuinte {
+  margin-top: 0px !important;
+  margin-right: 0px !important;
+}
+
+.logo-contribuinte input[type="image"], .logo-contribuinte img {
+  width: 100px;
+  height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+  <nav>
+    <cadastros>
+      <label>Cadastros</label>
+      <uri></uri>
+      <pages>
+        <listar_cadastros>
+          <label>Acesso ao Usuário</label>
+          <module>fiscal</module>
+          <controller>usuario-acesso</controller>
+          <action>listar-cadastros</action>
+        </listar_cadastros>
+        <usuario>
+          <label>Cadastros Eventuais Pendentes</label>
+          <module>fiscal</module>
+          <controller>usuario-eventual</controller>
+          <action>listar-novos-cadastros</action>
+        </usuario>
+        <autorização_cancelamento_nfse>
+          <label>Autorização de Cancelamento de NFS-e</label>
+          <module>fiscal</module>
+          <controller>cancelamento-nfse</controller>
+          <action>consultar</action>
+        </autorização_cancelamento_nfse>
+        <cancelamento_nfse>
+          <label>Cancelamentos de NFS-e</label>
+          <module>fiscal</module>
+          <controller>procedimento</controller>
+          <action>cancela-nota</action>
+        </cancelamento_nfse>
+        <abertura_competencia>
+          <label>Abertura de Competência</label>
+          <module>fiscal</module>
+          <controller>procedimento</controller>
+          <action>abertura-competencia</action>
+        </abertura_competencia>
+        <alteracao_regime_notas_simples>
+          <label>Alteração de Regime de Notas para Simples</label>
+          <module>fiscal</module>
+          <controller>procedimento</controller>
+          <action>alteracao-regime-notas-simples</action>
+        </alteracao_regime_notas_simples>
+      </pages>
+    </cadastros>
+    <relatorios>
+      <label>Relatórios</label>
+      <uri></uri>
+      <pages>
+        <comparativo_declaracoes>
+          <label>Comparativo de Declarações</label>
+          <module>fiscal</module>
+          <controller>relatorio3</controller>
+          <action>comparativo-declaracoes</action>
+        </comparativo_declaracoes>
+        <comparativo_retencoes>
+          <label>Comparativo de Retenções</label>
+          <module>fiscal</module>
+          <controller>relatorio4</controller>
+          <action>comparativo-retencoes</action>
+        </comparativo_retencoes>
+        <declaracoes_sem_movimento>
+          <label>Declarações Sem Movimento</label>
+          <module>fiscal</module>
+          <controller>relatorio2</controller>
+          <action>declaracoes-sem-movimento</action>
+        </declaracoes_sem_movimento>
+        <empresas_omissas>
+          <label>Empresas Omissas</label>
+          <module>fiscal</module>
+          <controller>relatorio2</controller>
+          <action>empresas-omissas</action>
+        </empresas_omissas>
+        <evolucao_arrecadacao>
+          <label>Evolução de Arrecadação</label>
+          <module>fiscal</module>
+          <controller>relatorio1</controller>
+          <action>evolucao-arrecadacao</action>
+        </evolucao_arrecadacao>
+        <inconsistencias_declaracoes>
+          <label>Inconsistências de Declarações</label>
+          <module>fiscal</module>
+          <controller>relatorio5</controller>
+          <action>inconsistencias-declaracoes</action>
+        </inconsistencias_declaracoes>
+        <nfse>
+          <label>NFSe Prestador/Tomador</label>
+          <module>fiscal</module>
+          <controller>relatorio6</controller>
+          <action>nfse</action>
+        </nfse>
+        <valores_atividade_servico>
+          <label>Valores Atividade/Serviço</label>
+          <module>fiscal</module>
+          <controller>relatorio1</controller>
+          <action>valores-atividade-servico</action>
+        </valores_atividade_servico>
+        <relatorio-nfse-periodo>
+          <label>NFS-e por Período</label>
+          <module>fiscal</module>
+          <controller>relatorio-nfse-periodo</controller>
+          <action>index</action>
+        </relatorio-nfse-periodo>
+        <impressao-guia-geracao-automatica>
+          <label>Geração Automatica de Guias</label>
+          <module>fiscal</module>
+          <controller>guias</controller>
+          <action>impressao-geracao-automatica</action>
+        </impressao-guia-geracao-automatica>
+        <relatorio-contribuinte-webservice>
+          <label>Contribuintes com Webservice</label>
+          <module>fiscal</module>
+          <controller>relatorio-webservice</controller>
+          <action>consulta</action>
+        </relatorio-contribuinte-webservice>
+      </pages>
+    </relatorios>
+    <informativo>
+      <label>Informativo</label>
+      <uri></uri>
+      <pages>
+        <form>
+          <label>Inserção de Informativo</label>
+          <module>fiscal</module>
+          <controller>informativo</controller>
+          <action>form</action>
+        </form>
+      </pages>
+    </informativo>
+    <guias>
+      <label>Guias</label>
+      <uri></uri>
+      <pages>
+        <geracao_automatica>
+          <label>Geração de Guias</label>
+          <module>fiscal</module>
+          <controller>guias</controller>
+          <action>geracao-automatica</action>
+        </geracao_automatica>
+      </pages>
+    </guias>
+  </nav>
+</configdata>

@@ -1,0 +1,27 @@
+<?php if ($this->bloqueado_msg == false) { ?>
+
+<?php if (isset($this->importacaoForm)) { ?>
+<fieldset id="fieldset-importacao">
+  <legend><?php echo $this->translate->_('Importar Arquivo') ?></legend>
+  
+  <div class="pull-right">
+    <a href="<?php echo $this->baseUrl('/contribuinte/dms/importacao-documentacao/formato/pdf') ?>" 
+       class="btn btn-primary btn-mini">
+      <i class="icon-white icon-question-sign"></i> <?php echo $this->translate->_('Documentação') ?>
+    </a>
+  </div>
+  
+  <br><br>
+  
+  <?php echo $this->importacaoForm ?>
+</fieldset>
+<?php } ?>
+
+<?php } else { ?>
+
+<div class="alert alert-error">
+  <?php echo $this->bloqueado_msg ?><br/>
+  <?php echo $this->translate->_('Entre em contato com o setor de arrecadação da prefeitura.') ?>
+</div>
+
+<?php } ?>

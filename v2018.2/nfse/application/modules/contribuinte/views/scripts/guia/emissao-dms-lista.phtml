@@ -1,0 +1,47 @@
+<table id="dms-lista" class="table table-bordered table-condensed table-striped table-hover">
+  <thead>
+    <tr>
+      <th><?php echo $this->translate->_('DMS')                      ?></th>
+      <th><?php echo $this->translate->_('Data Criação')             ?></th>
+      <th><?php echo $this->translate->_('Mês/Ano Competência')      ?></th>
+      <th><?php echo $this->translate->_('Quantidade de Notas')      ?></th>
+      <th><?php echo $this->translate->_('Valor (R$)')               ?></th>
+      <th style="width:120px"><?php echo $this->translate->_('Ação') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php if (count($this->aDms) > 0) { ?>
+    <?php foreach ($this->aDms as $oDms) { ?>
+    <tr>
+      <td><?php echo $oDms->getId()                                      ?></td>
+      <td><?php echo $oDms->getDataOperacao()->format('d/m/Y')           ?></td>
+      <td>
+        <?php echo DBSeller_Helper_Date_Date::mesExtenso($oDms->getMesCompetencia()).'/'.$oDms->getAnoCompetencia() ?>
+      </td>
+      <td><?php echo $oDms->iQuantidadeNotas ?></td>
+      <td><?php echo DBSeller_Helper_Number_Format::toMoney($oDms->fValorGuia) ?></td>
+      <td>
+        <?php if ($oDms->getStatus() != 'emitida') { ?>
+        <a href="<?php echo $this->urlEdicaoDms ?>/id_dms/<?php echo $oDms->getId() ?>" class="btn btn-mini" 
+           title="Editar Dms">
+          <i class="icon-edit"></i>
+        </a>
+        
+        <a href="/contribuinte/guia/dms-gerar-modal/id_dms/<?php echo $oDms->getId() ?>" 
+           class="gerar-guia btn btn-mini btn-success">
+          <?php echo $this->translate->_('Gerar Guia') ?>
+        </a>
+        
+        <?php } else { ?>
+        <span class="label label-success"><?php echo $this->translate->_('Guia Emitida') ?></span>  
+        <?php }?>
+      </td>
+    </tr>
+    <?php } ?>
+    <?php } else { ?>
+    <tr>
+      <td colspan="6"><?php echo $this->translate->_('Nenhum registro encontrado') ?></td>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>

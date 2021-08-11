@@ -1,0 +1,44 @@
+<?php echo $this->headScript() ?>
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Geração de Guia') ?></h3>
+</div>
+
+<?php if ($this->url_guia_pagamento != NULL) { ?>
+<div style="text-align:center;margin:10px 5px">  
+  <div class="alert alert-success"><?php echo $this->translate->_('Guia emitida com sucesso.') ?></div>
+  <a class="btn btn-success" href="/default/index/get/file/<?php echo $this->url_guia_pagamento ?>" target="_blank">
+    <?php echo $this->translate->_('Abrir guia de pagamento') ?>
+  </a>
+  <br><br>
+</div>
+<?php } else { ?>
+<div style="margin:20px 5px">
+  <div  id="form_emitir_guia_dms_erros"><!-- Dinamico Ajax - Erros no Submit do Form --></div>
+  <form id="form_emitir_guia_dms" class="form-horizontal" action="/contribuinte/guia/dms-gerar/">
+    <div class="control-group">
+      <label for="data_pagamento" class="control-label optional">
+        <?php echo $this->translate->_('Data Pagamento:') ?>
+      </label>
+      <div class="controls">
+        <input name="id_dms" type="hidden" value="<?php echo $this->id_dms ?>">
+        <input name="data_pagamento" type="text" class="span2 mask-data" value="<?php echo date('d/m/Y')?>">
+      </div>
+    </div>
+  </form>
+</div>
+<?php } ?>
+
+<div class="modal-footer">
+  <?php if ($this->url_guia_pagamento != NULL) { ?>
+  <a href="#" class="btn btn-fechar"><?php echo $this->translate->_('Fechar') ?></a>
+  <?php } else { ?>
+  <a href="#" class="btn btn-fechar" data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Cancelar') ?>
+  </a>
+  <a href="#" class="btn btn-success" id="btn_emitir_guia">
+    <?php echo $this->translate->_('Gerar Guia') ?>
+  </a>
+  <?php } ?>
+</div>

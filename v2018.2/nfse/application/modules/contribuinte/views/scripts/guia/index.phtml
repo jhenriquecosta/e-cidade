@@ -1,0 +1,96 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Competências') ?></legend>
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Competência')        ?></th>
+        <th><?php echo $this->translate->_('Total Serviços')     ?></th>
+        <th><?php echo $this->translate->_('Total ISS')          ?></th>
+        <th width="250px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->oCompetencias) > 0) { ?>
+      <?php foreach ($this->oCompetencias as $oCompetencia) {
+
+        $iAnoCompetencia = $oCompetencia->getAnoComp();
+        $iMesCompetencia = $oCompetencia->getMesComp();
+        $lExisteGuia     = $oCompetencia->getExisteGuia();
+      ?>
+      <tr>
+        <td><?php echo str_pad($oCompetencia->getCompetencia(), 7, '0', STR_PAD_LEFT) ?></td>
+        <td><?php echo $oCompetencia->getFormatedTotalServico()                       ?></td>
+        <td><?php echo $oCompetencia->getFormatedTotalIss()                           ?></td>
+        <td>
+          <a class="btn btn-small btn-success"
+             href="/contribuinte/guia/competencia/ano/<?php echo "{$iAnoCompetencia}/mes/{$iMesCompetencia}" ?>">
+            <?php echo $this->translate->_('Detalhes') ?>
+          </a>
+          <?php if ($oCompetencia->isCorrente()) { ?>
+          <a class="btn btn-small disabled">
+            <?php echo $this->translate->_('Competência corrente') ?>
+          </a>
+          <?php } else if (!$lExisteGuia) { ?>
+          <a modal-url="/contribuinte/guia/fecha-competencia/ano/<?php echo "{$iAnoCompetencia}/mes/{$iMesCompetencia}" ?>"
+             role="button" data-toggle="modal" href="#myModal" class="btn btn-small btn-success">
+            <?php echo $this->translate->_('Emitir Guia') ?>
+          </a>
+          <?php } ?>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="4"><?php echo $this->translate->_('Nenhum registro encontrado') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+
+  <?php
+  $this->urlFor("/contribuinte/guia/");
+  echo $this->paginationControl(
+    $this->oCompetencias,
+    'Sliding',
+    'layouts/pager.phtml',
+    array('translate' => $this->translate)
+  );
+  ?>
+</fieldset>
+
+<?php if (count($this->notas_retidas) > 0) { ?>
+<fieldset>
+  <legend><?php echo $this->translate->_('Substituto tributário') ?></legend>
+  
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th><?php echo $this->translate->_('Número')          ?></th>
+        <th><?php echo $this->translate->_('Competência')     ?></th>
+        <th><?php echo $this->translate->_('Data da Emissão') ?></th>
+        <th><?php echo $this->translate->_('contribuinte')    ?></th>
+        <th><?php echo $this->translate->_('Valor do ISS')    ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($this->notas_retidas as $oNota) { ?>
+      <tr>
+        <td>
+          <input type="checkbox" name="nota[<?php echo $oNota->getId() ?>]" data-nota="<?php echo $oNota->getId() ?>">
+        </td>
+        <td><?php echo $oNota->getNota()                                                       ?></td>
+        <td><?php echo $oNota->getComp()                                                       ?></td>
+        <td><?php echo "{$oNota->formatedData()} {$oNota->formatedHora()}"                     ?></td>
+        <td><?php echo $oNota->getP_razao_social()                                             ?></td>
+        <td><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_iss(), 2, 'R$ ') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  
+  <div class="pull-right">
+    <a id="guia-tomador" href="#" class="btn btn-success"><?php echo $this->translate->_('Gerar Guia') ?></a>
+  </div>
+</fieldset>
+<?php } ?>

@@ -1,0 +1,107 @@
+<!-- 1_7_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+<div>
+  <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.8" ?></h4>
+</div>
+<div class="content-informativo">
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <p>
+        <b><?php echo $this->translate->_('Novas regras na emissão de NFS-e [NFSe > Emissão]') ?></b>
+      </p>
+    </li>
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('Serviços não incidentes') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora, quando forem emitidas notas fiscais para atividades sobre as quais o imposto não incide, não será calculado oe imposto e na nota será exibida a informação da não incidência do imposto sobre a atividade.') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010800-1" src="/default/img/versao/V010800-1.png" title="V010800-1" style="max-width: 90%;">
+          </span>
+        </li>
+        <br/>
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('Emissão de notas para empresas Imunes e Isentas') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora, quando forem emitidas notas fiscais para empresas imunes ou isentas, não será possível efetuar a retenção de imposto, mesmo que o tomador seja um substituto tributário.') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('Para empresas imunes, o valor do imposto não será calculado no momento da emissão da nota e no lugar da alíquota será exibido “IMUNIDADE”.') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010800-2" src="/default/img/versao/V010800-2.png" title="V010800-2" style="max-width: 90%;">
+          </span>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('Para empresas isentas, o valor do imposto será calculado, porém o imposto não será devido e não poderão ser geradas guias, como acontece com as empresas optantes pelo Simples.') ?>
+          </p>
+          <p>
+            <?php echo $this->translate->_('Em todas as notas será exibida também a exigibilidade da empresa junto aos dados do prestador.') ?>
+          </p>
+        </li>
+
+      </ul>
+    </li>
+  </ul>
+  <ul class="content-informativo-versao inside none">
+    <li class="content-informativo-topico">
+      <b><?php echo $this->translate->_('NFSe > Consulta') ?></b>
+    </li>
+    <li class="content-informativo-topico">
+      <ul class="content-informativo-versao outside none">
+        <li class="content-informativo-topico">
+          <p>
+            <b><?php echo $this->translate->_('Situação e reemissão notas na consulta de notas') ?>:</b>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('A partir de agora, na consulta de notas, quando uma empresa com regime tributário “MEI (Microempreendedor Individual)” mudar o seu regime, na situação das notas consultadas será exibida a situação da empresa na data da emissão da nota, e não a situação atual.') ?>
+          </p>
+        </li>
+        <li class="content-informativo-topico">
+          <span>
+            <img alt="V010800-3" src="/default/img/versao/V010800-3.png" title="V010800-3" style="max-width: 90%;">
+          </span>
+        </li>
+        <li class="content-informativo-topico">
+          <p>
+            <?php echo $this->translate->_('Para a reemissão das notas será aplicada a mesma regra. As notas serão reemitidas de acordo com o regime tributário da empresa na data da emissão da nota.') ?>
+          </p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+</div>

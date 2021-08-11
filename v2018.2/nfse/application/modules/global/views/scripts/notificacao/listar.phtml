@@ -1,0 +1,47 @@
+<?php $iCountNotificacoes = DBSeller_Plugin_Notificacao::getCountAll(); ?>
+<?php if($iCountNotificacoes > 0) { ?>
+  <li class="dropdown pull-right" id="notificacoes">
+    <a id="drop-menu-notificacao" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+      <span class="badge badge-info">
+        <?php echo $this->translate->_('Notificações') ?>
+        <span class="badge badge-important"><?php echo $iCountNotificacoes; ?></span>
+      </span>
+      <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu <?php echo ($iCountNotificacoes > 6) ? 'pre-scrollable' : '' ?>" role="menu" aria-labelledby="drop-menu-notificacao" style="min-width:450px;">
+      <li>
+        <span style="padding:10px;font-weight:bold">
+          <i class="icon icon-tasks"></i> Mensagens
+        </span>
+      </li>
+      <li class="divider"></li>
+      <?php $aListaErrors = DBSeller_Plugin_Notificacao::getErro(); ?>
+      <?php foreach ($aListaErrors as $iCodigo => $sMensagem) { ?>
+        <li id="<?php echo $iCodigo; ?>" style="padding:0px 10px 0px 10px;">
+          <div class="alert alert-error" style="min-width:350px;">
+            <button type="button" class="close" data-dismiss="error" data-codigo="<?php echo $iCodigo; ?>" data-tipo="erro">&times;</button>
+            <?php echo $sMensagem ?>
+          </div>
+        </li>
+      <?php } ?>
+      <?php $aListaAvisos = DBSeller_Plugin_Notificacao::getAviso(); ?>
+      <?php foreach ($aListaAvisos as $iCodigo => $sMensagem) { ?>
+        <li id="<?php echo $iCodigo; ?>" style="padding:0px 10px 0px 10px">
+          <div class="alert alert-alert" style="min-width:350px;">
+            <button type="button" class="close" data-dismiss="alert" data-codigo="<?php echo $iCodigo; ?>" data-tipo="alerta">&times;</button>
+            <?php echo $sMensagem ?>
+          </div>
+        </li>
+      <?php } ?>
+      <?php $aListaSucessos = DBSeller_Plugin_Notificacao::getSucesso(); ?>
+      <?php foreach ($aListaSucessos as $iCodigo => $sMensagem) { ?>
+        <li id="<?php echo $iCodigo; ?>" style="padding:0px 10px 0px 10px">
+          <div class="alert alert-success" style="min-width:350px;">
+            <button type="button" class="close" data-dismiss="success" data-codigo="<?php echo $iCodigo; ?>" data-tipo="sucesso">&times;</button>
+            <?php echo $sMensagem ?>
+          </div>
+        </li>
+      <?php } ?>
+    </ul>
+  </li>
+<?php } ?>

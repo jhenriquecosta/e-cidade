@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DBSellerService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/soap/http"
+                  xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+                  xmlns:ii="http://{URL}/webservice/index/integracao"
+                  targetNamespace="http://{URL}/webservice/index/integracao">
+  <wsdl:types>
+  </wsdl:types>
+  <wsdl:message name="AcessoRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="AcessoResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotasIrregularidadesRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotasIrregularidadesResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="RpsForaPrazoRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="RpsForaPrazoResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuantidadeRpsRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="QuantidadeRpsResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="ComparativoRetencaoRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="ComparativoRetencaoResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="CompetenciasEncerradasRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="CompetenciasEncerradasResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="PrestacaoContasRequest">
+    <wsdl:part name="xml" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="PrestacaoContasResponse">
+    <wsdl:part name="return" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="DBSellerPort">
+    <wsdl:operation name="Acesso" parameterOrder="xml">
+      <wsdl:input message="ii:AcessoRequest"/>
+      <wsdl:output message="ii:AcessoResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="NotasIrregularidades" parameterOrder="xml">
+      <wsdl:input message="ii:NotasIrregularidadesRequest"/>
+      <wsdl:output message="ii:NotasIrregularidadesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="RpsForaPrazo" parameterOrder="xml">
+      <wsdl:input message="ii:RpsForaPrazoRequest"/>
+      <wsdl:output message="ii:RpsForaPrazoResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="QuantidadeRps" parameterOrder="xml">
+      <wsdl:input message="ii:QuantidadeRpsRequest"/>
+      <wsdl:output message="ii:QuantidadeRpsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ComparativoRetencao" parameterOrder="xml">
+      <wsdl:input message="ii:ComparativoRetencaoRequest"/>
+      <wsdl:output message="ii:ComparativoRetencaoResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="CompetenciasEncerradas" parameterOrder="xml">
+      <wsdl:input message="ii:CompetenciasEncerradasRequest"/>
+      <wsdl:output message="ii:CompetenciasEncerradasResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="PrestacaoContas" parameterOrder="xml">
+      <wsdl:input message="ii:PrestacaoContasRequest"/>
+      <wsdl:output message="ii:PrestacaoContasResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DBSellerBinding" type="ii:DBSellerPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+    <wsdl:operation name="Acesso">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotasIrregularidades">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RpsForaPrazo">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuantidadeRps">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ComparativoRetencao">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompetenciasEncerradas">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrestacaoContas">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body namespace="http://{URL}/webservice/index/integracao" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DBSellerService">
+    <wsdl:port name="DBSellerPort" binding="ii:DBSellerBinding">
+      <soap:address location="http://{URL}/webservice/index/integracao"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

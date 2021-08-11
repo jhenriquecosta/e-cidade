@@ -1,0 +1,231 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Resultado Pesquisa') ?></legend>
+
+  <table class="table table-bordered table-condensed table-striped table-hover" style="table-layout:fixed">
+    <thead>
+    <tr>
+      <th class="text-center db-consulta-coluna01"><?php echo $this->translate->_('Competência') ?></th>
+      <th class="text-right  db-consulta-coluna02"><?php echo $this->translate->_('Número') ?></th>
+      <th class="text-center db-consulta-coluna03"><?php echo $this->translate->_('Data Emissão') ?></th>
+      <th class="text-left   db-consulta-coluna04"><?php echo $this->translate->_('Tomador') ?></th>
+      <th class="text-right  db-consulta-coluna05"><?php echo $this->translate->_('Base Cálculo (R$)') ?></th>
+      <th class="text-right  db-consulta-coluna06"><?php echo $this->translate->_('ISS (R$)') ?></th>
+      <th class="text-left   db-consulta-coluna07"><?php echo $this->translate->_('Situação') ?></th>
+      <th class="text-center db-consulta-coluna08"><?php echo $this->translate->_('Ação') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    $lGuiaEmitida = false;
+
+    if (count($this->notas) > 0) {
+
+      foreach ($this->notas as $oNota) {
+
+        $lNaoGeraGuia = !$oNota->getEmite_guia();
+        $lGuiaEmitida = Contribuinte_Model_Guia::existeGuia($this->contribuinte,
+                                                            $oNota->getMes_comp(),
+                                                            $oNota->getAno_comp(),
+                                                            Contribuinte_Model_Guia::$DOCUMENTO_ORIGEM_NFSE);
+        // Obtem a solicitação da nota
+        $oSolicitacaoCancelamento = Contribuinte_Model_SolicitacaoCancelamento::getByAttribute('nota', $oNota->getEntity());
+
+        // Informações da nota substituta
+        $oNotaSubstituida = NULL;
+
+        if ($oNota->getIdNotaSubstituida()) {
+          $oNotaSubstituida = Contribuinte_Model_Nota::getById($oNota->getIdNotaSubstituida());
+        }
+
+        // Informações da nota substituta
+        $oNotaSubstituta = NULL;
+
+        if ($oNota->getIdNotaSubstituta()) {
+          $oNotaSubstituta = Contribuinte_Model_Nota::getById($oNota->getIdNotaSubstituta());
+        }
+
+        // Urls
+        $sUrlCopiaNota = '/contribuinte/nfse/index/id_copia/%s';
+        $sUrlImpressao = '/contribuinte/nfse/nota-impressa/codigo_verificacao/%s';
+        $sUrlEmail     = '/contribuinte/nfse/email-enviar/id_nfse/%s/email/%s';
+        $sUrlCancelar  = '/contribuinte/nfse/cancelar/numero/%s/id/%s';
+        ?>
+        <tr>
+          <td class="text-center db-consulta-coluna01">
+            <?php echo str_pad($oNota->getMes_comp(), 2, 0, STR_PAD_LEFT) . '/' . $oNota->getAno_comp() ?>
+          </td>
+          <td class="text-right db-consulta-coluna02">
+            <?php if ($oNotaSubstituida instanceof Contribuinte_Model_Nota) { ?>
+              <a class="tooltip-modal"
+                 data-content="Nota substituta da nº <?php echo $oNotaSubstituida->getNota() ?>"
+                 href="#">
+                <?php echo $oNota->getNota() ?>
+              </a>
+            <?php } else if ($oNotaSubstituta instanceof Contribuinte_Model_Nota) { ?>
+              <a class="tooltip-modal"
+                 data-content="Nota substituida pela nº <?php echo $oNotaSubstituta->getNota() ?>"
+                 href="#">
+                <?php echo $oNota->getNota() ?>
+              </a>
+            <?php } else { ?>
+              <?php echo $oNota->getNota() ?>
+            <?php } ?>
+          </td>
+          <td class="text-center db-consulta-coluna03"><?php echo $oNota->formatedData() ?></td>
+          <td
+            class="db-consulta-coluna04"><?php echo DBSeller_Helper_String_Format::wordsCap($oNota->getT_razao_social()) ?></td>
+          <td
+            class="text-right db-consulta-coluna05"><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_bc(),
+                                                                                                      2) ?></td>
+          <td class="text-right db-consulta-coluna06">
+            <?php if ($oNota->getEmite_guia() && $oNota->getS_vl_iss() > 0 && !$oNota->getCancelada() && !$oNota->getIdNotaSubstituta()) { ?>
+              <?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_iss(), 2) ?>
+            <?php } else { ?>
+              -
+            <?php } ?>
+          </td>
+          <!-- Coluna de situação da Nota -->
+          <td class="text-left db-consulta-coluna07">
+          <!-- Situação disponivel para todos os casos -->
+            <?php if ($oNota->getIdNotaSubstituta()) { ?>
+              <span class="label label-important db-label-situacao-documento">
+            <?php echo $this->translate->_('Nota Substituida') ?>
+          </span>
+            <?php } else if ($oNota->getCancelada()) { ?>
+              <span class="label label-important db-label-situacao-documento">
+            <?php echo $this->translate->_('Cancelada') ?>
+          </span>
+            <?php } else if (!empty($oSolicitacaoCancelamento)) { ?>
+              <span class="label db-label-situacao-documento">
+            <?php echo $this->translate->_('Cancelamento Solicitado') ?>
+          </span>
+          <!-- Regimes -->
+            <?php } else if ($oNota->getS_dec_reg_esp_tributacao() == Contribuinte_Model_Contribuinte::REGIME_TRIBUTARIO_SOCIEDADE_PROFISSIONAIS) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Sociedade de Profissionais') ?>
+              </span>
+            <?php } else if ($oNota->getP_categoria_simples_nacional() == Contribuinte_Model_Contribuinte::OPTANTE_SIMPLES_TIPO_MEI) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('MEI') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_exigibilidadeiss() == Contribuinte_Model_Contribuinte::EXIGIBILIDADE_ISENTO) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('ISENTO') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_exigibilidadeiss() == Contribuinte_Model_Contribuinte::EXIGIBILIDADE_IMUNE) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('IMUNE') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_exigibilidadeiss() == Contribuinte_Model_Contribuinte::EXIGIBILIDADE_IMUNE) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('IMUNE') ?>
+              </span>
+            <?php } else if ($oNota->getS_dec_reg_esp_tributacao() == Contribuinte_Model_Contribuinte::REGIME_TRIBUTARIO_FIXADO) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Fixado') ?>
+              </span>
+            <?php } else if ($oNota->getS_nao_incide()) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Não Incide') ?>
+              </span>
+            <?php } else if ($oNota->getS_dec_simples_nacional() == 1) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Simples Nacional') ?>
+              </span>
+          <!-- Retenção -->
+            <?php } else if ($oNota->getT_cooperado() == true) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Tomador Associado') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::PRESTADOR_RETEM_ISS) { ?>
+              <span class="label label-info db-label-situacao-documento">
+                <?php echo $this->translate->_('Tributada Prestador') ?>
+              </span>
+            <?php } else if ($oNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::TOMADOR_RETEM_ISS) { ?>
+              <span class="label db-label-situacao-documento">
+                <?php echo $this->translate->_('Retida Tomador') ?>
+              </span>
+            <?php } else { ?>
+              -
+            <?php } ?>
+            <!-- Natureza -->
+            <?php if ($oNota->getNatureza_operacao() == '2') { ?>
+              <span class="label label-warning db-label-situacao-documento">
+                <?php echo $this->translate->_('Fora do Município') ?>
+              </span>
+            <?php } ?>
+            <!-- Guia Emitida/Importada -->
+            <?php if ($lGuiaEmitida) { ?>
+              <span class="label label-success">
+            <?php echo $this->translate->_('Guia Emitida') ?>
+          </span>
+            <?php } else if ($oNota->getImportada()) { ?>
+              <span class="label label-success">
+            <?php echo $this->translate->_('Importada') ?>
+          </span>
+            <?php } ?>
+            <!-- Webservice -->
+            <?php if ($oNota->getWebservice()) { ?>
+              <span class="label label-warning">
+            <?php echo $this->translate->_('Webservice') ?>
+              </span>
+            <?php } ?>
+          </td>
+          <!-- Fim da coluna situações -->
+          <td class="text-center db-consulta-coluna08">
+            <a
+              href="<?php echo $this->serverUrl(sprintf($sUrlCopiaNota, $oNota->getId())) ?>"
+              title="<?php echo $this->translate->_('Copiar') ?>"
+              class="btn btn-mini">
+              <i class="icon-edit"></i>
+            </a>
+            <a
+              href="<?php echo $this->serverUrl(sprintf($sUrlImpressao, $oNota->getCod_verificacao())) ?>"
+              title="<?php echo $this->translate->_('Imprimir') ?>"
+              class="btn btn-mini">
+              <i class="icon-print"></i>
+            </a>
+            <a href="#myModal"
+               title="<?php echo $this->translate->_('Enviar por Email') ?>"
+               class="btn btn-mini"
+               data-toggle="modal"
+               modal-url="<?php echo $this->serverUrl(sprintf($sUrlEmail, $oNota->getId(), $oNota->getT_email())) ?>"
+               modal-width="500">
+              <i class="icon-envelope"></i>
+            </a>
+
+            <? if (!$oNota->podeCancelar()) { ?>
+              <a href="#" title="<?php echo $this->translate->_('Cancelar') ?>"
+                 class="btn btn-mini btn-danger disabled">
+                <i class="icon-remove icon-white"></i>
+              </a>
+            <?php } else { ?>
+              <a href="#myModal"
+                 title="<?php echo $this->translate->_('Cancelar') ?>"
+                 class="btn btn-mini btn-danger"
+                 data-toggle="modal"
+                 modal-url="<?php echo $this->serverUrl(sprintf($sUrlCancelar, $oNota->getNota(), $oNota->getId())) ?>"
+                 modal-width="500">
+                <i class="icon-remove icon-white"></i>
+              </a>
+            <?php } ?>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="8"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+
+  <?php
+  $this->urlFor("/contribuinte/nfse/consulta-processar/{$this->sBusca}");
+
+  echo $this->paginationControl($this->notas,
+                                'Sliding',
+                                'layouts/pager.phtml',
+                                array('translate' => $this->translate));
+  ?>
+</fieldset>

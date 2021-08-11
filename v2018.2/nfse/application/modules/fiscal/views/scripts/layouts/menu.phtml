@@ -1,0 +1,46 @@
+<?php $oTradutor = $this->layout()->translate ?>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    
+    <div class="nav-collapse">
+      <?php if ($this->user !== null) { ?>
+      <?php echo $this->navigation(Zend_registry::get('nav'))->menu()->setPartial('layouts/menu/navigation.phtml') ?>
+      <ul class="nav pull-right">
+        <li class="dropdown">
+          <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+            <i class="icon icon-user"></i>
+            <?php echo DBSeller_Helper_String_Format::wordsCap($this->user->getNome()) ?>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="drop3" style="min-width:250px">
+            <li>
+              <span style="padding:0 20px;font-weight:bold">
+                <i class="icon icon-user"></i> <?php echo $oTradutor->_('Informações do Usuário') ?>
+              </span>
+            </li>
+            <li class="divider"></li>
+            <li><a href="/default/index">Alterar Módulo</a></li>
+            <li><a href="/administrativo/usuario/trocar-senha">Alterar Senha</a></li>
+            <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/parametro/prefeitura')) { ?>
+            <li>
+              <a href="/administrativo/parametro/prefeitura"><?php echo $oTradutor->_('Parâmetros Prefeitura') ?></a>
+            </li>
+            <?php } ?>
+          </ul>
+        </li>
+        <!-- Notificações do sistema-->
+        <?php echo $this->partial('notificacao/listar.phtml', 'global', array('translate' => $oTradutor)) ?>
+        
+        <li class="divider-vertical"></li>
+        <li><a href="/auth/logout"><i class="icon icon-off"></i> <?php echo $oTradutor->_('Logout') ?></a></li>
+      </ul>
+      <?php } ?>
+    </div><!--/.nav-collapse -->
+  </div><!--/.nav-inner -->
+</div><!--/.navbar -->

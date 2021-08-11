@@ -1,0 +1,60 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Solicitações de Cadastro:') ?></legend>
+  
+  <table id="dms-lista" class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th><?php echo $this->translate->_('Nome')                     ?></th>
+        <th><?php echo $this->translate->_('CPF / CNPJ')               ?></th>
+        <th><?php echo $this->translate->_('Perfil')                   ?></th>
+        <th><?php echo $this->translate->_('Data Cadastro')            ?></th>
+        <th style="width:100px"><?php echo $this->translate->_('Ação') ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (count($this->aListaCadastroLiberar) > 0) { ?>
+      <?php foreach ($this->aListaCadastroLiberar as $oUsuarioEventual) { ?> 
+      <tr>
+        <td><?php echo $oUsuarioEventual->getNome()                                                 ?></td>
+        <td><?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($oUsuarioEventual->getCpfCnpj()) ?></td>
+        <td><?php echo $oUsuarioEventual->getPerfil()->getNome()                                    ?></td>
+        <td><?php echo $oUsuarioEventual->getDataCadastro()->format('d/m/Y')                        ?></td>
+        <td>
+          <a href="#myModal"
+             modal-url="/fiscal/usuario-eventual/comparar/id/<?php echo $oUsuarioEventual->getId() ?>"
+             data-toggle="modal"
+             class="btn btn-mini"
+             modal-width="750"
+             modal-height="350"
+             title="<?php echo $this->translate->_('Analizar Cadastro') ?>">
+             <i class="icon-eye-open"></i>
+          </a>
+          <a href="#myModal"
+             modal-url="/fiscal/usuario-eventual/liberar-cadastro/id/<?php echo $oUsuarioEventual->getId() ?>/cnpjcpf/<?php echo $oUsuarioEventual->getCpfCnpj() ?>"
+             data-toggle="modal"
+             class="btn btn-mini btn-success"
+             modal-width="500"
+             modal-height="auto"
+             title="<?php echo $this->translate->_('Confirmar Cadastro') ?>">
+             <i class="icon-ok icon-white"></i>
+          </a>
+          <a href="#myModal"
+             modal-url="/fiscal/usuario-eventual/recusar-cadastro/id/<?php echo $oUsuarioEventual->getId() ?>"
+             data-toggle="modal"
+             class="btn btn-mini btn-danger"
+             modal-width="500"
+             modal-height="auto"
+             title="<?php echo $this->translate->_('Bloquear Cadastro') ?>">
+             <i class="icon-remove icon-white"></i>
+          </a>
+        </td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td colspan="5"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+</fieldset>

@@ -1,0 +1,3 @@
+﻿# E-CIDADE/NFSE
+* VERSAO 2018.2
+

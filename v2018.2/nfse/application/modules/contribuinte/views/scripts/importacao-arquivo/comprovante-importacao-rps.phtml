@@ -1,0 +1,188 @@
+<style type="text/css">
+  table {
+    border:solid 1px #000;        
+    border-collapse:collapse;
+    width:100%;
+    font-size:11px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-bottom:20px;
+  }
+  td {
+    padding:5px;
+  }
+  .titulo {
+    width:100%;
+    font-weight:bold;
+    font-size:11px;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding:5px;
+    text-align:center;
+    text-transform:uppercase;
+  }
+  .com-borda {
+    border:solid 1px #000;
+  }
+  .sem-borda {
+    border:0;
+  }
+  .largura-100-por-cento {
+    width:100%;
+  }
+  .largura-80-por-cento {
+    width:80%;
+  }
+  .largura-20-por-cento {
+    width:20%;
+  }
+  .texto-esquerda {
+    text-align:left;
+  }
+  .texto-direita {
+    text-align:right;
+  }
+  .texto-centro {
+    text-align:center;
+  }
+</style>
+
+<table class="sem-borda">
+  <tr>
+    <td>
+      <img src="/global/img/brasao.jpg" alt="Brasão Prefeitura">
+    </td>
+    <td colspan="3" class="largura-80-por-cento texto-centro">
+      <?php echo $this->oDadosPrefeitura->getNome() ?><br/>
+      Secretaria Municipal de Fazenda e Planejamento<br/>
+      Fone: <?php echo $this->oDadosPrefeitura->getTelefone() ?> Fax: <?php echo $this->oDadosPrefeitura->getFax() ?>
+      <br>
+      <u>COMPROVANTE IMPORTACAO RPS</u>
+    </td>
+    <td class="largura-20-por-cent texto-centro">
+      Código da Importação:
+      <br/>
+      <?php echo $this->oImportacao->getId() ?>
+      <br><br>
+      Data de Operação:
+      <br/>
+      <?php echo $this->oImportacao->getData()->format('d/m/Y') ?> 
+    </td>
+  </tr>
+</table>
+
+<?php
+$iCodigoContribuinte    = NULL;
+$fTotalImportado        = 0;
+$fTotalImportadoImposto = 0;
+?>
+
+<?php foreach ($this->oImportacao->getImportacaoArquivoDocumentos() as $oImportacaoDocumento) { ?>
+<?php foreach ($oImportacaoDocumento->getNotas() as $oNota) { ?>
+
+<?php
+$fTotalImportado        += $oNota->getS_vl_servicos();
+$fTotalImportadoImposto += $oNota->getS_vl_iss();
+?>
+
+<?php if ($oNota->getId_contribuinte() != $iCodigoContribuinte) { ?>
+
+<?php 
+$oContribuinte           = Contribuinte_Model_Contribuinte::getById($oNota->getId_contribuinte()); 
+$iCodigoContribuinte     = $oNota->getId_contribuinte();
+?>
+  
+<div class="titulo">Dados do Prestador</div>
+<table class="largura-100-por-cento">
+  <tr>
+    <td>CPF/CNPJ: <?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($oContribuinte->getCgcCpf()) ?></td>
+    <td>IM: <?php echo $oContribuinte->getInscricaoMunicipal() ?></td>
+    <td>IE: <?php echo $oContribuinte->getInscricaoEstadual() ?></td>
+    <td>Telefone: <?php echo $oContribuinte->getTelefone() ?></td>
+  </tr>
+  <tr>
+    <td colspan="4">Razão Social: <?php echo $oContribuinte->getRazaoSocial() ? : $oContribuinte->getNome() ?></td>
+  </tr>
+  <tr>
+    <td colspan="4">Nome Fantasia: <?php echo $oContribuinte->getNomeFantasia() ?></td>
+  </tr>
+  <tr>
+    <td colspan="3">Endereço: <?php echo $oContribuinte->getDescricaoLogradouro() ?></td>
+    <td>CEP: <?php echo $oContribuinte->getCep() ?></td>
+  </tr>
+  <tr>
+    <td colspan="4">Complemento: <?php echo $oContribuinte->getLogradouroComplemento() ?></td>
+  </tr>
+  <tr>
+    <td colspan="3">
+      Município: <?php echo "{$oContribuinte->getDescricaoMunicipio()}/{$oContribuinte->getEstado()}" ?>
+    </td>
+    <td>Email: <?php echo $oContribuinte->getEmail() ?></td>
+  </tr>
+</table>
+  
+<div class="titulo">Lista de RPS Importados</div>
+<table class="largura-100-por-cento">  
+  <tr class="com-borda">
+    <td class="texto-centro   sem-borda largura-10-por-cento">Nº RPS</td>
+    <td class="texto-centro   sem-borda largura-10-por-cento">Nº NFSe</td>
+    <td class="texto-centro   sem-borda largura-15-por-cento">Competência</td>
+    <td class="texto-centro   sem-borda largura-20-por-cento">Data de Emissão</td>               
+    <td class="texto-esquerda sem-borda largura-10-por-cento">Situação</td>
+    <td class="texto-direita  sem-borda largura-20-por-cento">Valor do Serviço (R$)</td> 
+    <td class="texto-direita  sem-borda largura-20-por-cento">Valor do Imposto (R$)</td>
+  </tr>
+  
+  <?php } ?>
+  
+  <tr>
+    <td class="sem-borda texto-centro"><?php echo $oNota->getN_rps() ?></td>
+    <td class="sem-borda texto-centro"><?php echo $oNota->getNota() ?></td>
+    <td class="sem-borda texto-centro"><?php echo "{$oNota->getMes_comp()}/{$oNota->getAno_comp()}" ?></td>
+    <td class="sem-borda texto-centro"><?php echo $oNota->getDt_nota()->format('d/m/Y') ?></td>
+    <td class="sem-borda texto-esquerda">
+      <?php if ($oNota->getCancelada()) { ?>
+      Cancelado
+      <?php } else if ($oNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::TOMADOR_RETEM_ISS) { ?>
+      Retido Tomador
+      <?php } else if ($oNota->getNatureza_operacao() == '2') { ?>
+      Fora do Município
+      <?php } else if ($oNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::PRESTADOR_RETEM_ISS && !$oNota->getEmite_guia()) {  ?>
+      Isento
+      <?php } else if ($oNota->getS_dados_iss_retido() == Contribuinte_Model_Nota::PRESTADOR_RETEM_ISS) { ?>
+      Tributado
+      <?php } else { ?>
+      -
+      <?php } ?>
+    </td>   
+    <td class="sem-borda texto-direita">
+      <?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_servicos(), 2) ?>
+    </td>
+    <td class="sem-borda texto-direita">
+      <?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getS_vl_iss(), 2) ?>
+    </td>
+  </tr>
+  
+  <?php } ?>
+  <?php } ?>
+  
+  <tr>
+    <td class="sem-borda texto-esquerda" colspan="5"><strong>TOTAL IMPORTADO</strong></td>
+    <td class="sem-borda texto-direita">
+      <strong><?php echo DBSeller_Helper_Number_Format::toMoney($fTotalImportado, 2) ?></strong>
+    </td> 
+    <td class="sem-borda texto-direita">
+      <strong><?php echo DBSeller_Helper_Number_Format::toMoney($fTotalImportadoImposto, 2) ?></strong>
+    </td>
+  </tr>
+</table>
+
+<div class="titulo">Dados do Usuário</div>
+<table>
+  <tr>
+    <td class="sem-borda texto-esquerda">Nome:  <?php echo $this->oDadosUsuario->getNome()  ?></td>
+    <td class="sem-borda texto-esquerda">Login: <?php echo $this->oDadosUsuario->getLogin() ?></td>
+  </tr>
+  <tr>
+    <td class="sem-borda texto-esquerda">Telefone: <?php echo $this->oDadosUsuario->getTelefone() ?></td>
+    <td class="sem-borda texto-esquerda">Email:    <?php echo $this->oDadosUsuario->getEmail()    ?></td>
+  </tr>
+</table>

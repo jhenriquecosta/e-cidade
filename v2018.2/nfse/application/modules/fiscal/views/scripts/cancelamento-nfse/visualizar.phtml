@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <button type="button" class="close fechar-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3 id="myModalLabel"><?php echo $this->translate->_('Solicitação de Cancelamento') ?></h3>
+</div>
+
+<div class="modal-body">
+  <fieldset>
+    <legend><?php echo $this->translate->_('Dados da Solicitação') ?></legend>
+
+    <table class="table table-striped table-hover">
+      <tbody>
+        <tr>
+          <td><?php echo $this->translate->_('Nota') ?></td>
+          <td><b># <?php echo $this->oSolicitacao->nota ?></b></td>
+        </tr>
+        <tr>
+          <td><?php echo $this->translate->_('Justificativa') ?></td>
+          <td><?php echo $this->oSolicitacao->justificativa ?></td>
+        </tr>
+        <tr>
+          <td><?php echo $this->translate->_('Motivo') ?></td>
+          <td><?php echo $this->oSolicitacao->motivo ?></td>
+        </tr>
+        <tr>
+          <td><?php echo $this->translate->_('Data da Nota') ?></td>
+          <td><?php echo $this->oSolicitacao->dtNota ?></td>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
+</div>
+
+<div class="modal-footer">
+  <button class="input-medium btn btn-danger fechar-modal"  data-dismiss="modal" aria-hidden="true">
+    <?php echo $this->translate->_('Fechar') ?>
+  </button>
+</div>

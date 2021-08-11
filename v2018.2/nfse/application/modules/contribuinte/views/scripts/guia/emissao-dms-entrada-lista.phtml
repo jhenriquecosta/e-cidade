@@ -1,0 +1,43 @@
+<table id="dms-lista" class="table table-bordered table-condensed table-striped table-hover">
+  <thead>
+    <th style="width:20px"><!-- <input type="checkbox" id="marca_todos"> --></th>
+    <th>DMS</th>
+    <th>Data Criação</th>
+    <th>Total de Notas</th>
+    <th>Mês/Ano Competência</th>
+    <th style="width:120px">Ação</th>
+  </thead>
+  <tbody>
+    <?php if (count($this->aDms) > 0) { ?>
+    <?php foreach ($this->aDms as $oDms) { ?>
+    <tr>
+      <td>
+        <?php if ($oDms->getStatus() != 'emitida') { ?>
+        <input type="checkbox" class="chk_dms" name="dms[]" value="<?php echo $oDms->getId()?>">
+        <?php } ?>
+      </td>
+      <td><?php echo $oDms->getId()                            ?></td>
+      <td><?php echo $oDms->getDataOperacao()->format('d/m/Y') ?></td>
+      <td><?php echo count($oDms->getDmsNotas())               ?></td>
+      <td>
+        <?php echo DBSeller_Helper_Date_Date::mesExtenso($oDms->getMesCompetencia()).'/'.$oDms->getAnoCompetencia() ?>
+      </td>
+      <td>
+        <?php if ($oDms->getStatus() != 'emitida') {?>
+        <a href="/contribuinte/dms/emissao-manual-entrada/id_dms/<?php echo $oDms->getId() ?>" class="btn btn-mini" 
+           title="Editar Dms">
+          <i class="icon-edit"></i>
+        </a>
+        <?php } else { ?>
+        <span class="label label-success">Guia Emitida</span>  
+        <?php }?>
+      </td>
+    </tr>
+    <?php } ?>
+    <?php } else { ?>
+    <tr>
+      <td colspan="6">Nenhum registro encontrado</td>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>

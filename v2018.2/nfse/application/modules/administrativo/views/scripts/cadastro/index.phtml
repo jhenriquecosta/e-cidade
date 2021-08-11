@@ -1,0 +1,33 @@
+<h3>Cadastros</h3>
+
+Usuários que fizeram autocadastro e estão aguardando confirmação.
+
+<table class="table table-bordered table-condensed table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Nome/Razão Social</th>
+      <th style="width:10%">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php if (count($this->cadastros) > 0) { ?> 
+    <?php foreach ($this->cadastros as $c) { ?>
+    <tr>
+      <td>-</td>
+      <td><?php echo $c->getNome() ?></td>
+      <td>
+        <a href="<?php echo $this->baseUrl("/administrativo/cadastro/editar/id/{$c->getId()}") ?>" 
+           class="btn btn-success btn-small">
+          Confirmar
+        </a>
+      </td>
+    </tr>
+    <?php } ?>
+    <?php } else { ?>
+    <tr>
+      <td colspan="3">Nenhum registro encontrado.</td>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>

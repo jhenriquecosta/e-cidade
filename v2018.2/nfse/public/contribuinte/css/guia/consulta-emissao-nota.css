@@ -1,0 +1,12 @@
+#fieldset-group_competencia .span3:nth-child(3), #fieldset-group_competencia .span3:nth-child(4){
+  margin-left: 80px!important;
+  width: 220px!important;
+}
+
+#fieldset-group_competencia .span3:nth-child(3) .control-label{
+  width: 110px;
+}
+
+#fieldset-group_competencia .span3:nth-child(3) .controls, #fieldset-group_competencia .span3:nth-child(4) .controls{
+  margin-left: 130px!important;
+}

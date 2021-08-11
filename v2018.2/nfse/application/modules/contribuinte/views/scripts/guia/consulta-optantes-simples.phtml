@@ -1,0 +1,44 @@
+<fieldset>
+  <legend><?php echo $this->translate->_('Guias Optantes pelo Simples/MEI') ?></legend>
+
+  <table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+      <th><?php echo $this->translate->_('Competência') ?></th>
+      <th><?php echo $this->translate->_('Data Vencimento') ?></th>
+      <th><?php echo $this->translate->_('Valor Histórico') ?></th>
+      <th><?php echo $this->translate->_('Valor Corrigido') ?></th>
+      <th><?php echo $this->translate->_('Valor Pago') ?></th>
+      <th><?php echo $this->translate->_('Situação') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if (count($this->oGuias) > 0) { ?>
+      <?php foreach ($this->oGuias as $oGuia) { ?>
+        <tr>
+          <td><?php echo $oGuia->competencia ?></td>
+          <td><?php echo DBSeller_Helper_Date_Date::invertDate($oGuia->data_vencimento, '/') ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_historico, 2, 'R$ ') ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_corrigido, 2, 'R$ ') ?></td>
+          <td><?php echo DBSeller_Helper_Number_Format::toMoney($oGuia->valor_pago, 2, 'R$ ') ?></td>
+          <td>
+            <span class="label label-success">Paga</span>
+          </td>
+        </tr>
+      <?php } ?>
+    <?php } else { ?>
+      <tr>
+        <td colspan="6"><?php echo $this->translate->_('Nenhum registro encontrado.') ?></td>
+      </tr>
+    <?php } ?>
+    </tbody>
+  </table>
+    <?php
+    echo $this->paginationControl(
+          $this->oGuias,
+          'Sliding',
+          'layouts/pager.phtml',
+          array('translate' => $this->translate)
+        );
+  ?>
+</fieldset>

@@ -1,0 +1,144 @@
+<style type="text/css">
+  table {
+    border: solid 1px #000;        
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 11px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }    
+</style>
+<table>
+  <tr>
+    <td rowspan="4" style="border: solid 1px #000;">
+      <img alt="Brasão Prefeitura" src="/global/img/brasao.jpg" />
+    </td>
+    <td rowspan="4" colspan="3" style="width: 80%; border: solid 1px #000;">
+      <?php echo $this->oDadosPrefeitura->getNome(); ?><br/>
+      Secretaria Municipal de Fazenda e Planejamento<br/>
+      Fone: <?php echo $this->oDadosPrefeitura->getTelefone();?> Fax: <?php echo $this->oDadosPrefeitura->getFax();?>
+      <br><u>COMPROVANTE IMPORTACAO DMS</u>
+    </td>
+    <td style="border: solid 1px #000;">Código Importação<br/>
+        <?php echo $this->oImportacao->getId(); ?>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: solid 1px #000; width: 20%;">Data de Operação<br/>
+      <?php echo $this->oImportacao->getDataOperacao()->format('d/m/Y'); ?> 
+    </td>
+  </tr>
+ </table>
+<br>
+
+<?php if (!empty($this->oDadosContador)) { ?>
+
+<table>
+  <tr>
+    <td colspan="4" style="border: solid 1px #000;"><b>DADOS CONTADOR</b><br>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">CPF/CNPJ: <?php echo DBSeller_Helper_Number_Format::maskCPF_CNPJ($this->oDadosContador->getCgcCpf()) ?></td>
+    <td style="text-align: left;">IM: <?php echo $this->oDadosContador->getInscricaoMunicipal(); ?></td>
+    <td style="text-align: left;">IE: <?php echo $this->oDadosContador->getInscricaoEstadual(); ?></td>
+    <td style="text-align: left;">Telefone: <?php echo $this->oDadosContador->getTelefone(); ?></td>
+  </tr>
+  <tr style="border: none;">
+    <td colspan="4" style="text-align: left;">Razão Social: <?php echo $this->oDadosContador->getNome(); ?></td>
+  </tr>
+  <tr style="border: none;">
+    <td colspan="4" style="text-align: left;">Nome fantasia: <?php echo $this->oDadosContador->getNomeFantasia(); ?></td>
+  </tr>
+  <tr style="border: none;">
+    <td colspan="3" style="text-align: left;">Endereço: <?php echo $this->oDadosContador->getDescricaoLogradouro(); ?></td>
+    <td style="text-align: left;">CEP: <?php echo $this->oDadosContador->getCep(); ?></td>
+  </tr>
+  <tr style="border: none;">
+    <td colspan="4" style="text-align: left;">Complemento: <?php echo $this->oDadosContador->getLogradouroComplemento(); ?></td>
+  </tr>
+  <tr style="border: none;">
+    <td colspan="3" style="text-align: left;">Município: <?php echo $this->oDadosContador->getDescricaoMunicipio(); ?>/<?php echo $this->oDadosContador->getEstado(); ?></td>
+    <td style="text-align: left;">Email: <?php echo $this->oDadosContador->getEmail(); ?></td>
+  </tr>
+</table>
+<?php } ?>
+<br>
+
+<table style="width: 100%;">
+  <tr>
+    <td colspan="6" style="border: solid 1px #000;">
+      <b>LISTA DE NOTAS IMPORTADAS<br>&nbsp;</b>
+    </td>
+  </tr>
+  
+  <?php
+  
+  $iCodigoContribuinte    = NULL;
+  $iTotalImportado        = 0;
+  $iTotalImportadoImposto = 0;
+
+  foreach ($this->oImportacao->getImportacaoNotas() as $oNota) {
+    
+    if ($oNota->getIdContribuinte() != $iCodigoContribuinte) { 
+      
+      $oContribuinte = Contribuinte_model_contribuinte::getById($oNota->getIdContribuinte());
+      ?>
+    <tr>
+      <td colspan="6">
+         <table style="width: 100%;border:0">
+           <tr>
+             <td style="text-align:left">
+               <strong><?php echo 'CPF/CNPJ: ' . DBSeller_Helper_Number_Format::maskCPF_CNPJ($oContribuinte->getCgcCpf()) . ' - ' . $oContribuinte->getNome(); ?></strong>
+             </td>
+            </tr>
+         </table>
+       </td>
+    </tr>
+    <tr>
+      <td style="width:10%; border: solid 1px #000;">NUMERO</td>
+      <td style="width:15%; border: solid 1px #000;">Operação</td>
+      <td style="width:15%; border: solid 1px #000;">Competência</td>
+      <td style="width:20%; border: solid 1px #000;">DATA EMISSÃO</td>               
+      <td style="width:20%; border: solid 1px #000;">VALOR NOTA</td> 
+      <td style="width:20%; border: solid 1px #000;">VALOR IMPOSTO</td> 
+    </tr>
+    <?php 
+    }
+    
+    $iCodigoContribuinte = $oNota->getIdContribuinte();
+  ?>
+  <tr>
+    <td style="text-align: right;  border: solid 1px #000;"><?php echo $oNota->getNumeroNota(); ?></td>
+    <td style="text-align: center; border: solid 1px #000;"><?php echo ($oNota->getOperacaoNota() == 'e'? 'Entrada' : 'Saida'); ?></td>
+    <td style="text-align: center; border: solid 1px #000;"><?php echo $oNota->getCompetencia(); ?></td>
+    <td style="text-align: center; border: solid 1px #000;"><?php echo $oNota->getDataEmissaoNota()->format('d/m/Y'); ?></td>               
+    <td style="text-align: right;  border: solid 1px #000;"><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getValorTotal(), 2, 'R$ '); ?></td> 
+    <td style="text-align: right;  border: solid 1px #000;"><?php echo DBSeller_Helper_Number_Format::toMoney($oNota->getValorImposto(), 2, 'R$ '); ?></td>  
+    
+    <?php 
+      $iTotalImportado        = $iTotalImportado + $oNota->getValorTotal(); 
+      $iTotalImportadoImposto = $iTotalImportadoImposto + $oNota->getValorImposto();
+    ?>
+          
+ </tr>
+ <?php } ?>
+   <tr>
+    <td colspan="4" style="text-align: left; border: solid 1px #000;"><b>TOTAL IMPORTADO </b></td>
+    <td style="text-align: right; border: solid 1px #000;"><b><?php echo DBSeller_Helper_Number_Format::toMoney($iTotalImportado, 2, 'R$ '); ?></b></td> 
+    <td style="text-align: right; border: solid 1px #000;"><b><?php echo DBSeller_Helper_Number_Format::toMoney($iTotalImportadoImposto, 2, 'R$ '); ?></b></td>        
+ </tr>
+</table>
+<br>
+<table>
+  <tr>
+    <td colspan="2" style="border: solid 1px #000;"><b>USUÁRIO</b><br>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; border: solid 1px #000;">Nome: <?php echo $this->oDadosUsuario->getNome(); ?></td>
+    <td style="text-align: left; border: solid 1px #000;">login: <?php echo $this->oDadosUsuario->getLogin(); ?></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; border: solid 1px #000;">Telefone: <?php echo $this->oDadosUsuario->getTelefone(); ?></td>
+    <td style="text-align: left; border: solid 1px #000;">Email: <?php echo $this->oDadosUsuario->getEmail(); ?></td>
+  </tr>
+</table>

@@ -1,0 +1,42 @@
+<h3><?php echo $this->translate->_('Bem vindo') ?></h3>
+
+<?php echo $this->translate->_('Escolha um dos módulos abaixo:') ?>
+
+<div class="db_modulos">
+  <ul class="modules">
+    <?php if (DBSeller_Plugin_Auth::checkPermission('administrativo/index/index')) { ?>
+    <li>
+      <a href="<?php echo $this->baseUrl('/administrativo/') ?>" title="">
+        <img src="<?php echo $this->baseUrl('/default/img/icone-administrativo.png') ?>"><br>
+        <?php echo $this->translate->_('Administrativo');?>
+      </a>
+    </li>
+    <?php } ?>
+  
+    <?php
+    $oModulosFiscal = array('Fiscal', 'Administrativo');
+    
+    if (DBSeller_Plugin_Auth::checkPermission('contribuinte/index/index') &&
+        !in_array($this->user->getPerfil()->getNome(), $oModulosFiscal  )) { ?>
+    <li>
+      <a href="<?php echo $this->baseUrl('/contribuinte/') ?>" title="">
+        <img src="<?php echo $this->baseUrl('/default/img/icone-contribuinte.png') ?>" alt=""><br>
+        <?php echo $this->translate->_('Contribuinte');?>
+      </a>
+    </li>
+    <?php } ?>
+    
+    <?php
+    $oModulosAdmin = array('Fiscal');
+
+    if ((DBSeller_Plugin_Auth::checkPermission('fiscal/index/index') &&
+         in_array($this->user->getPerfil()->getNome(), $oModulosAdmin)) || isset($this->iUsuarioEscolhido)) { ?>
+    <li>
+      <a href="<?php echo $this->baseUrl('/fiscal/') ?>" title="">
+        <img src="<?php echo $this->baseUrl('/default/img/icone-fiscal.png') ?>" alt=""><br>
+        <?php echo $this->translate->_('Fiscal') ?>
+      </a>
+    </li>
+    <?php } ?>
+  </ul>
+</div>

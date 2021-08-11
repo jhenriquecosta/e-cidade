@@ -1,0 +1,57 @@
+#fieldset-group_competencia div.control-group div.controls {
+  margin-left: 0 !important;
+}
+
+#fieldset-group_competencia div.control-group label {
+  width: auto !important;
+}
+
+#fieldset-group_competencia div.control-group div.controls select {
+  margin-left: 20px !important;
+}
+
+#fieldset-group_competencia div.control-group div.controls button {
+  margin-left: -50px !important;
+}
+
+#fieldset-group_competencia div.control-group div.controls button#btn_exportar {
+  margin-left: -150px !important;
+}
+
+@media (max-width: 780px) {
+  #fieldset-group_competencia div.control-group div.controls select {
+    margin-left: 0 !important;
+  }
+
+  #fieldset-group_competencia div.control-group div.controls button {
+    margin-left: 0 !important;
+  }
+}
+
+.consulta-coluna01 {
+  width: 95px;
+}
+
+.consulta-coluna02 {
+  width: 60px;
+}
+
+.consulta-coluna03 {
+  width: 95px;
+}
+
+.consulta-coluna04 {
+  width: auto;
+}
+
+.consulta-coluna05 {
+  width: 125px;
+}
+
+.consulta-coluna06 {
+  width: 60px;
+}
+
+.consulta-coluna07 {
+  width: 210px;
+}

@@ -1,0 +1,86 @@
+<!-- 1_10_0 -->
+<div>
+  <ul class="breadcrumb">Versões:
+   <?php
+   $lastKey = key($this->versoes);
+   $aVersoes = array_reverse($this->versoes, TRUE);
+   $sUrl = $this->baseUrl("/default/atualizacao/versao/v/");
+
+   foreach ($aVersoes as $sLink => $sVersao) {
+
+    ?> <a href="<?= $sUrl . $sLink ?>"><?=$sVersao .'  ' ?></a>
+    <?php if ($sLink <> $lastKey) { ?>
+    <span class="divider">&gt;</span> <? }
+
+  } ?>
+  </ul>
+</div>
+<div class="well" style="padding: 1px">
+  <div>
+    <h4><?php echo $this->translate->_('Informativo sobre Atualizações de Versão') . ": 1.10" ?></h4>
+  </div>
+  <div class="content-informativo">
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFS-e > Emissão') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Fechamento da competência de optantes pelo Simples') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora a competência das empresas optantes pelo Simples não será mais fechada quando for recebido um pagamento da mesma. O fechamento da competência dos optantes pelo Simples obedecerá a mesma regra que as demais empresas, sendo fechada quando finalizado o período de retroatividade ou quando emitida uma nota da próxima competência.') ?>
+            </p>
+          </li>
+         </ul>
+      </li>
+    </ul>
+    <ul class="content-informativo-versao inside none">
+      <li class="content-informativo-topico">
+        <b><?php echo $this->translate->_('NFS-e > Emissão') ?></b>
+      </li>
+      <li class="content-informativo-topico">
+        <ul class="content-informativo-versao outside none">
+          <li class="content-informativo-topico">
+            <b><?php echo $this->translate->_('Emissão de notas para o exterior') ?></b>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('A partir de agora é possível emitir notas fiscais para serviços prestados no exterior, assim como para tomadores de serviços do exterior.') ?>
+            </p>
+            <p>
+              <?php echo $this->translate->_('Para tomadores do exterior, basta selecionar o país desejado no campo “País” nas informações do tomador. Selecionado um país diferente de “Brasil”, os campos “Estado” e “Cidade” serão substituídos por um campo texto, sendo possível preencher com o endereço do tomador, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011000-1.png" src="/default/img/versao/V011000-1.png" title="V011000-1.png" style="max-width: 90%;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Para serviços prestados no exterior, basta selecionar o país desejado no campo “País” nas informações do serviço. Assim como nas informações do tomador, os campos “Estado” e “Cidade” serão substituídos por um campo texto, sendo possível preencher com o local do serviço, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011000-2.png" src="/default/img/versao/V011000-2.png" title="V011000-2.png" style="max-width: 90%;">
+            </span>
+          </li>
+          <li class="content-informativo-topico">
+            <p>
+              <?php echo $this->translate->_('Para efeitos de tributação, será possível escolher se incidirá ou não imposto, conforme abaixo:') ?>
+            </p>
+          </li>
+          <li class="content-informativo-topico">
+            <span>
+              <img alt="V011000-3.png" src="/default/img/versao/V011000-3.png" title="V011000-3.png" style="max-width: 90%;">
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
